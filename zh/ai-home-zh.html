@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Joy AI 教师助手</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <style>
+    /* 导入字体 */
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap');
+    @font-face {
+      font-family: 'OPPO Sans';
+      src: url('https://cdn.jsdelivr.net/gh/wordshub/free-font/assets/font/OPPOSans/OPPOSans-R.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'OPPO Sans';
+      src: url('https://cdn.jsdelivr.net/gh/wordshub/free-font/assets/font/OPPOSans/OPPOSans-B.ttf') format('truetype');
+      font-weight: bold;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'LXGWWenKai';
+      src: url('https://cdn.jsdelivr.net/gh/chawyehsu/lxgw-wenkai-webfont@latest/dist/LXGWWenKai-Regular.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
+    
+    /* 基础字体设置 */
+    body {
+      font-family: 'LXGWWenKai', -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+    }
+
+    /* 标题字体特殊样式 */
+    h1, h2, h3, .section-title, .font-bold {
+      font-family: 'OPPO Sans', 'Noto Sans SC', sans-serif;
+      letter-spacing: -0.02em;
+    }
+
+    /* 副标题样式 */
+    .subtitle, nav a, .text-lg {
+      font-family: 'Noto Sans SC', 'OPPO Sans', sans-serif;
+      letter-spacing: 0.01em;
+    }
+
+    /* 正文文本样式优化 */
+    p, .text-base, .text-sm {
+      font-family: 'LXGWWenKai', 'Noto Sans SC', sans-serif;
+      line-height: 1.8;
+      letter-spacing: 0.02em;
+    }
+
+    /* 特殊文本样式 */
+    .hero p {
+      font-family: 'Noto Sans SC', 'LXGWWenKai', sans-serif;
+      line-height: 1.6;
+    }
+
+    .carousel-card {
+      display: none;
+    }
+    .carousel-card.active {
+      display: flex;
+    }
+    .custom-bg {
+      background-color: #ffd368;
+    }
+    /* Mobile menu styles */
+    .mobile-menu {
+      display: none;
+    }
+    .mobile-menu.active {
+      display: block;
+    }
+    @media (max-width: 768px) {
+      .desktop-menu {
+        display: none;
+      }
+    }
+
+    /* 删除原有的标题特效 */
+    .section-title {
+      transition: all 0.25s ease-in;
+    }
+  </style>
+</head>
+
+<body class="bg-white text-gray-900 font-sans">
+
+<!-- Header -->
+<header class="bg-white shadow-md sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="flex justify-between items-center h-16">
+      <!-- Logo -->
+      <div class="text-lg md:text-xl font-bold">
+        <a href="../index-ch.html" class="hover:text-yellow-500">Joy AI助力教师</a>
+      </div>
+      
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex space-x-4">
+        <a href="ai-home-zh.html" class="font-bold text-base hover:text-yellow-500">首页</a>
+        <a href="ai-about-zh.html" class="font-bold text-base hover:text-yellow-500">关于我们</a>
+        <a href="ai-resources-zh.html" class="font-bold text-base hover:text-yellow-500">免费资源</a>
+        <a href="ai-contact-zh.html" class="font-bold text-base hover:text-yellow-500">联系我们</a>
+      </nav>
+
+      <!-- Mobile menu button -->
+      <button class="md:hidden p-2" onclick="toggleMobileMenu()">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <div id="mobile-menu" class="mobile-menu md:hidden pb-4">
+      <a href="ai-home-zh.html" class="block py-2 px-4 text-sm font-bold hover:bg-gray-100">首页</a>
+      <a href="ai-about-zh.html" class="block py-2 px-4 text-sm font-bold hover:bg-gray-100">关于我们</a>
+      <a href="ai-resources-zh.html" class="block py-2 px-4 text-sm font-bold hover:bg-gray-100">免费资源</a>
+      <a href="ai-contact-zh.html" class="block py-2 px-4 text-sm font-bold hover:bg-gray-100">联系我们</a>
+    </div>
+  </div>
+</header>
+
+<!-- Hero Section -->
+<section class="hero relative py-10 md:py-20 overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 md:px-8">
+    <div class="grid md:grid-cols-2 gap-8 items-center">
+      <!-- Text Content -->
+      <div class="text-left md:pr-8">
+        <div class="inline-block bg-yellow-100 rounded-full px-4 py-1 text-sm md:text-base text-yellow-700 mb-6">
+          JOY AI助力教师
+        </div>
+        <h1 class="text-4xl md:text-6xl font-black mb-6 leading-tight">
+          <span class="text-yellow-400">AI</span>助力教师<span class="text-yellow-400">减负增效</span>
+        </h1>
+        <p class="text-gray-600 text-lg md:text-xl mb-8 leading-relaxed">
+          探索AI如何革新您的教学方法，提高工作效率，为学生创造更有趣的学习体验。
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href="ai-resources-zh.html" class="bg-black text-white px-5 py-2 rounded-full text-sm md:text-base font-bold hover:transform hover:scale-105 transition-transform inline-flex items-center">
+            开始学习
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+            </svg>
+          </a>
+          <a href="ai-about-zh.html" class="bg-white border-2 border-black text-black px-5 py-2 rounded-full text-sm md:text-base font-bold hover:bg-gray-50 transition-colors">
+            了解更多
+          </a>
+        </div>
+      </div>
+      
+      <!-- Hero Image -->
+      <div class="relative">
+        <div class="absolute -top-10 -right-10 w-40 h-40 bg-yellow-400 rounded-full opacity-50 blur-3xl"></div>
+        <div class="relative z-10 transform hover:-rotate-2 transition-transform duration-300">
+          <img src="../images/hero-ai.png" alt="AI教学助手" class="rounded-3xl shadow-2xl w-full">
+          <div class="absolute -bottom-6 -right-6 bg-white p-4 rounded-2xl shadow-lg transform rotate-3">
+            <p class="text-sm md:text-base font-medium">AI驱动 🤖</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Meet Joy Section -->
+<section class="py-16 md:py-24 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 md:px-8">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-5xl font-bold mb-4">认识JOY - 您的AI教学助手</h2>
+      <p class="text-gray-600 text-lg max-w-2xl mx-auto">
+        13年教师继续教育经验，终身学习者
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6 md:gap-8">
+      <!-- Card 1: Experience -->
+      <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:-rotate-1 transition-transform">
+        <div class="relative w-full h-72 md:h-80">
+          <div class="absolute inset-0">
+            <img 
+              src="../images/meetjoy1.png" 
+              alt="Joy的经验" 
+              class="w-full h-full object-cover object-center"
+              style="aspect-ratio: 1/1;"
+            >
+          </div>
+          <div class="absolute top-4 left-4">
+            <span class="bg-yellow-400 text-black px-4 py-1 rounded-full text-sm font-bold">
+              专注继续教育
+            </span>
+          </div>
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-bold mb-2">专注助力教师发展</h3>
+          <div class="flex flex-col gap-1">
+            <span class="flex items-center text-sm text-gray-600">
+              <span class="text-yellow-400 mr-2">✓</span>
+              专注于教师发展成长与发展研究
+            </span>
+            <span class="flex items-center text-sm text-gray-600">
+              <span class="text-yellow-400 mr-2">✓</span>
+              13年继续教育研究与实践经验
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: Education -->
+      <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:-rotate-1 transition-transform">
+        <div class="relative w-full h-72 md:h-80">
+          <div class="absolute inset-0">
+            <img 
+              src="../images/meetjoy2.jpg" 
+              alt="Joy的教育背景" 
+              class="w-full h-full object-cover object-center"
+              style="aspect-ratio: 1/1;"
+            >
+          </div>
+          <div class="absolute top-4 left-4">
+            <span class="bg-blue-400 text-white px-4 py-1 rounded-full text-sm font-bold">
+              教育背景
+            </span>
+          </div>
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-bold mb-2">教育经历</h3>
+          <div class="flex flex-col gap-1">
+            <span class="flex items-center text-sm text-gray-600">
+              <span class="text-yellow-400 mr-2">✓</span>
+              英语教育学士
+            </span>
+            <span class="flex items-center text-sm text-gray-600">
+              <span class="text-yellow-400 mr-2">✓</span>
+              对外汉语硕士
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3: AI Expertise -->
+      <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:-rotate-1 transition-transform">
+        <div class="relative w-full h-72 md:h-80">
+          <div class="absolute inset-0">
+            <img 
+              src="../images/meetjoy3.png" 
+              alt="Joy的AI专长" 
+              class="w-full h-full object-cover object-center"
+              style="aspect-ratio: 1/1;"
+            >
+          </div>
+          <div class="absolute top-4 left-4">
+            <span class="bg-green-400 text-white px-4 py-1 rounded-full text-sm font-bold">
+              AI教育探索者
+            </span>
+          </div>
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-bold mb-2">技术整合</h3>
+          <div class="flex flex-col gap-1">
+            <span class="flex items-center text-sm text-gray-600">
+              <span class="text-yellow-400 mr-2">✓</span>
+              AI助力教师减负增效
+            </span>
+            <span class="flex items-center text-sm text-gray-600">
+              <span class="text-yellow-400 mr-2">✓</span>
+              AI助力教师发展
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Why AI Section -->
+<section class="py-10 md:py-20 px-4 md:px-0 bg-gray-50">
+  <div class="max-w-7xl mx-auto">
+    <h2 class="section-title text-3xl md:text-5xl font-bold text-center mb-6 md:mb-12">为什么要使用AI助力教学？</h2>
+    
+    <div class="carousel-wrapper relative">
+      <div class="arrow arrow-left absolute top-1/2 transform -translate-y-1/2 text-xl md:text-2xl bg-black text-white w-8 md:w-10 h-8 md:h-10 flex items-center justify-center rounded-full cursor-pointer z-10 left-2 md:left-32" onclick="prevCard('why')">&#8592;</div>
+      
+      <div class="carousel-container flex transition-transform duration-500 ease" id="why-carousel">
+        <!-- Card 1 -->
+        <div class="carousel-card active w-full md:w-3/4 mx-auto">
+          <div class="flex flex-col md:flex-row items-center bg-white rounded-xl shadow-lg overflow-hidden">
+            <div class="w-full md:w-1/2 p-6 md:p-8">
+              <h3 class="text-2xl md:text-3xl font-bold mb-4">提高效率</h3>
+              <p class="text-gray-600 text-sm md:text-base mb-6">让AI处理重复性工作，让您专注于最重要的事情 - 您的学生。更快地创建教案、生成练习和批改作业。</p>
+              <div class="flex items-center text-sm md:text-base">
+                <span class="text-yellow-500 mr-2">✓</span> 自动批改
+                <span class="text-yellow-500 mx-2">✓</span> 快速反馈
+                <span class="text-yellow-500 mx-2">✓</span> 智能规划
+              </div>
+            </div>
+            <div class="w-full md:w-1/2">
+              <img src="../images/why1.png" alt="AI提高效率" class="w-full h-48 md:h-72 object-cover">
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="carousel-card w-full md:w-3/4 mx-auto">
+          <div class="flex flex-col md:flex-row items-center bg-white rounded-xl shadow-lg overflow-hidden">
+            <div class="w-full md:w-1/2">
+              <img src="../images/why2.png" alt="智能规划" class="w-full h-48 md:h-72 object-cover">
+            </div>
+            <div class="w-full md:w-1/2 p-6 md:p-8">
+              <h3 class="text-2xl md:text-3xl font-bold mb-4">智能规划</h3>
+              <p class="text-gray-600 text-sm md:text-base mb-6">使用AI驱动的工具设计引人入胜的课程。获取创意想法、个性化内容和适合学生需求的互动材料。</p>
+              <div class="flex items-center text-sm md:text-base">
+                <span class="text-yellow-500 mr-2">✓</span> 个性化内容
+                <span class="text-yellow-500 mx-2">✓</span> 创意想法
+                <span class="text-yellow-500 mx-2">✓</span> 互动材料
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="carousel-card w-full md:w-3/4 mx-auto">
+          <div class="flex flex-col md:flex-row items-center bg-white rounded-xl shadow-lg overflow-hidden">
+            <div class="w-full md:w-1/2 p-6 md:p-8">
+              <h3 class="text-2xl md:text-3xl font-bold mb-4">提升技能</h3>
+              <p class="text-gray-600 text-sm md:text-base mb-6">通过AI增强的专业发展保持教育领先地位。学习新的教学策略，探索创新工具，培养面向未来的技能。</p>
+              <div class="flex items-center text-sm md:text-base">
+                <span class="text-yellow-500 mr-2">✓</span> 现代技术
+                <span class="text-yellow-500 mx-2">✓</span> 持续学习
+                <span class="text-yellow-500 mx-2">✓</span> 技术整合
+              </div>
+            </div>
+            <div class="w-full md:w-1/2">
+              <img src="../images/why3.png" alt="提升技能" class="w-full h-48 md:h-72 object-cover">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="arrow arrow-right absolute top-1/2 transform -translate-y-1/2 text-xl md:text-2xl bg-black text-white w-8 md:w-10 h-8 md:h-10 flex items-center justify-center rounded-full cursor-pointer z-10 right-2 md:right-32" onclick="nextCard('why')">&#8594;</div>
+    </div>
+  </div>
+</section>
+
+<!-- Subscribe Section -->
+<section class="subscribe py-20 md:py-32 relative overflow-hidden bg-white">
+  <div class="max-w-7xl mx-auto px-4 md:px-8">
+    <div class="max-w-3xl mx-auto text-center">
+      <span class="inline-block custom-bg text-black px-4 py-2 rounded-full text-sm font-semibold mb-6">
+        加入我们的社区
+      </span>
+      
+      <h2 class="text-3xl md:text-5xl font-bold text-gray-900 mb-6">
+        每月获取免费教学资源
+      </h2>
+      
+      <p class="text-gray-600 text-lg md:text-xl mb-8 max-w-2xl mx-auto">
+        订阅以直接在您的收件箱中接收AI教学技巧、教案和独家材料。
+      </p>
+
+      <!-- Benefits List -->
+      <div class="grid md:grid-cols-3 gap-6 mb-12 text-left">
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0">
+            <span class="flex items-center justify-center w-8 h-8 rounded-full bg-yellow-100 text-yellow-700">✓</span>
+          </div>
+          <div>
+            <h3 class="text-gray-900 font-semibold mb-1">月度资源</h3>
+            <p class="text-gray-600 text-sm">精选教学材料和AI工具</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0">
+            <span class="flex items-center justify-center w-8 h-8 rounded-full bg-yellow-100 text-yellow-700">✓</span>
+          </div>
+          <div>
+            <h3 class="text-gray-900 font-semibold mb-1">抢先体验</h3>
+            <p class="text-gray-600 text-sm">率先试用新功能</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0">
+            <span class="flex items-center justify-center w-8 h-8 rounded-full bg-yellow-100 text-yellow-700">✓</span>
+          </div>
+          <div>
+            <h3 class="text-gray-900 font-semibold mb-1">社区支持</h3>
+            <p class="text-gray-600 text-sm">加入我们的教师社区</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Subscription Form -->
+      <form id="subscribe-form" class="max-w-lg mx-auto" action="https://formspree.io/f/your-formspree-id" method="POST">
+        <div class="flex flex-col md:flex-row gap-4">
+          <div class="flex-grow">
+            <div class="relative">
+              <input 
+                type="email" 
+                name="email" 
+                placeholder="    输入您的邮箱" 
+                required
+                class="w-full px-6 py-4 bg-gray-50 border border-gray-200 rounded-full text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
+              >
+              <div class="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="px-8 py-4 bg-black text-white rounded-full font-bold hover:transform hover:scale-105 transition-all duration-300 flex items-center justify-center">
+            立即订阅
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+            </svg>
+          </button>
+        </div>
+        <p class="text-gray-500 text-sm mt-4">
+          🔒 我们尊重您的隐私。随时可以取消订阅。
+        </p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-gray-800 text-white py-8 md:py-12 px-4 md:px-8">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-8 md:mb-12">
+      <h3 class="text-xl md:text-2xl font-bold mb-4 md:mb-6">更多信息</h3>
+      <p class="text-gray-400 text-sm md:text-base mb-6 md:mb-8">及时了解我们最新的学习技巧和工具！</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8">
+      <div>
+        <h3 class="text-base md:text-lg font-semibold mb-3 md:mb-4">Joy Learning</h3>
+        <p class="text-gray-400 text-sm md:text-base">英语、教学和终身学习的资源平台。</p>
+      </div>
+      <div>
+        <h3 class="text-base md:text-lg font-semibold mb-3 md:mb-4">快速链接</h3>
+        <ul class="space-y-2">
+          <li><a href="#" class="text-gray-400 hover:text-yellow-500 text-sm md:text-base">首页</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-yellow-500 text-sm md:text-base">联系我们</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-base md:text-lg font-semibold mb-3 md:mb-4">探索</h3>
+        <ul class="space-y-2">
+          <li><a href="https://www.xiaohongshu.com/user/profile/67f36760000000000d008455" class="text-gray-400 hover:text-yellow-500 text-sm md:text-base">小红书</a></li>
+          <li><a href="https://space.bilibili.com/3546894768802257?spm_id_from=333.1007.0.0" class="text-gray-400 hover:text-yellow-500 text-sm md:text-base">Bilibili</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-base md:text-lg font-semibold mb-3 md:mb-4">联系方式</h3>
+        <ul class="space-y-2">
+          <li class="flex items-center justify-center md:justify-start">
+            <i class="fas fa-envelope text-yellow-500 mr-2"></i>
+            <a href="mailto:joyzhu1020@gmail.com" class="text-gray-400 hover:text-yellow-500 text-sm md:text-base">joyzhu1020@gmail.com</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-gray-700 mt-6 md:mt-8 pt-6 md:pt-8 text-center text-gray-400">
+      <p class="text-sm md:text-base">&copy; 2025 Joy Learning. 保留所有权利。</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+function nextCard(section) {
+  const container = document.getElementById(section + '-carousel');
+  const cards = container.querySelectorAll('.carousel-card');
+  let index = Array.from(cards).findIndex(card => card.classList.contains('active'));
+  cards[index].classList.remove('active');
+  index = (index + 1) % cards.length;
+  cards[index].classList.add('active');
+}
+
+function prevCard(section) {
+  const container = document.getElementById(section + '-carousel');
+  const cards = container.querySelectorAll('.carousel-card');
+  let index = Array.from(cards).findIndex(card => card.classList.contains('active'));
+  cards[index].classList.remove('active');
+  index = (index - 1 + cards.length) % cards.length;
+  cards[index].classList.add('active');
+}
+
+// Add mobile menu toggle function
+function toggleMobileMenu() {
+  const mobileMenu = document.getElementById('mobile-menu');
+  mobileMenu.classList.toggle('active');
+}
+</script>
+
+<!-- Cloudflare Web Analytics -->
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "815acc2e10b44841a90f1ff1da46d26b"}'></script>
+<!-- End Cloudflare Web Analytics -->
+</body>
+</html> 

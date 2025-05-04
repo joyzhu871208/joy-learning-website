@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Joy AI for Teachers</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .btn-primary {
+            background-color: #ffd368;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #e6be5e;
+            transform: translateY(-2px);
+        }
+        .social-icon {
+            transition: all 0.3s ease;
+        }
+        .social-icon:hover {
+            transform: scale(1.1);
+        }
+        .youtube-icon { color: #FF0000; }
+        .xiaohongshu-icon { color: #FE2C55; }
+        .bilibili-icon { color: #00A1D6; }
+        .wechat-icon { color: #07C160; }
+        .weibo-icon { color: #E6162D; }
+        /* Mobile menu styles */
+        .mobile-menu {
+            display: none;
+        }
+        .mobile-menu.active {
+            display: block;
+        }
+        @media (max-width: 768px) {
+            .desktop-menu {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="text-lg md:text-xl font-bold">
+                    <a href="../index-en.html" class="hover:text-yellow-500">Joy AI for Teachers</a>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-4">
+                    <a href="ai-home-en.html" class="font-bold text-base hover:text-yellow-500">Home</a>
+                    <a href="ai-about-en.html" class="font-bold text-base hover:text-yellow-500">About</a>
+                    <a href="ai-resources-en.html" class="font-bold text-base hover:text-yellow-500">Resources</a>
+                    <a href="ai-contact-en.html" class="font-bold text-base text-yellow-500">Contact</a>
+                </nav>
+
+                <!-- Mobile menu button -->
+                <button class="md:hidden p-2" onclick="toggleMobileMenu()">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Navigation -->
+            <div id="mobile-menu" class="mobile-menu md:hidden pb-4">
+                <a href="ai-home-en.html" class="block py-2 px-4 text-sm font-bold hover:bg-gray-100">Home</a>
+                <a href="ai-about-en.html" class="block py-2 px-4 text-sm font-bold hover:bg-gray-100">About</a>
+                <a href="ai-resources-en.html" class="block py-2 px-4 text-sm font-bold hover:bg-gray-100">Resources</a>
+                <a href="ai-contact-en.html" class="block py-2 px-4 text-sm font-bold bg-gray-100">Contact</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <div class="bg-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-4xl font-extrabold text-gray-900 sm:text-5xl sm:tracking-tight lg:text-6xl">Contact Us</h1>
+                <p class="mt-5 max-w-xl mx-auto text-xl text-gray-500">Have questions or want to collaborate? We'd love to hear from you!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <!-- Contact Form -->
+            <div class="bg-white p-8 rounded-lg shadow-md">
+                <h2 class="text-2xl font-bold mb-6">Send Us a Message</h2>
+                <form id="contact-form" class="space-y-6" onsubmit="sendEmail(event)">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+                        <input type="text" id="name" name="name" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-yellow-500 focus:border-yellow-500">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                        <input type="email" id="email" name="email" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-yellow-500 focus:border-yellow-500">
+                    </div>
+                    <div>
+                        <label for="subject" class="block text-sm font-medium text-gray-700">Subject</label>
+                        <select id="subject" name="subject" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-yellow-500 focus:border-yellow-500">
+                            <option value="Course Consultation">Course Consultation</option>
+                            <option value="Teacher Training">Teacher Training</option>
+                            <option value="School Cooperation">School Cooperation</option>
+                            <option value="AI Tools Support">AI Tools Support</option>
+                            <option value="Other Inquiries">Other Inquiries</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
+                        <textarea id="message" name="message" rows="4" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-yellow-500 focus:border-yellow-500"></textarea>
+                    </div>
+                    <div>
+                        <button type="submit" class="w-full btn-primary py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">
+                            Send Message
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Contact Info & Social Media -->
+            <div class="space-y-8">
+                <!-- Contact Information -->
+                <div class="bg-white p-8 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-6">Contact Information</h2>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-envelope text-yellow-500 mt-1"></i>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm font-medium text-gray-900">Email</p>
+                                <p class="text-sm text-gray-500">joyzhu1020@gmail.com</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0">
+                                <i class="fas fa-clock text-yellow-500 mt-1"></i>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm font-medium text-gray-900">Response Time</p>
+                                <p class="text-sm text-gray-500">Within 48 hours</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Social Media -->
+                <div class="bg-white p-8 rounded-lg shadow-md">
+                    <h2 class="text-2xl font-bold mb-6">Follow Us</h2>
+                    <p class="text-gray-600 mb-6">Stay updated with our latest content and IELTS tips!</p>
+                    <div class="grid grid-cols-3 gap-4">
+                        <a href="" target="_blank" class="social-icon youtube-icon text-center">
+                            <i class="fab fa-youtube text-3xl"></i>
+                            <p class="text-sm mt-2">YouTube</p>
+                        </a>
+                        <a href="https://www.xiaohongshu.com/user/profile/67f36760000000000d008455" target="_blank" class="social-icon xiaohongshu-icon text-center">
+                            <i class="fas fa-book text-3xl"></i>
+                            <p class="text-sm mt-2">小红书</p>
+                        </a>
+                        <a href="https://space.bilibili.com/3546894768802257?spm_id_from=333.1007.0.0" target="_blank" class="social-icon bilibili-icon text-center">
+                            <i class="fas fa-play-circle text-3xl"></i>
+                            <p class="text-sm mt-2">Bilibili</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 md:py-12 px-4 md:px-8">
+        <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-8 md:mb-12">
+            <h3 class="text-xl md:text-2xl font-bold mb-4 md:mb-6">More Information</h3>
+            <p class="text-gray-400 text-sm md:text-base mb-6 md:mb-8">Stay updated with our latest learning tips and tools!</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8">
+            <div>
+            <h3 class="text-base md:text-lg font-semibold mb-3 md:mb-4">Joy Learning</h3>
+            <p class="text-gray-400 text-sm md:text-base">Resources for English, teaching, and lifelong learning.</p>
+            </div>
+            <div>
+            <h3 class="text-base md:text-lg font-semibold mb-3 md:mb-4">Quick Links</h3>
+            <ul class="space-y-2">
+                <li><a href="#" class="text-gray-400 hover:text-yellow-500 text-sm md:text-base">Home</a></li>
+                <li><a href="#" class="text-gray-400 hover:text-yellow-500 text-sm md:text-base">Contact</a></li>
+            </ul>
+            </div>
+            <div>
+            <h3 class="text-base md:text-lg font-semibold mb-3 md:mb-4">Explore</h3>
+            <ul class="space-y-2">
+                <li><a href="https://www.xiaohongshu.com/user/profile/67f36760000000000d008455" class="text-gray-400 hover:text-yellow-500 text-sm md:text-base">Red Book</a></li>
+                <li><a href="https://space.bilibili.com/3546894768802257?spm_id_from=333.1007.0.0" class="text-gray-400 hover:text-yellow-500 text-sm md:text-base">Bilibili</a></li>
+            </ul>
+            </div>
+            <div>
+            <h3 class="text-base md:text-lg font-semibold mb-3 md:mb-4">Contact</h3>
+            <ul class="space-y-2">
+                <li class="flex items-center justify-center md:justify-start">
+                <i class="fas fa-envelope text-yellow-500 mr-2"></i>
+                <a href="mailto:joyzhu1020@gmail.com" class="text-gray-400 hover:text-yellow-500 text-sm md:text-base">joyzhu1020@gmail.com</a>
+                </li>
+            </ul>
+            </div>
+        </div>
+        <div class="border-t border-gray-700 mt-6 md:mt-8 pt-6 md:pt-8 text-center text-gray-400">
+            <p class="text-sm md:text-base">&copy; 2025 Joy Learning. All rights reserved.</p>
+        </div>
+        </div>
+    </footer>
+
+    <script>
+    function toggleMobileMenu() {
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenu.classList.toggle('hidden');
+    }
+
+    function sendEmail(event) {
+        event.preventDefault();
+        
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const subject = document.getElementById('subject').value;
+        const message = document.getElementById('message').value;
+        
+        const mailtoLink = `mailto:joyzhu1020@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`From: ${name}\nEmail: ${email}\n\n${message}`)}`;
+        
+        window.location.href = mailtoLink;
+    }
+    </script>
+
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "815acc2e10b44841a90f1ff1da46d26b"}'></script>
+    <!-- End Cloudflare Web Analytics -->
+</body>
+</html> 

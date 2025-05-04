@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>校本培训 - Joy AI助力教师</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <!-- Add Swiper's CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <style>
+        .custom-bg {
+            background-color: #ffd368;
+        }
+        .swiper-container {
+            width: 100%;
+            max-width: 960px;
+            margin: 0 auto;
+            aspect-ratio: 16/9;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        .swiper-slide {
+            position: relative;
+            overflow: hidden;
+        }
+        .swiper-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .swiper-button-next,
+        .swiper-button-prev {
+            color: #ffffff;
+            background: rgba(0, 0, 0, 0.3);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        .swiper-button-next:hover,
+        .swiper-button-prev:hover {
+            background: rgba(0, 0, 0, 0.5);
+        }
+        .swiper-button-next:after,
+        .swiper-button-prev:after {
+            font-size: 18px;
+        }
+        .swiper-pagination-bullet {
+            width: 10px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.8);
+        }
+        .swiper-pagination-bullet-active {
+            background: #ffd368;
+        }
+        .highlight-text {
+            color: #ffd368;
+            font-weight: 600;
+        }
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2rem;
+        }
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: #ffd368;
+        }
+        .content-box {
+            background: #fff;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+        /* Mobile menu styles */
+        .mobile-menu {
+            display: none;
+        }
+        .mobile-menu.active {
+            display: block;
+        }
+        @media (max-width: 768px) {
+            .desktop-menu {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-white text-gray-900 font-sans">
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="text-lg md:text-xl font-bold">
+                    <a href="../index-ch.html" class="hover:text-yellow-500">Joy AI助力教师</a>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-4">
+                    <a href="ai-home-zh.html" class="font-bold text-base hover:text-yellow-500">首页</a>
+                    <a href="ai-about-zh.html" class="font-bold text-base hover:text-yellow-500">关于我们</a>
+                    <a href="ai-resources-zh.html" class="font-bold text-base hover:text-yellow-500">免费资源</a>
+                    <a href="ai-contact-zh.html" class="font-bold text-base hover:text-yellow-500">联系我们</a>
+                </nav>
+
+                <!-- Mobile menu button -->
+                <button class="md:hidden p-2" onclick="toggleMobileMenu()">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Navigation -->
+            <div id="mobile-menu" class="mobile-menu md:hidden pb-4 hidden">
+                <a href="ai-home-zh.html" class="block py-2 px-4 text-sm font-bold hover:bg-gray-100">首页</a>
+                <a href="ai-about-zh.html" class="block py-2 px-4 text-sm font-bold hover:bg-gray-100">关于我们</a>
+                <a href="ai-resources-zh.html" class="block py-2 px-4 text-sm font-bold hover:bg-gray-100">免费资源</a>
+                <a href="ai-contact-zh.html" class="block py-2 px-4 text-sm font-bold hover:bg-gray-100">联系我们</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="py-16 md:py-24 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4">
+                <h1 class="text-4xl md:text-5xl font-bold text-center mb-4">
+                    校本培训，让教师更专业
+                </h1>
+                <p class="text-xl md:text-4xl text-gray-600 text-center mb-12">
+                    让教育<span class="highlight-text">更高效</span>！
+                </p>
+                
+                <!-- Image Slider -->
+                <div class="swiper-container mb-24">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <img src="../images/meetjoy3.png" alt="校本培训图片 1">
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="../images/about1.png" alt="校本培训图片 2">
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="../images/about3.png" alt="校本培训图片 3">
+                        </div>
+                    </div>
+                    <!-- Add Navigation -->
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                    <!-- Add Pagination -->
+                    <div class="swiper-pagination"></div>
+                </div>
+
+                <!-- Content Section -->
+                <div class="max-w-4xl mx-auto mt-8">
+                    <div class="content-box mb-12">
+                        <h2 class="section-title text-2xl font-bold">作为学校管理者，您是否常常面临以下困扰？</h2>
+                        <ul class="space-y-6 text-lg mt-8">
+                            <li class="flex items-start transform hover:-translate-y-1 transition-transform duration-300">
+                                <span class="flex-shrink-0 w-8 h-8 custom-bg rounded-full flex items-center justify-center mr-4">1</span>
+                                <div>
+                                    <p class="font-semibold mb-2">培训资源有限</p>
+                                    <p class="text-gray-600">培训效果难以落地？</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start transform hover:-translate-y-1 transition-transform duration-300">
+                                <span class="flex-shrink-0 w-8 h-8 custom-bg rounded-full flex items-center justify-center mr-4">2</span>
+                                <div>
+                                    <p class="font-semibold mb-2">理论与实践脱节</p>
+                                    <p class="text-gray-600">新技术的引入总是停留在"理论"阶段，教师们难以真正应用？</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start transform hover:-translate-y-1 transition-transform duration-300">
+                                <span class="flex-shrink-0 w-8 h-8 custom-bg rounded-full flex items-center justify-center mr-4">3</span>
+                                <div>
+                                    <p class="font-semibold mb-2">需求差异化</p>
+                                    <p class="text-gray-600">由于学员差异，通用课程很难满足不同教师的具体需求？</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="content-box mb-12">
+                        <h2 class="section-title text-2xl font-bold">我们的解决方案</h2>
+                        <div class="space-y-6 text-lg mt-8">
+                            <p class="text-xl font-semibold text-gray-800">我们完全理解您的挑战，且有能力帮助您解决这些问题！</p>
+                            <div class="bg-gray-50 p-6 rounded-lg">
+                                <p class="mb-4"><span class="highlight-text">13年培训经验</span> - 专注于将理论与实践深度结合。我们为不同类型、不同地区、不同生源情况的学校量身定制课程，确保每个教师都能在实际教学中快速掌握并灵活应用新工具。</p>
+                                <p class="mb-4"><span class="highlight-text">互动式工作坊</span> - 帮助教师们真正理解并掌握技术，而不仅仅是听讲座；通过持续的线上回访和长期支持，确保培训效果得以延续并不断提升。</p>
+                                <p><span class="highlight-text">定制化方案</span> - 无论您的学校规模如何，无论教师团队的技术水平如何，我们都能提供符合您需求的定制培训方案，让您的教师在教学中得到真正的支持与成长。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CTA Section -->
+                    <div class="text-center bg-gray-50 p-12 rounded-2xl">
+                        <h2 class="text-3xl font-bold mb-6">现在就联系我们</h2>
+                        <p class="text-xl text-gray-600 mb-8">定制属于您学校的专属培训计划！<br>我们期待与您一起，帮助您的团队实现真正的教学突破。</p>
+                        <a href="ai-contact-zh.html" class="inline-block custom-bg text-black px-12 py-4 rounded-full text-lg font-bold hover:bg-yellow-400 transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
+                            联系我们
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 md:py-12 px-4 md:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-8 md:mb-12">
+                <h3 class="text-xl md:text-2xl font-bold mb-4 md:mb-6">更多信息</h3>
+                <p class="text-gray-400 text-sm md:text-base mb-6 md:mb-8">关注我们，获取最新教学技巧和工具！</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8">
+                <div>
+                    <h3 class="text-base md:text-lg font-semibold mb-3 md:mb-4">Joy Learning</h3>
+                    <p class="text-gray-400 text-sm md:text-base">提供英语教学、教师发展和终身学习资源。</p>
+                </div>
+                <div>
+                    <h3 class="text-base md:text-lg font-semibold mb-3 md:mb-4">快速链接</h3>
+                    <ul class="space-y-2">
+                        <li><a href="ai-home-zh.html" class="text-gray-400 hover:text-yellow-500 text-sm md:text-base">首页</a></li>
+                        <li><a href="ai-contact-zh.html" class="text-gray-400 hover:text-yellow-500 text-sm md:text-base">联系我们</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-base md:text-lg font-semibold mb-3 md:mb-4">探索</h3>
+                    <ul class="space-y-2">
+                        <li><a href="https://www.xiaohongshu.com/user/profile/67f36760000000000d008455" class="text-gray-400 hover:text-yellow-500 text-sm md:text-base">小红书</a></li>
+                        <li><a href="https://space.bilibili.com/3546894768802257?spm_id_from=333.1007.0.0" class="text-gray-400 hover:text-yellow-500 text-sm md:text-base">哔哩哔哩</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-base md:text-lg font-semibold mb-3 md:mb-4">联系方式</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center justify-center md:justify-start">
+                            <i class="fas fa-envelope text-yellow-500 mr-2"></i>
+                            <a href="mailto:joyzhu1020@gmail.com" class="text-gray-400 hover:text-yellow-500 text-sm md:text-base">joyzhu1020@gmail.com</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-6 md:mt-8 pt-6 md:pt-8 text-center text-gray-400">
+                <p class="text-sm md:text-base">&copy; 2025 Joy Learning。保留所有权利。</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Add Swiper JS -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+        // Initialize Swiper
+        var swiper = new Swiper('.swiper-container', {
+            slidesPerView: 1,
+            spaceBetween: 0,
+            loop: true,
+            effect: 'fade',
+            fadeEffect: {
+                crossFade: true
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+            },
+        });
+
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        }
+    </script>
+
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "815acc2e10b44841a90f1ff1da46d26b"}'></script>
+    <!-- End Cloudflare Web Analytics -->
+</body>
+</html> 

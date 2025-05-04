@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Joy AI for Teachers</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <style>
+    .carousel-card {
+      display: none;
+    }
+    .carousel-card.active {
+      display: flex;
+    }
+    .custom-bg {
+      background-color: #ffd368;
+    }
+    /* Mobile menu styles */
+    .mobile-menu {
+      display: none;
+    }
+    .mobile-menu.active {
+      display: block;
+    }
+    @media (max-width: 768px) {
+      .desktop-menu {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-white text-gray-900 font-sans">
+
+<!-- Header -->
+<header class="bg-white shadow-md sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="flex justify-between items-center h-16">
+      <!-- Logo -->
+      <div class="text-lg md:text-xl font-bold">
+        <a href="../index-en.html" class="hover:text-yellow-500">Joy AI for Teachers</a>
+      </div>
+      
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex space-x-4">
+        <a href="ai-home-en.html" class="font-bold text-base hover:text-yellow-500">Home</a>
+        <a href="ai-about-en.html" class="font-bold text-base hover:text-yellow-500">About</a>
+        <a href="ai-resources-en.html" class="font-bold text-base hover:text-yellow-500">Resources</a>
+        <a href="ai-contact-en.html" class="font-bold text-base hover:text-yellow-500">Contact</a>
+      </nav>
+
+      <!-- Mobile menu button -->
+      <button class="md:hidden p-2" onclick="toggleMobileMenu()">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <div id="mobile-menu" class="mobile-menu md:hidden pb-4">
+      <a href="ai-home-en.html" class="block py-2 px-4 text-sm font-bold hover:bg-gray-100">Home</a>
+      <a href="ai-about-en.html" class="block py-2 px-4 text-sm font-bold hover:bg-gray-100">About</a>
+      <a href="ai-resources-en.html" class="block py-2 px-4 text-sm font-bold hover:bg-gray-100">Resources</a>
+      <a href="ai-contact-en.html" class="block py-2 px-4 text-sm font-bold hover:bg-gray-100">Contact</a>
+    </div>
+  </div>
+</header>
+
+<!-- Hero Section -->
+<section class="hero relative py-10 md:py-20 overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 md:px-8">
+    <div class="grid md:grid-cols-2 gap-8 items-center">
+      <!-- Text Content -->
+      <div class="text-left md:pr-8">
+        <div class="inline-block bg-yellow-100 rounded-full px-4 py-1 text-sm md:text-base text-yellow-700 mb-6">
+          JOY AI FOR TEACHERS
+        </div>
+        <h1 class="text-4xl md:text-6xl font-black mb-6 leading-tight">
+          Transform Your Teaching with <span class="text-yellow-400">AI</span> Magic
+        </h1>
+        <p class="text-gray-600 text-lg md:text-xl mb-8 leading-relaxed">
+          Discover how AI can revolutionize your teaching methods, improve your efficiency, and create engaging learning experiences for your students.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href="ai-resources-en.html" class="bg-black text-white px-8 py-3 rounded-full text-base md:text-lg font-bold hover:transform hover:scale-105 transition-transform inline-flex items-center">
+            Start Learning
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+            </svg>
+          </a>
+          <a href="ai-about-en.html" class="bg-white border-2 border-black text-black px-8 py-3 rounded-full text-base md:text-lg font-bold hover:bg-gray-50 transition-colors">
+            Learn More
+          </a>
+        </div>
+      </div>
+      
+      <!-- Hero Image -->
+      <div class="relative">
+        <div class="absolute -top-10 -right-10 w-40 h-40 bg-yellow-400 rounded-full opacity-50 blur-3xl"></div>
+        <div class="relative z-10 transform hover:-rotate-2 transition-transform duration-300">
+          <img src="../images/hero-ai.png" alt="AI Teaching Assistant" class="rounded-3xl shadow-2xl w-full">
+          <div class="absolute -bottom-6 -right-6 bg-white p-4 rounded-2xl shadow-lg transform rotate-3">
+            <p class="text-sm md:text-base font-medium">Powered by AI 🤖</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Meet Joy Section -->
+<section class="py-16 md:py-24 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 md:px-8">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-5xl font-bold mb-4">Meet JOY-Your AI Teaching Guide</h2>
+      <p class="text-gray-600 text-lg max-w-2xl mx-auto">
+        13+ years of continuing education for teachers and a lifelong learner
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6 md:gap-8">
+      <!-- Card 1: Experience -->
+      <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:-rotate-1 transition-transform">
+        <div class="relative w-full h-72 md:h-80">
+          <div class="absolute inset-0">
+            <img 
+              src="../images/meetjoy1.png" 
+              alt="Joy's Experience" 
+              class="w-full h-full object-cover object-center"
+              style="aspect-ratio: 1/1;"
+            >
+          </div>
+          <div class="absolute top-4 left-4">
+            <span class="bg-yellow-400 text-black px-4 py-1 rounded-full text-sm font-bold">
+              Continuing Education
+            </span>
+          </div>
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-bold mb-2">Care for Teachers</h3>
+          <div class="flex flex-col gap-1">
+            <span class="flex items-center text-sm text-gray-600">
+              <span class="text-yellow-400 mr-2">✓</span>
+              Expertise in Teacher Development
+            </span>
+            <span class="flex items-center text-sm text-gray-600">
+              <span class="text-yellow-400 mr-2">✓</span>
+              13+ Years of Experience
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2: Education -->
+      <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:-rotate-1 transition-transform">
+        <div class="relative w-full h-72 md:h-80">
+          <div class="absolute inset-0">
+            <img 
+              src="../images/meetjoy2.jpg" 
+              alt="Joy's Education" 
+              class="w-full h-full object-cover object-center"
+              style="aspect-ratio: 1/1;"
+            >
+          </div>
+          <div class="absolute top-4 left-4">
+            <span class="bg-blue-400 text-white px-4 py-1 rounded-full text-sm font-bold">
+              Education Background
+            </span>
+          </div>
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-bold mb-2">Academic Excellence</h3>
+          <div class="flex flex-col gap-1">
+            <span class="flex items-center text-sm text-gray-600">
+              <span class="text-yellow-400 mr-2">✓</span>
+              Bachelor in English Education
+            </span>
+            <span class="flex items-center text-sm text-gray-600">
+              <span class="text-yellow-400 mr-2">✓</span>
+              Master in Teaching Chinese as a Foreign Language
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3: AI Expertise -->
+      <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:-rotate-1 transition-transform">
+        <div class="relative w-full h-72 md:h-80">
+          <div class="absolute inset-0">
+            <img 
+              src="../images/meetjoy3.png" 
+              alt="Joy's AI Expertise" 
+              class="w-full h-full object-cover object-center"
+              style="aspect-ratio: 1/1;"
+            >
+          </div>
+          <div class="absolute top-4 left-4">
+            <span class="bg-green-400 text-white px-4 py-1 rounded-full text-sm font-bold">
+              AI Expert
+            </span>
+          </div>
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-bold mb-2">Tech Integration</h3>
+          <div class="flex flex-col gap-1">
+            <span class="flex items-center text-sm text-gray-600">
+              <span class="text-yellow-400 mr-2">✓</span>
+              AI-Powered Classroom Solutions
+            </span>
+            <span class="flex items-center text-sm text-gray-600">
+              <span class="text-yellow-400 mr-2">✓</span>
+              Education Tech Tools
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Why AI Section -->
+<section class="py-10 md:py-20 px-4 md:px-0 bg-gray-50">
+  <div class="max-w-7xl mx-auto">
+    <h2 class="section-title text-3xl md:text-5xl font-bold text-center mb-6 md:mb-12">Why AI for Your Teaching?</h2>
+    
+    <div class="carousel-wrapper relative">
+      <div class="arrow arrow-left absolute top-1/2 transform -translate-y-1/2 text-xl md:text-2xl bg-black text-white w-8 md:w-10 h-8 md:h-10 flex items-center justify-center rounded-full cursor-pointer z-10 left-2 md:left-32" onclick="prevCard('why')">&#8592;</div>
+      
+      <div class="carousel-container flex transition-transform duration-500 ease" id="why-carousel">
+        <!-- Card 1 -->
+        <div class="carousel-card active w-full md:w-3/4 mx-auto">
+          <div class="flex flex-col md:flex-row items-center bg-white rounded-xl shadow-lg overflow-hidden">
+            <div class="w-full md:w-1/2 p-6 md:p-8">
+              <h3 class="text-2xl md:text-3xl font-bold mb-4">Efficiency</h3>
+              <p class="text-gray-600 text-sm md:text-base mb-6">Let AI handle repetitive tasks while you focus on what matters most - your students. Create lesson plans, generate worksheets, and grade assignments faster than ever.</p>
+              <div class="flex items-center text-sm md:text-base">
+                <span class="text-yellow-500 mr-2">✓</span> Automated grading
+                <span class="text-yellow-500 mx-2">✓</span> Quick feedback
+                <span class="text-yellow-500 mx-2">✓</span> Smart planning
+              </div>
+            </div>
+            <div class="w-full md:w-1/2">
+              <img src="../images/why1.png" alt="Efficiency with AI" class="w-full h-48 md:h-72 object-cover">
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="carousel-card w-full md:w-3/4 mx-auto">
+          <div class="flex flex-col md:flex-row items-center bg-white rounded-xl shadow-lg overflow-hidden">
+            <div class="w-full md:w-1/2">
+              <img src="../images/why2.png" alt="Smarter Planning" class="w-full h-48 md:h-72 object-cover">
+            </div>
+            <div class="w-full md:w-1/2 p-6 md:p-8">
+              <h3 class="text-2xl md:text-3xl font-bold mb-4">Smarter Planning</h3>
+              <p class="text-gray-600 text-sm md:text-base mb-6">Design engaging lessons with AI-powered tools. Get creative ideas, personalized content, and interactive materials tailored to your students' needs.</p>
+              <div class="flex items-center text-sm md:text-base">
+                <span class="text-yellow-500 mr-2">✓</span> Personalized content
+                <span class="text-yellow-500 mx-2">✓</span> Creative ideas
+                <span class="text-yellow-500 mx-2">✓</span> Interactive materials
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="carousel-card w-full md:w-3/4 mx-auto">
+          <div class="flex flex-col md:flex-row items-center bg-white rounded-xl shadow-lg overflow-hidden">
+            <div class="w-full md:w-1/2 p-6 md:p-8">
+              <h3 class="text-2xl md:text-3xl font-bold mb-4">Grow Your Skills</h3>
+              <p class="text-gray-600 text-sm md:text-base mb-6">Stay ahead in education with AI-enhanced professional development. Learn new teaching strategies, explore innovative tools, and build future-ready skills.</p>
+              <div class="flex items-center text-sm md:text-base">
+                <span class="text-yellow-500 mr-2">✓</span> Modern techniques
+                <span class="text-yellow-500 mx-2">✓</span> Continuous learning
+                <span class="text-yellow-500 mx-2">✓</span> Tech integration
+              </div>
+            </div>
+            <div class="w-full md:w-1/2">
+              <img src="../images/why3.png" alt="Grow Your Skills" class="w-full h-48 md:h-72 object-cover">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="arrow arrow-right absolute top-1/2 transform -translate-y-1/2 text-xl md:text-2xl bg-black text-white w-8 md:w-10 h-8 md:h-10 flex items-center justify-center rounded-full cursor-pointer z-10 right-2 md:right-32" onclick="nextCard('why')">&#8594;</div>
+    </div>
+  </div>
+</section>
+
+<!-- Subscribe Section -->
+<section class="subscribe py-20 md:py-32 relative overflow-hidden bg-white">
+  <div class="max-w-7xl mx-auto px-4 md:px-8">
+    <div class="max-w-3xl mx-auto text-center">
+      <span class="inline-block custom-bg text-black px-4 py-2 rounded-full text-sm font-semibold mb-6">
+        Join Our Community
+      </span>
+      
+      <h2 class="text-3xl md:text-5xl font-bold text-gray-900 mb-6">
+        Get Free Teaching Resources Every Month
+      </h2>
+      
+      <p class="text-gray-600 text-lg md:text-xl mb-8 max-w-2xl mx-auto">
+        Subscribe to receive AI teaching tips, lesson plans, and exclusive materials directly in your inbox.
+      </p>
+
+      <!-- Benefits List -->
+      <div class="grid md:grid-cols-3 gap-6 mb-12 text-left">
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0">
+            <span class="flex items-center justify-center w-8 h-8 rounded-full bg-yellow-100 text-yellow-700">✓</span>
+          </div>
+          <div>
+            <h3 class="text-gray-900 font-semibold mb-1">Monthly Resources</h3>
+            <p class="text-gray-600 text-sm">Curated teaching materials and AI tools</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0">
+            <span class="flex items-center justify-center w-8 h-8 rounded-full bg-yellow-100 text-yellow-700">✓</span>
+          </div>
+          <div>
+            <h3 class="text-gray-900 font-semibold mb-1">Early Access</h3>
+            <p class="text-gray-600 text-sm">Be the first to try new features</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-4">
+          <div class="flex-shrink-0">
+            <span class="flex items-center justify-center w-8 h-8 rounded-full bg-yellow-100 text-yellow-700">✓</span>
+          </div>
+          <div>
+            <h3 class="text-gray-900 font-semibold mb-1">Community Support</h3>
+            <p class="text-gray-600 text-sm">Join our teaching community</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Subscription Form -->
+      <form id="subscribe-form" class="max-w-lg mx-auto" action="https://formspree.io/f/your-formspree-id" method="POST">
+        <div class="flex flex-col md:flex-row gap-4">
+          <div class="flex-grow">
+            <div class="relative">
+              <input 
+                type="email" 
+                name="email" 
+                placeholder="    Enter your email" 
+                required
+                class="w-full px-6 py-4 bg-gray-50 border border-gray-200 rounded-full text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent"
+              >
+              <div class="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="px-8 py-4 bg-black text-white rounded-full font-bold hover:transform hover:scale-105 transition-all duration-300 flex items-center justify-center">
+            Subscribe Now
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+            </svg>
+          </button>
+        </div>
+        <p class="text-gray-500 text-sm mt-4">
+          🔒 We respect your privacy. Unsubscribe at any time.
+        </p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-gray-800 text-white py-8 md:py-12 px-4 md:px-8">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-8 md:mb-12">
+      <h3 class="text-xl md:text-2xl font-bold mb-4 md:mb-6">More Information</h3>
+      <p class="text-gray-400 text-sm md:text-base mb-6 md:mb-8">Stay updated with our latest learning tips and tools!</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8">
+      <div>
+        <h3 class="text-base md:text-lg font-semibold mb-3 md:mb-4">Joy Learning</h3>
+        <p class="text-gray-400 text-sm md:text-base">Resources for English, teaching, and lifelong learning.</p>
+      </div>
+      <div>
+        <h3 class="text-base md:text-lg font-semibold mb-3 md:mb-4">Quick Links</h3>
+        <ul class="space-y-2">
+          <li><a href="#" class="text-gray-400 hover:text-yellow-500 text-sm md:text-base">Home</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-yellow-500 text-sm md:text-base">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-base md:text-lg font-semibold mb-3 md:mb-4">Explore</h3>
+        <ul class="space-y-2">
+          <li><a href="https://www.xiaohongshu.com/user/profile/67f36760000000000d008455" class="text-gray-400 hover:text-yellow-500 text-sm md:text-base">Red Book</a></li>
+          <li><a href="https://space.bilibili.com/3546894768802257?spm_id_from=333.1007.0.0" class="text-gray-400 hover:text-yellow-500 text-sm md:text-base">Bilibili</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-base md:text-lg font-semibold mb-3 md:mb-4">Contact</h3>
+        <ul class="space-y-2">
+          <li class="flex items-center justify-center md:justify-start">
+            <i class="fas fa-envelope text-yellow-500 mr-2"></i>
+            <a href="mailto:joyzhu1020@gmail.com" class="text-gray-400 hover:text-yellow-500 text-sm md:text-base">joyzhu1020@gmail.com</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-gray-700 mt-6 md:mt-8 pt-6 md:pt-8 text-center text-gray-400">
+      <p class="text-sm md:text-base">&copy; 2025 Joy Learning. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+function nextCard(section) {
+  const container = document.getElementById(section + '-carousel');
+  const cards = container.querySelectorAll('.carousel-card');
+  let index = Array.from(cards).findIndex(card => card.classList.contains('active'));
+  cards[index].classList.remove('active');
+  index = (index + 1) % cards.length;
+  cards[index].classList.add('active');
+}
+
+function prevCard(section) {
+  const container = document.getElementById(section + '-carousel');
+  const cards = container.querySelectorAll('.carousel-card');
+  let index = Array.from(cards).findIndex(card => card.classList.contains('active'));
+  cards[index].classList.remove('active');
+  index = (index - 1 + cards.length) % cards.length;
+  cards[index].classList.add('active');
+}
+
+// Add mobile menu toggle function
+function toggleMobileMenu() {
+  const mobileMenu = document.getElementById('mobile-menu');
+  mobileMenu.classList.toggle('active');
+}
+</script>
+
+<!-- Cloudflare Web Analytics -->
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "815acc2e10b44841a90f1ff1da46d26b"}'></script>
+<!-- End Cloudflare Web Analytics -->
+</body>
+</html>

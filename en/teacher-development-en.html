@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Teacher Development Program - Joy AI for Teachers</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <style>
+        .custom-bg {
+            background-color: #ffd368;
+        }
+        .highlight-text {
+            color: #ffd368;
+            font-weight: 600;
+        }
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2rem;
+        }
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: #ffd368;
+        }
+        /* Mobile menu styles */
+        .mobile-menu {
+            display: none;
+        }
+        .mobile-menu.active {
+            display: block;
+        }
+        @media (max-width: 768px) {
+            .desktop-menu {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-white text-gray-900 font-sans">
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="text-lg md:text-xl font-bold">
+                    <a href="../index-en.html" class="hover:text-yellow-500">Joy AI for Teachers</a>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-4">
+                    <a href="ai-home-en.html" class="font-bold text-base hover:text-yellow-500">Home</a>
+                    <a href="ai-about-en.html" class="font-bold text-base hover:text-yellow-500">About</a>
+                    <a href="ai-resources-en.html" class="font-bold text-base hover:text-yellow-500">Free Resources</a>
+                    <a href="ai-contact-en.html" class="font-bold text-base hover:text-yellow-500">Contact</a>
+                </nav>
+
+                <!-- Mobile menu button -->
+                <button class="md:hidden p-2" onclick="toggleMobileMenu()">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Navigation -->
+            <div id="mobile-menu" class="mobile-menu md:hidden pb-4 hidden">
+                <a href="ai-home-en.html" class="block py-2 px-4 text-sm font-bold hover:bg-gray-100">Home</a>
+                <a href="ai-about-en.html" class="block py-2 px-4 text-sm font-bold hover:bg-gray-100">About</a>
+                <a href="ai-resources-en.html" class="block py-2 px-4 text-sm font-bold hover:bg-gray-100">Free Resources</a>
+                <a href="ai-contact-en.html" class="block py-2 px-4 text-sm font-bold hover:bg-gray-100">Contact</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <section class="py-16 md:py-24">
+            <div class="max-w-4xl mx-auto px-4">
+                <!-- Title Section -->
+                <div class="text-center mb-16">
+                    <h1 class="text-3xl md:text-4xl font-bold mb-4">
+                        Teachers are the Foundation of Education, Talent is the Core Resource of Schools
+                    </h1>
+                    <p class="text-xl md:text-2xl text-gray-600">
+                        Customized AI-Powered Teacher Development, <span class="highlight-text">Leading Schools into the Future of Education</span>
+                    </p>
+                </div>
+
+                <!-- Introduction -->
+                <div class="mb-16">
+                    <p class="text-lg text-gray-700 leading-relaxed mb-6">
+                        In modern education, teachers are a school's most valuable asset. Their growth directly determines the quality of education and the pace of school development. In this rapidly changing era, educational competition is no longer just between schools, but between teachers.
+                    </p>
+                    <p class="text-lg text-gray-700 leading-relaxed">
+                        The solution: Through precise, customized teacher development programs combined with AI technology, we provide tailored growth paths for teachers.
+                    </p>
+                </div>
+
+                <!-- Core Advantages -->
+                <div class="mb-16">
+                    <h2 class="section-title text-2xl font-bold">Why Choose Our Customized AI Teacher Development Program?</h2>
+                    <ul class="space-y-6 mt-8">
+                        <li>
+                            <h3 class="text-xl font-semibold mb-2">Tailored Professional Development Planning</h3>
+                            <p class="text-gray-700">Every teacher's growth path is unique. Through in-depth communication with schools and precise analysis of teachers' actual needs, we design customized professional development plans. From teaching skills to career goals, from short-term capability enhancement to long-term development, we ensure each teacher can grow rapidly on their most suitable path.</p>
+                        </li>
+                        <li>
+                            <h3 class="text-xl font-semibold mb-2">AI-Empowered Personalized Growth</h3>
+                            <p class="text-gray-700">With AI support, our courses go beyond the "one-size-fits-all" approach, offering personalized learning paths based on each teacher's background, skills, and development needs. AI technology tracks learning progress in real-time and provides intelligent learning recommendations.</p>
+                        </li>
+                        <li>
+                            <h3 class="text-xl font-semibold mb-2">Comprehensive Skill Coverage</h3>
+                            <p class="text-gray-700">Our course content covers multiple areas including instructional design, classroom management, creative tools, and micro-lesson animation production, enhancing both professional skills and overall competence. Through AI tools, we help teachers quickly transform these skills into practical teaching outcomes.</p>
+                        </li>
+                        <li>
+                            <h3 class="text-xl font-semibold mb-2">Sustained Support for Continuous Progress</h3>
+                            <p class="text-gray-700">Beyond course training, we provide long-term follow-up, online guidance, and support to ensure teachers can continuously apply and optimize what they've learned in their actual work. Teacher growth doesn't end with the course; it's an ongoing journey of progress.</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Vision Section -->
+                <div class="mb-16">
+                    <h2 class="section-title text-2xl font-bold">Teacher Development: From Following Trends to Leading Them</h2>
+                    <div class="bg-gray-50 p-6 rounded-lg mt-8">
+                        <p class="text-gray-700 mb-4">A continuously growing teaching team brings higher student achievement, stronger educational influence, and enhanced school reputation. AI-empowered teacher growth will bring your school unparalleled competitive advantages.</p>
+                        <p class="text-gray-700">The future of education is AI-driven, and teacher development will no longer be limited to traditional learning models. We customize AI tool-supported growth paths for your school, enabling your education team to not just keep pace with the times but lead educational innovation.</p>
+                    </div>
+                </div>
+
+                <!-- CTA Section -->
+                <div class="text-center bg-gray-50 p-12 rounded-2xl">
+                    <h2 class="text-3xl font-bold mb-6">Act Now, Lead Educational Change</h2>
+                    <p class="text-xl text-gray-600 mb-8">
+                        Get your exclusive AI teacher development plan and become a leader in educational transformation
+                    </p>
+                    <a href="ai-contact-en.html" class="inline-block custom-bg text-black px-12 py-4 rounded-full text-lg font-bold hover:bg-yellow-400 transition-all duration-300 transform hover:scale-105 hover:shadow-lg">
+                        Contact Us
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 md:py-12 px-4 md:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-8 md:mb-12">
+                <h3 class="text-xl md:text-2xl font-bold mb-4 md:mb-6">More Information</h3>
+                <p class="text-gray-400 text-sm md:text-base mb-6 md:mb-8">Follow us for the latest teaching tips and tools!</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8">
+                <div>
+                    <h3 class="text-base md:text-lg font-semibold mb-3 md:mb-4">Joy Learning</h3>
+                    <p class="text-gray-400 text-sm md:text-base">Resources for English, teaching, and lifelong learning.</p>
+                </div>
+                <div>
+                    <h3 class="text-base md:text-lg font-semibold mb-3 md:mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="ai-home-en.html" class="text-gray-400 hover:text-yellow-500 text-sm md:text-base">Home</a></li>
+                        <li><a href="ai-contact-en.html" class="text-gray-400 hover:text-yellow-500 text-sm md:text-base">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-base md:text-lg font-semibold mb-3 md:mb-4">Explore</h3>
+                    <ul class="space-y-2">
+                        <li><a href="https://www.xiaohongshu.com/user/profile/67f36760000000000d008455" class="text-gray-400 hover:text-yellow-500 text-sm md:text-base">Red Book</a></li>
+                        <li><a href="https://space.bilibili.com/3546894768802257?spm_id_from=333.1007.0.0" class="text-gray-400 hover:text-yellow-500 text-sm md:text-base">Bilibili</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-base md:text-lg font-semibold mb-3 md:mb-4">Contact</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center justify-center md:justify-start">
+                            <i class="fas fa-envelope text-yellow-500 mr-2"></i>
+                            <a href="mailto:joyzhu1020@gmail.com" class="text-gray-400 hover:text-yellow-500 text-sm md:text-base">joyzhu1020@gmail.com</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-6 md:mt-8 pt-6 md:pt-8 text-center text-gray-400">
+                <p class="text-sm md:text-base">&copy; 2025 Joy Learning. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        }
+    </script>
+
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "815acc2e10b44841a90f1ff1da46d26b"}'></script>
+    <!-- End Cloudflare Web Analytics -->
+</body>
+</html> 

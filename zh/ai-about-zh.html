@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>关于Joy - AI教育探索者</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <style>
+    /* 导入字体 */
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap');
+    @font-face {
+      font-family: 'OPPO Sans';
+      src: url('https://cdn.jsdelivr.net/gh/wordshub/free-font/assets/font/OPPOSans/OPPOSans-R.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'OPPO Sans';
+      src: url('https://cdn.jsdelivr.net/gh/wordshub/free-font/assets/font/OPPOSans/OPPOSans-B.ttf') format('truetype');
+      font-weight: bold;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'LXGWWenKai';
+      src: url('https://cdn.jsdelivr.net/gh/chawyehsu/lxgw-wenkai-webfont@latest/dist/LXGWWenKai-Regular.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
+    
+    /* 基础字体设置 */
+    body {
+      font-family: 'LXGWWenKai', -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+    }
+
+    /* 标题字体特殊样式 */
+    h1, h2, h3, .section-title, .font-bold {
+      font-family: 'OPPO Sans', 'Noto Sans SC', sans-serif;
+      letter-spacing: -0.02em;
+    }
+
+    /* 副标题样式 */
+    .subtitle, nav a, .text-lg {
+      font-family: 'Noto Sans SC', 'OPPO Sans', sans-serif;
+      letter-spacing: 0.01em;
+    }
+
+    /* 正文文本样式优化 */
+    p, .text-base, .text-sm {
+      font-family: 'LXGWWenKai', 'Noto Sans SC', sans-serif;
+      line-height: 1.8;
+      letter-spacing: 0.02em;
+    }
+
+    .custom-bg {
+      background-color: #ffd368;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .float-animation {
+      animation: float 3s ease-in-out infinite;
+    }
+  </style>
+</head>
+
+<body class="bg-white text-gray-900 font-sans">
+
+<!-- Header -->
+<header class="bg-white shadow-md sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="flex justify-between items-center h-16">
+      <!-- Logo -->
+      <div class="text-lg md:text-xl font-bold">
+        <a href="../index-ch.html" class="hover:text-yellow-500">Joy AI助力教师</a>
+      </div>
+      
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex space-x-4">
+        <a href="ai-home-zh.html" class="font-bold text-base hover:text-yellow-500">首页</a>
+        <a href="ai-about-zh.html" class="font-bold text-base text-yellow-500">关于我们</a>
+        <a href="ai-resources-zh.html" class="font-bold text-base hover:text-yellow-500">免费资源</a>
+        <a href="ai-contact-zh.html" class="font-bold text-base hover:text-yellow-500">联系我们</a>
+      </nav>
+
+      <!-- Mobile menu button -->
+      <button class="md:hidden p-2" onclick="toggleMobileMenu()">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <div id="mobile-menu" class="mobile-menu md:hidden pb-4 hidden">
+      <a href="ai-home-zh.html" class="block py-2 px-4 text-sm font-bold hover:bg-gray-100">首页</a>
+      <a href="ai-about-zh.html" class="block py-2 px-4 text-sm font-bold bg-gray-100">关于我们</a>
+      <a href="ai-resources-zh.html" class="block py-2 px-4 text-sm font-bold hover:bg-gray-100">免费资源</a>
+      <a href="ai-contact-zh.html" class="block py-2 px-4 text-sm font-bold hover:bg-gray-100">联系我们</a>
+    </div>
+  </div>
+</header>
+
+<!-- Hero Section -->
+<section class="py-16 md:py-24 overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 md:px-8">
+    <div class="grid md:grid-cols-2 gap-8 items-center">
+      <!-- Text Content -->
+      <div class="text-left md:pr-8">
+        <div class="inline-block custom-bg rounded-full px-4 py-1 text-sm md:text-base text-black mb-6">
+          AI教育探索者 & 教师培训师
+        </div>
+        <h1 class="text-4xl md:text-6xl font-black mb-6 leading-tight">
+          用<span class="text-yellow-400">AI技术</span>减负增效
+        </h1>
+        <p class="text-gray-600 text-lg md:text-xl mb-8 leading-relaxed">
+          凭借13年教师培训经验与前沿AI整合教育领域，帮助教育工作者转变教学方法，拥抱未来教育。
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href="ai-contact-zh.html" class="bg-black text-white px-5 py-2 rounded-full text-sm md:text-base font-bold hover:transform hover:scale-105 transition-transform inline-flex items-center">
+            预约咨询
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+      
+      <!-- Hero Image -->
+      <div class="relative">
+        <div class="absolute -top-10 -right-10 w-40 h-40 bg-yellow-400 rounded-full opacity-50 blur-3xl"></div>
+        <div class="relative z-10 transform hover:-rotate-2 transition-transform duration-300">
+          <img src="../images/joyteach.png" alt="Joy教学" class="rounded-3xl shadow-2xl w-full">
+          <div class="absolute -bottom-6 -right-6 bg-white p-4 rounded-2xl shadow-lg transform rotate-3">
+            <p class="text-sm md:text-base font-medium">AI赋能教师 🚀</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Experience Showcase -->
+<section class="py-16 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 md:px-8">
+    <div class="grid md:grid-cols-3 gap-8">
+      <!-- AI Education Expert -->
+      <div class="bg-white rounded-2xl shadow-lg p-8 transform hover:-translate-y-2 transition-transform">
+        <div class="w-16 h-16 custom-bg rounded-full flex items-center justify-center mb-6">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold mb-4">AI教育探索者</h3>
+        <p class="text-gray-600">不断探索AI工具在教学中的应用，帮助教师提高教学效果和学生参与度。</p>
+      </div>
+
+      <!-- Teaching Experience -->
+      <div class="bg-white rounded-2xl shadow-lg p-8 transform hover:-translate-y-2 transition-transform">
+        <div class="w-16 h-16 custom-bg rounded-full flex items-center justify-center mb-6">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold mb-4">13年教师培训经验</h3>
+        <p class="text-gray-600">丰富的教学和教师培训经验，分享实用见解和高效方法。</p>
+      </div>
+
+      <!-- EdTech Integration -->
+      <div class="bg-white rounded-2xl shadow-lg p-8 transform hover:-translate-y-2 transition-transform">
+        <div class="w-16 h-16 custom-bg rounded-full flex items-center justify-center mb-6">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold mb-4">AI教育工具整合</h3>
+        <p class="text-gray-600">将AI技术融入教学实践，提供系统化工具使用视频教程，助力教师探索AI教学。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services Section -->
+<section class="py-16 md:py-24">
+  <div class="max-w-7xl mx-auto px-4 md:px-8">
+    <h2 class="text-3xl md:text-5xl font-bold text-center mb-16">服务项目</h2>
+
+    <!-- School Workshops -->
+    <div class="grid md:grid-cols-2 gap-8 mb-20 items-center">
+      <div class="relative max-w-lg mx-auto md:mx-0">
+        <img src="../images/about1.png" alt="学校工作坊" class="rounded-2xl shadow-lg w-full object-cover h-[300px]">
+        <div class="absolute -bottom-4 -right-4 bg-white p-3 rounded-xl shadow-md">
+          <span class="text-sm font-medium">互动课程 🎯</span>
+        </div>
+      </div>
+      <div class="md:pl-8">
+        <h3 class="text-2xl md:text-3xl font-bold mb-4">学校讲座与工作坊</h3>
+        <p class="text-gray-600 mb-6">定制化校本培训课程，帮助您的教师团队掌握AI工具并有效地将其应用到教学实践中。</p>
+        <ul class="space-y-3 mb-8">
+          <li class="flex items-center">
+            <span class="w-6 h-6 custom-bg rounded-full flex items-center justify-center mr-3">✓</span>
+            <span>AI基础理论与工具实践培训</span>
+          </li>
+          <li class="flex items-center">
+            <span class="w-6 h-6 custom-bg rounded-full flex items-center justify-center mr-3">✓</span>
+            <span>实用实施策略</span>
+          </li>
+          <li class="flex items-center">
+            <span class="w-6 h-6 custom-bg rounded-full flex items-center justify-center mr-3">✓</span>
+            <span>根据学校需求定制</span>
+          </li>
+        </ul>
+        <a href="school-workshop-zh.html" class="inline-flex items-center text-black font-bold hover:text-yellow-500 transition-colors">
+          了解更多
+          <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- AI Training -->
+    <div class="grid md:grid-cols-2 gap-8 mb-20 items-center">
+      <div class="md:pr-8 order-2 md:order-1">
+        <h3 class="text-2xl md:text-3xl font-bold mb-4">AI工具精通系统在线课程</h3>
+        <p class="text-gray-600 mb-6">全面的AI工具使用系统化在线课程，使教师能够在日常教学中有效地运用AI工具。</p>
+        <ul class="space-y-3 mb-8">
+          <li class="flex items-center">
+            <span class="w-6 h-6 custom-bg rounded-full flex items-center justify-center mr-3">✓</span>
+            <span>AI工具精通工作坊</span>
+          </li>
+          <li class="flex items-center">
+            <span class="w-6 h-6 custom-bg rounded-full flex items-center justify-center mr-3">✓</span>
+            <span>个性化指导</span>
+          </li>
+          <li class="flex items-center">
+            <span class="w-6 h-6 custom-bg rounded-full flex items-center justify-center mr-3">✓</span>
+            <span>持续支持</span>
+          </li>
+        </ul>
+        <a href="ai-train-zh.html" class="inline-flex items-center text-black font-bold hover:text-yellow-500 transition-colors">
+          了解更多
+          <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+          </svg>
+        </a>
+      </div>
+      <div class="relative max-w-lg mx-auto md:mx-0 order-1 md:order-2">
+        <img src="../images/about2.png" alt="AI培训" class="rounded-2xl shadow-lg w-full object-cover h-[300px]">
+        <div class="absolute -bottom-4 -left-4 bg-white p-3 rounded-xl shadow-md">
+          <span class="text-sm font-medium">专业指导 🎓</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Teacher Development -->
+    <div class="grid md:grid-cols-2 gap-8 items-center">
+      <div class="relative max-w-lg mx-auto md:mx-0">
+        <img src="../images/about3.png" alt="教师发展" class="rounded-2xl shadow-lg w-full object-cover h-[300px]">
+        <div class="absolute -bottom-4 -right-4 bg-white p-3 rounded-xl shadow-md">
+          <span class="text-sm font-medium">专业成长 🌱</span>
+        </div>
+      </div>
+      <div class="md:pl-8">
+        <h3 class="text-2xl md:text-3xl font-bold mb-4">AI助力教师发展</h3>
+        <p class="text-gray-600 mb-6">AI助力教师发展，提供全面的专业发展计划，旨在提升教学技能和技术能力。</p>
+        <ul class="space-y-3 mb-8">
+          <li class="flex items-center">
+            <span class="w-6 h-6 custom-bg rounded-full flex items-center justify-center mr-3">✓</span>
+            <span>教师发展职业规划</span>
+          </li>
+          <li class="flex items-center">
+            <span class="w-6 h-6 custom-bg rounded-full flex items-center justify-center mr-3">✓</span>
+            <span>AI支持下的专业成长</span>
+          </li>
+          <li class="flex items-center">
+            <span class="w-6 h-6 custom-bg rounded-full flex items-center justify-center mr-3">✓</span>
+            <span>AI工具辅助教师个人学习与发展</span>
+          </li>
+        </ul>
+        <a href="teacher-development-zh.html" class="inline-flex items-center text-black font-bold hover:text-yellow-500 transition-colors">
+          了解更多
+          <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Success Stories -->
+<section class="py-16 md:py-24 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 md:px-8">
+    <h2 class="text-3xl md:text-5xl font-bold text-center mb-16">教师评价</h2>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Story 1 -->
+      <div class="bg-white rounded-2xl shadow-lg p-8">
+        <div class="mb-6">
+          <h4 class="font-bold text-lg">陈老师</h4>
+          <p class="text-sm text-gray-500">初中英语教师</p>
+        </div>
+        <p class="text-gray-600">"Joy的工作坊改变了我们教师对课堂技术的运用方式。她分享的实用策略和工具现在已成为我们日常教学中不可或缺的一部分。"</p>
+      </div>
+
+      <!-- Story 2 -->
+      <div class="bg-white rounded-2xl shadow-lg p-8">
+        <div class="mb-6">
+          <h4 class="font-bold text-lg">张老师</h4>
+          <p class="text-sm text-gray-500">高中数学教师</p>
+        </div>
+        <p class="text-gray-600">"Joy提供的AI整合培训显著提高了我们的教学效率。我们的学生更加投入，教师们在使用技术方面也更有信心。"</p>
+      </div>
+
+      <!-- Story 3 -->
+      <div class="bg-white rounded-2xl shadow-lg p-8">
+        <div class="mb-6">
+          <h4 class="font-bold text-lg">王校长</h4>
+          <p class="text-sm text-gray-500">初中校长</p>
+        </div>
+        <p class="text-gray-600">"Joy在教学和AI技术方面的专业知识非常宝贵。她的培训课程实用、有趣，而且可以立即应用到课堂中。"</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-gray-800 text-white py-8 md:py-12 px-4 md:px-8">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-8 md:mb-12">
+      <h3 class="text-xl md:text-2xl font-bold mb-4 md:mb-6">更多信息</h3>
+      <p class="text-gray-400 text-sm md:text-base mb-6 md:mb-8">及时了解我们最新的学习技巧和工具！</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8">
+      <div>
+        <h3 class="text-base md:text-lg font-semibold mb-3 md:mb-4">Joy Learning</h3>
+        <p class="text-gray-400 text-sm md:text-base">英语、教学和终身学习的资源平台。</p>
+      </div>
+      <div>
+        <h3 class="text-base md:text-lg font-semibold mb-3 md:mb-4">快速链接</h3>
+        <ul class="space-y-2">
+          <li><a href="#" class="text-gray-400 hover:text-yellow-500 text-sm md:text-base">首页</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-yellow-500 text-sm md:text-base">联系我们</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-base md:text-lg font-semibold mb-3 md:mb-4">探索</h3>
+        <ul class="space-y-2">
+          <li><a href="https://www.xiaohongshu.com/user/profile/67f36760000000000d008455" class="text-gray-400 hover:text-yellow-500 text-sm md:text-base">小红书</a></li>
+          <li><a href="https://space.bilibili.com/3546894768802257?spm_id_from=333.1007.0.0" class="text-gray-400 hover:text-yellow-500 text-sm md:text-base">Bilibili</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-base md:text-lg font-semibold mb-3 md:mb-4">联系方式</h3>
+        <ul class="space-y-2">
+          <li class="flex items-center justify-center md:justify-start">
+            <i class="fas fa-envelope text-yellow-500 mr-2"></i>
+            <a href="mailto:joyzhu1020@gmail.com" class="text-gray-400 hover:text-yellow-500 text-sm md:text-base">joyzhu1020@gmail.com</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-gray-700 mt-6 md:mt-8 pt-6 md:pt-8 text-center text-gray-400">
+      <p class="text-sm md:text-base">&copy; 2025 Joy Learning. 保留所有权利。</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleMobileMenu() {
+  const mobileMenu = document.getElementById('mobile-menu');
+  mobileMenu.classList.toggle('hidden');
+}
+</script>
+
+<!-- Cloudflare Web Analytics -->
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "815acc2e10b44841a90f1ff1da46d26b"}'></script>
+<!-- End Cloudflare Web Analytics -->
+</body>
+</html> 

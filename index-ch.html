@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Joy Learning</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+</head>
+
+<body class="bg-white text-gray-900 font-sans">
+  <!-- Navbar -->
+  <nav class="flex justify-between items-center p-6 shadow-md sticky top-0 bg-white z-50">
+    <h1 class="text-2xl font-bold">Joy Learning</h1>
+    <div class="flex items-center space-x-4">
+      <!-- English 按钮 -->
+      <a href="index-en.html"
+        class="bg-black text-white px-4 py-1.5 rounded-full text-sm font-medium hover:bg-gray-800 transition">
+        English
+      </a>
+
+      <!-- 中文按钮 -->
+      <span class="bg-yellow-400 text-black px-4 py-1.5 rounded-full text-sm font-medium">
+        中文
+      </span>
+    </div>
+  </nav>
+
+  <section class="text-center py-8">
+    <p class="text-7xl text-gray-600 italic">学无止境，成长不息，活出精彩。</p>
+  </section>
+
+  <!-- Hero Section with 3 Hand-drawn Image Links -->
+  <section class="py-20 px-6">
+    <div class="max-w-5xl mx-auto flex flex-col items-center space-y-12">
+  
+      <!-- 第一行：中间一张图 -->
+      <a href="zh/ai-home-zh.html" class="group relative block">
+        <img src="./images/hero-ai.png" class="hover-image w-60 md:w-68 cursor-pointer transition transform hover:scale-105" />
+        <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white opacity-0 group-hover:opacity-100 transition">JOY AI助力教师</div>
+      </a>
+  
+      <!-- 第二行：左右两张图偏移错位 -->
+      <div class="flex justify-between w-full px-8">
+        <div class="group relative transform -translate-y-6">
+          <img src="./images/hero-ielts.png" class="hover-image w-60 md:w-68 cursor-pointer transition transform hover:scale-105" />
+          <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white opacity-0 group-hover:opacity-100 transition">即将上线 JOY IELTS</div>
+        </div>
+        <div class="group relative transform translate-y-4">
+          <img src="./images/hero-read.png" class="hover-image w-60 md:w-68 cursor-pointer transition transform hover:scale-105" />
+          <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white opacity-0 group-hover:opacity-100 transition">即将上线 JOY书单分享</div>
+        </div>
+      </div>
+  
+    </div>
+  </section>
+  
+
+
+
+  <footer class="bg-gray-800 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h3 class="text-2xl font-bold mb-6">更多信息</h3>
+        <p class="text-gray-400 mb-8">获取最新的学习技巧和工具！</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div>
+          <h3 class="text-lg font-semibold mb-4">Joy Learning</h3>
+          <p class="text-gray-400">英语学习、教学资源和终身学习的平台。</p>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold mb-4">快速链接</h3>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-400 hover:text-yellow-500">首页</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-yellow-500">联系我们</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold mb-4">探索</h3>
+          <ul class="space-y-2">
+            <li><a href="https://www.xiaohongshu.com/user/profile/67f36760000000000d008455" class="text-gray-400 hover:text-yellow-500">小红书</a></li>
+            <li><a href="https://space.bilibili.com/3546894768802257?spm_id_from=333.1007.0.0" class="text-gray-400 hover:text-yellow-500">Bilibili</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-lg font-semibold mb-4">联系方式</h3>
+          <ul class="space-y-2">
+            <li class="flex items-center">
+              <i class="fas fa-envelope text-yellow-500 mr-2"></i>
+              <a href="mailto:joyzhu1020@gmail.com" class="text-gray-400 hover:text-yellow-500">joyzhu1020@gmail.com</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+        <p>&copy; 2025 Joy Learning. 保留所有权利。</p>
+      </div>
+    </div>
+  </footer>
+
+<!-- 音频文件 -->
+<audio id="hoverSound" src="sounds/hover.wav" preload="auto"></audio>
+
+<!-- 图片元素 -->
+<img src="images/example.png" alt="示例图片" class="hover-image" />
+
+<!-- JavaScript -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const hoverSound = document.getElementById('hoverSound');
+    const hoverImages = document.querySelectorAll('.hover-image');
+    
+    // 确保声音已加载
+    hoverSound.load();
+    
+    // 添加一次点击事件监听，以满足浏览器的用户交互要求
+    document.addEventListener('click', function() {
+      // 静音播放然后立即暂停，为后续的自动播放做准备
+      hoverSound.volume = 0;
+      hoverSound.play().then(() => {
+        hoverSound.pause();
+        hoverSound.volume = 1;
+      }).catch(e => console.log('预加载音频失败:', e));
+    }, { once: true });
+    
+    hoverImages.forEach(img => {
+      img.addEventListener('mouseenter', () => {
+        hoverSound.currentTime = 0;
+        try {
+          const playPromise = hoverSound.play();
+          if (playPromise !== undefined) {
+            playPromise.catch(error => {
+              console.log('播放音频被浏览器阻止:', error);
+            });
+          }
+        } catch (e) {
+          console.log('音频播放错误:', e);
+        }
+      });
+    });
+    
+    // 确保鼠标样式为指针
+    const groupDivs = document.querySelectorAll('.group');
+    groupDivs.forEach(div => {
+      div.style.cursor = 'pointer';
+    });
+  });
+</script>
+
+<!-- Cloudflare Web Analytics -->
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "815acc2e10b44841a90f1ff1da46d26b"}'></script>
+<!-- End Cloudflare Web Analytics -->
+</body>
+</html>
