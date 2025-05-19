@@ -146,17 +146,18 @@
           <div class="card mb-8">
             <h2 class="text-xl font-semibold mb-4">下载资源</h2>
             
-            <!-- PDF Download -->
+            <!-- Prompt Template Download -->
             <div class="mb-4">
-              <h3 class="font-medium mb-2">教学指南</h3>
-              <p class="text-sm text-[#39353f] text-opacity-70 mb-4">下载详细的PDF教学指南</p>
-              <a id="pdfDownload" href="#" class="btn-primary block w-full mb-2">下载 PDF</a>
-              <button id="pdfPreviewBtn" class="btn-secondary block w-full">预览 PDF</button>
+              <h3 class="font-medium mb-2">提示词模板</h3>
+              <p class="text-sm text-[#39353f] text-opacity-70 mb-4">下载PDF格式的提示词模板</p>
+              <a id="promptDownload" href="#" class="btn-primary block w-full">下载提示词模板</a>
             </div>
 
-            <!-- PDF Preview Container -->
-            <div id="pdfPreviewContainer" class="pdf-preview">
-              <div id="pdfViewer" class="w-full h-full"></div>
+            <!-- Game Template Download -->
+            <div class="mb-4">
+              <h3 class="font-medium mb-2">游戏模板</h3>
+              <p class="text-sm text-[#39353f] text-opacity-70 mb-4">下载TXT格式的游戏模板</p>
+              <a id="gameDownload" href="#" class="btn-primary block w-full">下载游戏模板</a>
             </div>
           </div>
           
@@ -176,9 +177,6 @@
       © 2025 Joy AI for Teachers. All rights reserved.
     </footer>
 
-    <!-- PDF.js Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.4.120/build/pdf.min.js"></script>
-    
     <!-- Resource Data -->
     <script src="../js/resource-data.js"></script>
     
@@ -191,61 +189,50 @@
         // Load resource data
         const resource = resourceDetails[resourceId];
         if (!resource) {
-          console.error('Resource not found');
+          window.location.href = 'ai-resources-zh.html';
           return;
         }
 
-        // Function to convert video URL to embed URL
-        function getEmbedUrl(url) {
-          if (url.includes('bilibili.com')) {
-            // If the URL is already in embed format, return it as is
-            if (url.includes('player.bilibili.com/player.html')) {
-              return url;
-            }
-            // Extract BV ID from Bilibili URL
-            const bvid = url.match(/BV\w+/)?.[0];
-            if (bvid) {
-              return `https://player.bilibili.com/player.html?bvid=${bvid}&high_quality=1`;
-            }
-          } else if (url.includes('xiaohongshu.com')) {
-            // Extract note ID from Xiaohongshu URL
-            const noteId = url.split('/').pop();
-            if (noteId) {
-              return `https://www.xiaohongshu.com/embed/${noteId}`;
-            }
-          }
-          return url;
-        }
-        
-        // Update page content
-        document.title = `${resource.title} - Joy Learning`;
+        // Set page content
         document.getElementById('resourceTitle').textContent = resource.title;
         document.getElementById('resourceDescription').textContent = resource.description;
         document.getElementById('resourceIntroduction').textContent = resource.introduction;
-        
-        // Set video source
-        const videoFrame = document.getElementById('videoFrame');
-        if (resource.videoUrl) {
-          videoFrame.src = getEmbedUrl(resource.videoUrl);
+        document.getElementById('videoFrame').src = resource.videoUrl;
+
+        // Set up prompt template download
+        const promptDownload = document.getElementById('promptDownload');
+        if (promptDownload) {
+          promptDownload.addEventListener('click', (e) => {
+            e.preventDefault();
+            const promptPath = '../' + resource.promptTemplate;
+            window.open(promptPath, '_blank');
+          });
         }
-        
-        // Set PDF download link
-        const pdfDownload = document.getElementById('pdfDownload');
-        const pdfPreviewBtn = document.getElementById('pdfPreviewBtn');
-        if (resource.pdfGuide) {
-          pdfDownload.href = resource.pdfGuide;
-          pdfPreviewBtn.style.display = 'block';
-        } else {
-          pdfDownload.style.display = 'none';
-          pdfPreviewBtn.style.display = 'none';
+
+        // Set up game template download
+        const gameDownload = document.getElementById('gameDownload');
+        if (gameDownload) {
+          gameDownload.addEventListener('click', (e) => {
+            e.preventDefault();
+            const gamePath = '../' + resource.gameTemplate;
+            window.open(gamePath, '_blank');
+          });
         }
-        
+
+        // Hide buttons if resources are not available
+        if (!resource.promptTemplate) {
+          promptDownload.style.display = 'none';
+        }
+        if (!resource.gameTemplate) {
+          gameDownload.style.display = 'none';
+        }
+
         // Fill related resources
         const relatedList = document.getElementById('relatedResourcesList');
         resource.relatedResources.forEach(related => {
           const li = document.createElement('li');
           li.innerHTML = `
-            <a href="resource-detail-zh.html?id=${related.id}" class="block p-3 rounded-lg hover:bg-gray-50 transition">
+            <a href="resource-detail-zh.html?id=${related.id}" class="block hover:bg-gray-50 p-3 rounded-lg">
               <h3 class="font-medium text-[#39353f]">${related.title}</h3>
               <p class="text-sm text-[#39353f] text-opacity-70">${related.description}</p>
             </a>
@@ -253,38 +240,6 @@
           relatedList.appendChild(li);
         });
       });
-      
-      // Load PDF preview
-      function loadPDF(pdfUrl) {
-        pdfjsLib.getDocument(pdfUrl).promise.then(function(pdf) {
-          pdf.getPage(1).then(function(page) {
-            const canvas = document.createElement('canvas');
-            const viewer = document.getElementById('pdfViewer');
-            viewer.innerHTML = '';
-            viewer.appendChild(canvas);
-            
-            const scale = 1.5;
-            const viewport = page.getViewport({ scale: scale });
-            canvas.height = viewport.height;
-            canvas.width = viewport.width;
-            
-            const context = canvas.getContext('2d');
-            const renderContext = {
-              canvasContext: context,
-              viewport: viewport
-            };
-            
-            page.render(renderContext);
-          });
-        }).catch(function(error) {
-          console.error('Error loading PDF:', error);
-          document.getElementById('pdfViewer').innerHTML = '<p class="text-red-500 p-4">PDF 加载失败，请尝试直接下载</p>';
-        });
-      }
     </script>
-
-<!-- Cloudflare Web Analytics -->
-<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "815acc2e10b44841a90f1ff1da46d26b"}'></script>
-<!-- End Cloudflare Web Analytics -->
   </body>
 </html> 

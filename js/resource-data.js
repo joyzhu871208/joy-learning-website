@@ -1,10 +1,39 @@
 const resourceDetails = {
-    "deepseek-lesson-plan": {
-        title: "使用Deepseek生成教案",
-        description: "3分钟掌握AI教案生成方法",
-        introduction: "Deepseek是一款强大的AI助手，可以帮助教师快速生成高质量的教案。本教程将指导您如何使用Deepseek的教案生成功能，让备课更加高效。",
-        videoUrl: "./videos/deepseek-lesson-plan.mp4",
-        pdfGuide: "./pdfs/deepseek-lesson-plan-guide.pdf",
+    "deepseek-game-tutorial": {
+        title: "Deepseek生成历史盲盒游戏",
+        description: "3分钟掌握AI生成历史盲盒游戏方法",
+        introduction: `这期视频我教你用 DeepSeek 5分钟生成一个"历史盲盒游戏"👇
+
+🎯 随机抽题 + 答题解锁，学生玩到停不下来！
+
+✔️ 不会写代码 ✅
+✔️ 免费下载模板 ✅
+✔️ 自定义定制 ✅
+
+完整流程：
+- 提取历史知识点
+- 一键生成游戏代码
+- 个性化定制（动画、奖励机制、画面优化）
+- 直接保存为 HTML 文件，随时本地运行！
+
+这不仅能帮老师们节省大量时间，更能让历史课堂变得生动有趣！
+Deepseek不仅仅是一个AI助手，它能成为你教学中的"游戏设计师"，帮你在教学中融入趣味性和互动性。
+
+💡 适用人群：
+历史教师、班主任
+需要提升课堂趣味性的教育工作者
+想用科技改变传统教学方式的老师们
+
+📎 更多资源：
+在我的网站里，你还能找到更多教师专用工具教学、模板推荐和AI应用技巧，一起用科技点亮教育吧！
+别忘了关注我，获取更多实用教程哦～`,
+        videoUrl: "https://player.bilibili.com/player.html?bvid=BV1WHJ3ziEPM&page=1&high_quality=1",
+        promptTemplate: "pdfs/历史盲盒游戏提示词模板.pdf",
+        gameTemplate: "pdfs/历史盲盒游戏模版.txt",
+        downloadLinks: {
+            prompt: "pdfs/历史盲盒游戏提示词模板.pdf",
+            template: "pdfs/历史盲盒游戏模版.txt"
+        },
         relatedResources: [
             {
                 id: "deepseek-exercise",

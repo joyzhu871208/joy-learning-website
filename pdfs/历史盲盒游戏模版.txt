@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>历史盲盒猜谜游戏</title>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .game-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            padding: 25px;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .theme-selector {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .theme-btn {
+            padding: 8px 15px;
+            margin: 0 10px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .clue-box {
+            background-color: #f8f9fa;
+            border-left: 5px solid #3498db;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(52,152,219,0.08);
+            display: none;
+            transition: transform 0.25s cubic-bezier(.4,2,.6,1), box-shadow 0.25s, border-color 0.25s;
+            border: 1.5px solid #e3eaf3;
+        }
+        .clue-box:hover {
+            transform: scale(1.035);
+            box-shadow: 0 6px 24px rgba(52,152,219,0.18);
+            border-color: #3498db;
+            background-color: #eaf6fb;
+        }
+        .clue-header {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+        .btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        .btn-reveal {
+            background-color: #2ecc71;
+        }
+        .btn-reset {
+            background-color: #e74c3c;
+        }
+        .answer-input {
+            padding: 10px;
+            width: 70%;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        .controls {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .score-display {
+            text-align: right;
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #3498db;
+            font-weight: bold;
+        }
+        .feedback {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        .correct {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>历史盲盒猜谜游戏</h1>
+        
+        <div class="theme-selector">
+            <button class="theme-btn" data-theme="shangyang">盲盒1</button>
+            <button class="theme-btn" data-theme="jianzhen">盲盒2</button>
+            <button class="theme-btn" data-theme="zhenggong">盲盒3</button>
+        </div>
+        
+        <div class="score-display">当前得分: <span id="score">0</span>分</div>
+        
+        <!-- 线索容器 - 初始为空 -->
+        <div id="clue1" class="clue-box">
+            <div class="clue-header">线索1 (5分)</div>
+            <div class="clue-content"></div>
+        </div>
+        <div id="clue2" class="clue-box">
+            <div class="clue-header">线索2 (4分)</div>
+            <div class="clue-content"></div>
+        </div>
+        <div id="clue3" class="clue-box">
+            <div class="clue-header">线索3 (3分)</div>
+            <div class="clue-content"></div>
+        </div>
+        <div id="clue4" class="clue-box">
+            <div class="clue-header">线索4 (2分)</div>
+            <div class="clue-content"></div>
+        </div>
+        <div id="clue5" class="clue-box">
+            <div class="clue-header">线索5 (1分)</div>
+            <div class="clue-content"></div>
+        </div>
+        
+        <div class="controls">
+            <button id="nextClue" class="btn btn-reveal">显示线索</button>
+            <input type="text" id="userAnswer" class="answer-input" placeholder="输入你的答案...">
+            <button id="submitAnswer" class="btn">提交</button>
+            <button id="resetGame" class="btn btn-reset">重新开始</button>
+        </div>
+        
+        <div id="feedback" class="feedback"></div>
+    </div>
+
+    <script>
+        // 游戏数据 - 完全通过JavaScript管理
+        const gameData = {
+            shangyang: {
+                clues: [
+                    "一根木头引发的信任革命",
+                    "太子犯法，师傅受刑",
+                    "奖励耕战，废除世袭",
+                    "秦孝公时期的强国之术",
+                    "商鞅变法"
+                ],
+                answer: "商鞅变法"
+            },
+            jianzhen: {
+                clues: [
+                    "山川异域，风月同天",
+                    "双目失明的扬州高僧",
+                    "六渡沧海终抵奈良",
+                    "唐招提寺的创建者",
+                    "鉴真东渡"
+                ],
+                answer: "鉴真东渡"
+            },
+            zhenggong: {
+                clues: [
+                    "海上孤岛的血脉之争",
+                    "厦门演武场的舰队",
+                    "荷兰人签署投降书",
+                    "南明时期的民族英雄",
+                    "郑成功收复台湾"
+                ],
+                answer: "郑成功收复台湾"
+            }
+        };
+
+        let currentTheme = '';
+        let currentClue = 0;
+        let score = 0;
+        const maxClues = 5;
+        const clueScores = [5, 4, 3, 2, 1];
+        
+        // 主题选择
+        document.querySelectorAll('.theme-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                currentTheme = this.dataset.theme;
+                resetGame();
+                document.querySelectorAll('.theme-btn').forEach(b => b.style.backgroundColor = '#3498db');
+                this.style.backgroundColor = '#2980b9';
+                
+                // 动态加载线索内容
+                for (let i = 1; i <= maxClues; i++) {
+                    document.querySelector(`#clue${i} .clue-content`).textContent = gameData[currentTheme].clues[i-1];
+                }
+            });
+        });
+        
+        // 显示线索
+        document.getElementById('nextClue').addEventListener('click', function() {
+            if (!currentTheme) {
+                alert('请先选择一个历史主题！');
+                return;
+            }
+            
+            if (currentClue < maxClues) {
+                currentClue++;
+                document.getElementById(`clue${currentClue}`).style.display = 'block';
+                
+                if (currentClue === maxClues) {
+                    this.disabled = true;
+                    document.getElementById('submitAnswer').style.backgroundColor = '#f39c12';
+                }
+            }
+        });
+        
+        // 提交答案
+        document.getElementById('submitAnswer').addEventListener('click', function() {
+            if (!currentTheme) {
+                alert('请先选择一个历史主题！');
+                return;
+            }
+            
+            const userAnswer = document.getElementById('userAnswer').value.trim();
+            const feedback = document.getElementById('feedback');
+            
+            if (userAnswer === "") {
+                feedback.textContent = "请输入你的答案！";
+                feedback.className = "feedback incorrect";
+                feedback.style.display = "block";
+                return;
+            }
+            
+            if (userAnswer === gameData[currentTheme].answer) {
+                const points = clueScores[currentClue - 1];
+                score += points;
+                document.getElementById('score').textContent = score;
+                
+                feedback.innerHTML = `正确！获得${points}分！<br>正确答案：${gameData[currentTheme].answer}`;
+                feedback.className = "feedback correct";
+                
+                document.getElementById('nextClue').disabled = true;
+                this.disabled = true;
+            } else {
+                feedback.textContent = "答案不正确，请继续观察线索";
+                feedback.className = "feedback incorrect";
+            }
+            
+            feedback.style.display = "block";
+        });
+        
+        // 重置游戏
+        document.getElementById('resetGame').addEventListener('click', resetGame);
+        
+        function resetGame() {
+            for (let i = 1; i <= maxClues; i++) {
+                document.getElementById(`clue${i}`).style.display = 'none';
+            }
+            
+            currentClue = 0;
+            document.getElementById('userAnswer').value = "";
+            document.getElementById('feedback').style.display = "none";
+            document.getElementById('nextClue').disabled = false;
+            document.getElementById('submitAnswer').disabled = false;
+            document.getElementById('submitAnswer').style.backgroundColor = '';
+        }
+    </script>
+</body>
+</html>
