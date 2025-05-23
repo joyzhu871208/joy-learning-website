@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joy's Reading Journey</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
+    <link rel="stylesheet" href="../css/reading.css">
+    <!-- Animate.css for smooth animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="flex justify-between items-center p-6 shadow-md sticky top-0 bg-white z-50">
+        <h1 class="text-2xl font-bold">Joy Learning</h1>
+        <div class="flex items-center space-x-4">
+            <!-- English 按钮 -->
+            <span class="bg-black text-white px-4 py-1.5 rounded-full text-sm font-medium">
+                English
+            </span>
+
+            <!-- 中文按钮 -->
+            <a href="../zh/reading-zh.html" class="bg-yellow-400 text-black px-4 py-1.5 rounded-full text-sm font-medium hover:bg-yellow-300 transition">
+                中文
+            </a>
+        </div>
+    </nav>
+
+    <!-- Title Section -->
+    <div class="text-center mt-16 mb-12">
+        <h1 class="text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-red-500 animate__animated animate__fadeIn">
+            Reading with JOY
+        </h1>
+        <p class="mt-4 text-gray-600 text-xl animate__animated animate__fadeIn animate__delay-1s">
+            <i class="fas fa-quote-left text-yellow-400 mr-2"></i>
+            Every book opens a new door to imagination
+            <i class="fas fa-quote-right text-yellow-400 ml-2"></i>
+        </p>
+    </div>
+
+    <!-- Hero Images Section -->
+    <section class="reading-hero-images">
+        <div class="swiper hero-swiper">
+            <div class="swiper-wrapper">
+                <!-- Slide 1 -->
+                <div class="swiper-slide">
+                    <div class="hero-slide">
+                        <img src="../images/reading-hero-1.png" alt="Reading Journey 1" class="slide-image">
+                        <div class="slide-content">
+                            <h2>Reading Journey</h2>
+                            <p>Books are lighthouses in the ocean of knowledge</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slide 2 -->
+                <div class="swiper-slide">
+                    <div class="hero-slide">
+                        <img src="../images/reading-hero-2.png" alt="Reading Journey 2" class="slide-image">
+                        <div class="slide-content">
+                            <h2>Book Collection</h2>
+                            <p>Sharing the books that shaped my thoughts</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slide 3 -->
+                <div class="swiper-slide">
+                    <div class="hero-slide">
+                        <img src="../images/reading-hero-3.png" alt="Reading Journey 3" class="slide-image">
+                        <div class="slide-content">
+                            <h2>Reading Time</h2>
+                            <p>A moment of peace in a busy world</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slide 4 -->
+                <div class="swiper-slide">
+                    <div class="hero-slide">
+                        <img src="../images/reading-hero-4.png" alt="Reading Journey 4" class="slide-image">
+                        <div class="slide-content">
+                            <h2>Book Reviews</h2>
+                            <p>Discover new perspectives through reading</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Navigation -->
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <!-- Pagination -->
+            <div class="swiper-pagination"></div>
+        </div>
+    </section>
+
+    <!-- Books Grid -->
+    <section class="books-container">
+        <div class="books-grid">
+            <!-- Book Card 1 -->
+            <div class="book-card polaroid">
+                <div class="book-content">
+                    <img src="../images/books/book1.jpg" alt="Book 1">
+                    <div class="book-overlay">
+                        <p class="book-quote">"A mind-opening journey into the world of AI and humanity."</p>
+                        <button class="view-detail">View Detail</button>
+                    </div>
+                    <div class="video-badge">
+                        <img src="../images/video-icon.svg" alt="Video Available">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Book Card 2 -->
+            <div class="book-card bookmark">
+                <div class="book-content">
+                    <img src="../images/books/book2.jpg" alt="Book 2">
+                    <div class="book-overlay">
+                        <p class="book-quote">"Discover the power of habits in shaping our lives."</p>
+                        <button class="view-detail">View Detail</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Book Card 3 -->
+            <div class="book-card sticky-note">
+                <div class="book-content">
+                    <img src="../images/books/book3.jpg" alt="Book 3">
+                    <div class="book-overlay">
+                        <p class="book-quote">"A beautiful exploration of human connections."</p>
+                        <button class="view-detail">View Detail</button>
+                    </div>
+                    <div class="video-badge">
+                        <img src="../images/video-icon.svg" alt="Video Available">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comments Section -->
+    <section class="comments-section">
+        <h2>Share Your Thoughts</h2>
+        <div class="comment-form">
+            <input type="text" placeholder="Your Name" id="commenter-name">
+            <textarea placeholder="Share your thoughts about reading..." id="comment-content"></textarea>
+            <button type="submit" class="submit-comment">Submit</button>
+        </div>
+        <div class="comments-list">
+            <!-- Comments will be dynamically added here -->
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+    <script>
+        // Initialize Swiper
+        const swiper = new Swiper('.hero-swiper', {
+            // Enable loop mode
+            loop: true,
+            // Enable autoplay
+            autoplay: {
+                delay: 5000, // 5 seconds
+                disableOnInteraction: false,
+            },
+            // Enable smooth transition
+            effect: 'fade',
+            fadeEffect: {
+                crossFade: true
+            },
+            // Speed of transition
+            speed: 1500,
+            // Navigation arrows
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            // Pagination
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+        });
+    </script>
+</body>
+</html> 

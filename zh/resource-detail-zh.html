@@ -176,7 +176,7 @@
     <footer class="text-center py-6 text-sm text-gray-400">
       © 2025 Joy AI for Teachers. All rights reserved.
     </footer>
-
+    
     <!-- Resource Data -->
     <script src="../js/resource-data.js"></script>
     
@@ -192,13 +192,13 @@
           window.location.href = 'ai-resources-zh.html';
           return;
         }
-
+        
         // Set page content
         document.getElementById('resourceTitle').textContent = resource.title;
         document.getElementById('resourceDescription').textContent = resource.description;
         document.getElementById('resourceIntroduction').textContent = resource.introduction;
         document.getElementById('videoFrame').src = resource.videoUrl;
-
+        
         // Set up prompt template download
         const promptDownload = document.getElementById('promptDownload');
         if (promptDownload) {
@@ -225,8 +225,8 @@
         }
         if (!resource.gameTemplate) {
           gameDownload.style.display = 'none';
-        }
-
+          }
+        
         // Fill related resources
         const relatedList = document.getElementById('relatedResourcesList');
         resource.relatedResources.forEach(related => {
