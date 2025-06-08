@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>口算小能手-100以内加减法抢答赛</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --accent-color: #f39c12;
+            --danger-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+            --correct-color: #2ecc71;
+            --wrong-color: #e74c3c;
+            --neutral-color: #f8f9fa;
+        }
+        
+        * {
+            box-sizing: border-box;
+            transition: all 0.2s ease;
+        }
+        
+        body {
+            font-family: 'Arial Rounded MT Bold', 'Microsoft YaHei', sans-serif;
+            background-color: #f5f5f5;
+            background-image: linear-gradient(135deg, rgba(238,238,238,0.6) 0%, rgba(255,255,255,0.6) 100%), 
+                              url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path fill="%23f0f0f0" d="M30,10L50,30L70,10L90,30L70,50L90,70L70,90L50,70L30,90L10,70L30,50L10,30L30,10Z"/></svg>');
+            background-size: cover, 300px 300px;
+            margin: 0;
+            padding: 20px;
+            color: var(--dark-color);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        
+        h1::after {
+            content: '';
+            display: block;
+            width: 150px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+        
+        .control-panel {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding: 20px;
+            background-color: var(--neutral-color);
+            border-radius: 15px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+        
+        .game-info {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .game-info div {
+            background-color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .game-info div:before {
+            font-family: "Arial";
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            line-height: 24px;
+            text-align: center;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+        }
+        
+        .round:before {
+            content: "R";
+        }
+        
+        .time:before {
+            content: "T";
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        button:active {
+            transform: scale(0.95);
+        }
+        
+        button:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.2);
+            transform: translateX(-100%);
+            transition: transform 0.3s;
+        }
+        
+        button:hover:before {
+            transform: translateX(0);
+        }
+        
+        .start-btn {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .pause-btn {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        .reset-btn {
+            background-color: var(--danger-color);
+            color: white;
+        }
+        
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .question-panel {
+            text-align: center;
+            font-size: 3.5em;
+            margin: 30px 0;
+            padding: 30px;
+            background: linear-gradient(135deg, #e0f7fa, #b2ebf2);
+            border-radius: 15px;
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            animation: pulse 2s infinite;
+            font-weight: bold;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+            50% { box-shadow: 0 5px 25px rgba(0,0,0,0.1); }
+            100% { box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        }
+        
+        .groups-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .group {
+            background-color: var(--neutral-color);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            position: relative;
+            border: 2px solid transparent;
+        }
+        
+        .group.active {
+            background-color: rgba(46, 204, 113, 0.1);
+            border-color: var(--correct-color);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(46, 204, 113, 0.2);
+        }
+        
+        .group.wrong {
+            background-color: rgba(231, 76, 60, 0.1);
+            border-color: var(--wrong-color);
+            animation: shake 0.5s ease-in-out;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-5px); }
+            40%, 80% { transform: translateX(5px); }
+        }
+        
+        .group-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .group-name {
+            font-weight: bold;
+            font-size: 1.4em;
+            color: var(--dark-color);
+            position: relative;
+            padding-left: 15px;
+        }
+        
+        .group-name::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 80%;
+            background-color: var(--primary-color);
+            border-radius: 4px;
+        }
+        
+        .group-score {
+            background: linear-gradient(135deg, var(--primary-color), #4facfe);
+            color: white;
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 1.2em;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+        
+        .input-display {
+            font-size: 2.5em;
+            text-align: center;
+            margin: 20px 0;
+            min-height: 70px;
+            background-color: white;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #eee;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+            font-weight: bold;
+            color: var(--dark-color);
+        }
+        
+        .numpad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .numpad button {
+            padding: 18px 0;
+            font-size: 1.6em;
+            background-color: white;
+            color: var(--dark-color);
+            border-radius: 10px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+        
+        .numpad button:hover {
+            background-color: #f8f9fa;
+            transform: translateY(-2px);
+        }
+        
+        .numpad button:nth-child(11), .numpad button:nth-child(12) {
+            font-size: 1.2em;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.3em;
+            background: linear-gradient(135deg, var(--primary-color), #4facfe);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(0,0,0,0.15);
+        }
+        
+        .setup-panel {
+            margin-bottom: 35px;
+            padding: 25px;
+            background-color: var(--neutral-color);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .setup-panel h3 {
+            margin-top: 0;
+            color: var(--dark-color);
+            font-size: 1.5em;
+            position: relative;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .setup-panel h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary-color);
+            border-radius: 3px;
+        }
+        
+        .group-count-selector {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .group-count-selector button {
+            padding: 10px 25px;
+            background-color: white;
+            color: var(--dark-color);
+            border-radius: 8px;
+            font-size: 1.1em;
+        }
+        
+        .group-count-selector button.active {
+            background: linear-gradient(135deg, var(--primary-color), #4facfe);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #888;
+            font-size: 0.9em;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .setup-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: space-between;
+        }
+        
+        .setup-option {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .setup-option label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: var(--dark-color);
+        }
+        
+        .difficulty-selector,
+        .time-selector {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .difficulty-btn,
+        .time-btn {
+            padding: 10px 20px;
+            background-color: white;
+            color: var(--dark-color);
+            border-radius: 8px;
+            flex: 1;
+            text-align: center;
+            font-size: 1.1em;
+        }
+        
+        .difficulty-btn.active,
+        .time-btn.active {
+            background: linear-gradient(135deg, var(--primary-color), #4facfe);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .question-count {
+            background-color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .question-count:before {
+            content: "Q";
+            font-family: "Arial";
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            line-height: 24px;
+            text-align: center;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+        }
+        
+        .result-panel {
+            background-color: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .result-panel h2 {
+            color: var(--primary-color);
+            font-size: 2em;
+            margin-top: 0;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .result-panel h2::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+        
+        .result-content {
+            font-size: 1.5em;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: var(--neutral-color);
+            border-radius: 10px;
+        }
+        
+        .result-chart {
+            height: 300px;
+            margin-bottom: 30px;
+        }
+        
+        .new-game-btn {
+            padding: 15px 40px;
+            font-size: 1.3em;
+            background: linear-gradient(135deg, var(--secondary-color), #27ae60);
+            color: white;
+            border-radius: 10px;
+            margin: 0 auto;
+            display: block;
+        }
+        
+        .medal {
+            display: inline-block;
+            margin: 0 5px;
+            font-size: 1.5em;
+        }
+        
+        .gold-medal { color: gold; }
+        .silver-medal { color: silver; }
+        .bronze-medal { color: #cd7f32; }
+        
+        @media (max-width: 768px) {
+            .groups-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .control-panel {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .game-info {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .buttons {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .question-panel {
+                font-size: 2.5em;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>口算小能手 - 趣味数学竞赛</h1>
+        
+        <div class="setup-panel">
+            <h3>游戏设置</h3>
+            <div class="setup-options">
+                <div class="setup-option">
+                    <label>分组数量:</label>
+                    <div class="group-count-selector">
+                        <button class="group-btn" data-count="1">1组</button>
+                        <button class="group-btn" data-count="2">2组</button>
+                        <button class="group-btn" data-count="3">3组</button>
+                        <button class="group-btn" data-count="4">4组</button>
+                    </div>
+                </div>
+                
+                <div class="setup-option">
+                    <label>难度级别:</label>
+                    <div class="difficulty-selector">
+                        <button class="difficulty-btn active" data-level="easy">简单</button>
+                        <button class="difficulty-btn" data-level="medium">中等</button>
+                        <button class="difficulty-btn" data-level="hard">困难</button>
+                    </div>
+                </div>
+                
+                <div class="setup-option">
+                    <label>游戏时长:</label>
+                    <div class="time-selector">
+                        <button class="time-btn" data-time="60">60秒</button>
+                        <button class="time-btn active" data-time="90">90秒</button>
+                        <button class="time-btn" data-time="120">120秒</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="control-panel">
+            <div class="game-info">
+                <div class="round">当前轮次 <span id="round">1</span></div>
+                <div class="time">剩余时间 <span id="time">90</span>秒</div>
+                <div class="question-count">题目 <span id="questionCount">0</span>/<span id="totalQuestions">0</span></div>
+            </div>
+            <div class="buttons">
+                <button class="start-btn" id="startBtn">开始比赛</button>
+                <button class="pause-btn" id="pauseBtn" disabled>暂停</button>
+                <button class="reset-btn" id="resetBtn" disabled>重新开始</button>
+            </div>
+        </div>
+        
+        <div class="question-panel" id="questionPanel">
+            准备开始比赛...
+        </div>
+        
+        <div class="groups-container" id="groupsContainer">
+            <!-- 小组将通过JavaScript动态生成 -->
+        </div>
+        
+        <div class="result-panel" id="resultPanel" style="display: none;">
+            <h2>比赛结果</h2>
+            <div class="result-content" id="resultContent"></div>
+            <div class="result-chart">
+                <canvas id="resultChart"></canvas>
+            </div>
+            <button class="new-game-btn" id="newGameBtn">新游戏</button>
+        </div>
+        
+        <div class="footer">
+            口算小能手 | 适合小学1-3年级 | 版本 2.0
+        </div>
+    </div>
+
+    <script>
+        // 游戏状态
+        const gameState = {
+            isRunning: false,
+            isPaused: false,
+            currentRound: 1,
+            timeLeft: 90,
+            timer: null,
+            groups: [],
+            currentQuestion: null,
+            answeredGroups: [],
+            groupCount: 3, // 默认3组
+            difficulty: 'easy', // 默认简单难度
+            totalTime: 90, // 默认90秒
+            questionCount: 0,
+            correctAnswers: 0,
+            questionHistory: [], // 记录所有问题
+            results: [] // 游戏结果
+        };
+        
+        // DOM元素
+        const elements = {
+            round: document.getElementById('round'),
+            time: document.getElementById('time'),
+            questionPanel: document.getElementById('questionPanel'),
+            groupsContainer: document.getElementById('groupsContainer'),
+            startBtn: document.getElementById('startBtn'),
+            pauseBtn: document.getElementById('pauseBtn'),
+            resetBtn: document.getElementById('resetBtn'),
+            questionCount: document.getElementById('questionCount'),
+            totalQuestions: document.getElementById('totalQuestions'),
+            resultPanel: document.getElementById('resultPanel'),
+            resultContent: document.getElementById('resultContent'),
+            newGameBtn: document.getElementById('newGameBtn'),
+            groupBtns: document.querySelectorAll('.group-btn'),
+            difficultyBtns: document.querySelectorAll('.difficulty-btn'),
+            timeBtns: document.querySelectorAll('.time-btn')
+        };
+        
+        // 根据难度生成题目参数范围
+        const difficultySettings = {
+            easy: {
+                addition: { min1: 1, max1: 20, min2: 1, max2: 20 },
+                subtraction: { min1: 10, max1: 30, min2: 1, max2: 10 }
+            },
+            medium: {
+                addition: { min1: 10, max1: 50, min2: 10, max2: 50 },
+                subtraction: { min1: 30, max1: 70, min2: 10, max2: 30 }
+            },
+            hard: {
+                addition: { min1: 30, max1: 70, min2: 30, max2: 70 },
+                subtraction: { min1: 50, max1: 99, min2: 10, max2: 50 },
+                multiplication: { min1: 1, max1: 9, min2: 1, max2: 9 }, // 乘法（难度高）
+                division: { min1: 1, max1: 9, min2: 1, max2: 9 } // 除法（难度高）
+            }
+        };
+
+        // 生成指定范围内的随机整数
+        function randomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+        
+        // 初始化小组
+        function initGroups(count) {
+            gameState.groupCount = count;
+            gameState.groups = [];
+            elements.groupsContainer.innerHTML = '';
+            
+            const groupColors = [
+                {bg: '#e8f5e9', border: '#66bb6a', accent: '#4caf50'},
+                {bg: '#e3f2fd', border: '#64b5f6', accent: '#2196f3'},
+                {bg: '#fff8e1', border: '#ffd54f', accent: '#ffc107'},
+                {bg: '#f3e5f5', border: '#ce93d8', accent: '#9c27b0'}
+            ];
+            
+            for (let i = 1; i <= count; i++) {
+                const color = groupColors[(i-1) % groupColors.length];
+                
+                gameState.groups.push({
+                    id: i,
+                    name: `第${i}组`,
+                    score: 0,
+                    currentInput: '',
+                    color: color,
+                    correctCount: 0,
+                    wrongCount: 0,
+                    responseTime: []
+                });
+                
+                const groupHTML = `
+                    <div class="group" data-group="${i}" style="border-color:${color.border};background-color:${color.bg}">
+                        <div class="group-header">
+                            <div class="group-name" style="color:${color.accent}">第${i}组</div>
+                            <div class="group-score" style="background:linear-gradient(135deg, ${color.accent}, ${color.border})">0分</div>
+                        </div>
+                        <div class="input-display" id="input-${i}">0</div>
+                        <div class="numpad">
+                            <button>7</button>
+                            <button>8</button>
+                            <button>9</button>
+                            <button>4</button>
+                            <button>5</button>
+                            <button>6</button>
+                            <button>1</button>
+                            <button>2</button>
+                            <button>3</button>
+                            <button>0</button>
+                            <button>清除</button>
+                            <button>退格</button>
+                        </div>
+                        <button class="submit-btn" data-group="${i}" style="background:linear-gradient(135deg, ${color.accent}, ${color.border})">提交答案</button>
+                    </div>
+                `;
+                
+                elements.groupsContainer.insertAdjacentHTML('beforeend', groupHTML);
+            }
+            
+            // 添加数字按钮事件
+            document.querySelectorAll('.numpad button').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    if (!gameState.isRunning || gameState.isPaused) return;
+                    
+                    const groupDiv = this.closest('.group');
+                    const groupId = parseInt(groupDiv.dataset.group);
+                    const group = gameState.groups.find(g => g.id === groupId);
+                    
+                    if (gameState.answeredGroups.includes(groupId)) return;
+                    
+                    const btnText = this.textContent;
+                    
+                    if (btnText === '清除') {
+                        group.currentInput = '';
+                    } else if (btnText === '退格') {
+                        group.currentInput = group.currentInput.slice(0, -1);
+                    } else {
+                        // 限制最大输入长度为4位数
+                        if (group.currentInput.length < 4) {
+                            group.currentInput += btnText;
+                        }
+                    }
+                    
+                    document.getElementById(`input-${groupId}`).textContent = 
+                        group.currentInput || '0';
+                });
+            });
+            
+            // 添加提交按钮事件
+            document.querySelectorAll('.submit-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    if (!gameState.isRunning || gameState.isPaused) return;
+                    
+                    const groupId = parseInt(this.dataset.group);
+                    const group = gameState.groups.find(g => g.id === groupId);
+                    
+                    if (gameState.answeredGroups.includes(groupId) || !group.currentInput) return;
+                    
+                    const answer = parseInt(group.currentInput);
+                    const isCorrect = answer === gameState.currentQuestion.answer;
+                    const questionTime = (new Date().getTime() - gameState.questionStartTime) / 1000;
+                    
+                    group.responseTime.push(questionTime);
+                    
+                    if (isCorrect) {
+                        // 计算分数：基础分10分 + 速度分（最高10分）
+                        const speedPoints = Math.max(10 - Math.floor(questionTime), 0);
+                        const points = 10 + speedPoints;
+                        
+                        group.score += points;
+                        group.correctCount++;
+                        document.querySelector(`.group[data-group="${groupId}"] .group-score`).textContent = `${group.score}分`;
+                        
+                        // 标记为已回答
+                        gameState.answeredGroups.push(groupId);
+                        
+                        // 高亮显示正确的小组
+                        const groupDiv = document.querySelector(`.group[data-group="${groupId}"]`);
+                        groupDiv.classList.add('active');
+                        setTimeout(() => {
+                            groupDiv.classList.remove('active');
+                        }, 1000);
+                        
+                        // 显示答对的动画
+                        const inputDisplay = document.getElementById(`input-${groupId}`);
+                        inputDisplay.innerHTML = `${answer} <span style="color:green">✓</span>`;
+                        inputDisplay.style.color = 'green';
+                        
+                        // 如果所有小组都已回答或有一个小组答对，进入下一题
+                        if (gameState.answeredGroups.length === gameState.groupCount || isCorrect) {
+                            setTimeout(nextQuestion, 1500);
+                        }
+                    } else {
+                        // 回答错误
+                        gameState.answeredGroups.push(groupId);
+                        group.wrongCount++;
+                        
+                        const groupDiv = document.querySelector(`.group[data-group="${groupId}"]`);
+                        groupDiv.classList.add('wrong');
+                        
+                        // 显示答错的动画
+                        const inputDisplay = document.getElementById(`input-${groupId}`);
+                        inputDisplay.innerHTML = `${answer} <span style="color:red">✗</span>`;
+                        inputDisplay.style.color = 'red';
+                        
+                        setTimeout(() => {
+                            groupDiv.classList.remove('wrong');
+                        }, 1000);
+                        
+                        // 如果所有小组都已回答，进入下一题
+                        if (gameState.answeredGroups.length === gameState.groupCount) {
+                            setTimeout(nextQuestion, 1500);
+                        }
+                    }
+                });
+            });
+            
+            // 添加键盘支持
+            document.addEventListener('keydown', function(e) {
+                if (!gameState.isRunning || gameState.isPaused) return;
+                
+                // 数字键1-4选择小组（如果存在）
+                if (e.key >= '1' && e.key <= '4' && parseInt(e.key) <= gameState.groupCount) {
+                    const groupIndex = parseInt(e.key);
+                    const submitBtn = document.querySelector(`.submit-btn[data-group="${groupIndex}"]`);
+                    if (submitBtn) submitBtn.click();
+                }
+            });
+        }
+        
+        // 生成新的题目
+        function generateQuestion() {
+            const settings = difficultySettings[gameState.difficulty];
+            const operations = ['addition', 'subtraction'];
+            
+            // 高难度时增加乘除法
+            if (gameState.difficulty === 'hard') {
+                operations.push('multiplication', 'division');
+            }
+            
+            const operation = operations[Math.floor(Math.random() * operations.length)];
+            let a, b, answer, text;
+            
+            switch(operation) {
+                case 'addition':
+                    a = randomInt(settings.addition.min1, settings.addition.max1);
+                    b = randomInt(settings.addition.min2, settings.addition.max2);
+                    answer = a + b;
+                    text = `${a} + ${b} =`;
+                    break;
+                    
+                case 'subtraction':
+                    // 确保结果为正数
+                    a = randomInt(settings.subtraction.min1, settings.subtraction.max1);
+                    b = randomInt(settings.subtraction.min2, Math.min(settings.subtraction.max2, a));
+                    answer = a - b;
+                    text = `${a} - ${b} =`;
+                    break;
+                    
+                case 'multiplication':
+                    a = randomInt(settings.multiplication.min1, settings.multiplication.max1);
+                    b = randomInt(settings.multiplication.min2, settings.multiplication.max2);
+                    answer = a * b;
+                    text = `${a} × ${b} =`;
+                    break;
+                    
+                case 'division':
+                    // 确保结果为整数
+                    b = randomInt(settings.division.min2, settings.division.max2);
+                    a = b * randomInt(settings.division.min1, settings.division.max1);
+                    answer = a / b;
+                    text = `${a} ÷ ${b} =`;
+                    break;
+            }
+            
+            const question = {
+                text: text,
+                answer: answer,
+                operation: operation,
+                timestamp: new Date().getTime()
+            };
+            
+            gameState.currentQuestion = question;
+            gameState.questionHistory.push(question);
+            
+            return question;
+        }
+        
+        // 显示新题目
+        function showQuestion() {
+            const question = generateQuestion();
+            elements.questionPanel.textContent = question.text;
+            gameState.questionStartTime = new Date().getTime();
+            gameState.questionCount++;
+            
+            // 更新题目计数
+            elements.questionCount.textContent = gameState.questionCount;
+            
+            // 重置小组输入状态
+            gameState.answeredGroups = [];
+            gameState.groups.forEach(group => {
+                group.currentInput = '';
+                const inputDisplay = document.getElementById(`input-${group.id}`);
+                inputDisplay.textContent = '0';
+                inputDisplay.style.color = '';
+            });
+            
+            // 添加题目动画效果
+            elements.questionPanel.classList.add('new-question');
+            setTimeout(() => {
+                elements.questionPanel.classList.remove('new-question');
+            }, 300);
+        }
+        
+        // 下一题
+        function nextQuestion() {
+            gameState.currentRound++;
+            elements.round.textContent = gameState.currentRound;
+            showQuestion();
+        }
+        
+        // 开始游戏
+        function startGame() {
+            if (gameState.isRunning) return;
+            
+            gameState.isRunning = true;
+            gameState.isPaused = false;
+            gameState.currentRound = 1;
+            gameState.timeLeft = gameState.totalTime;
+            gameState.questionCount = 0;
+            gameState.questionHistory = [];
+            gameState.answeredGroups = [];
+            
+            elements.round.textContent = gameState.currentRound;
+            elements.time.textContent = gameState.timeLeft;
+            elements.totalQuestions.textContent = '?';
+            elements.questionCount.textContent = '0';
+            
+            // 隐藏结果面板
+            elements.resultPanel.style.display = 'none';
+            
+            // 重置小组分数
+            gameState.groups.forEach(group => {
+                group.score = 0;
+                group.correctCount = 0;
+                group.wrongCount = 0;
+                group.responseTime = [];
+                group.currentInput = '';
+                document.querySelector(`.group[data-group="${group.id}"] .group-score`).textContent = '0分';
+                document.getElementById(`input-${group.id}`).textContent = '0';
+            });
+            
+            // 启用/禁用按钮
+            elements.startBtn.disabled = true;
+            elements.pauseBtn.disabled = false;
+            elements.resetBtn.disabled = false;
+            
+            // 禁用设置按钮
+            document.querySelectorAll('.group-btn, .difficulty-btn, .time-btn').forEach(btn => {
+                btn.disabled = true;
+            });
+            
+            // 开始计时
+            gameState.timer = setInterval(() => {
+                gameState.timeLeft--;
+                elements.time.textContent = gameState.timeLeft;
+                
+                if (gameState.timeLeft <= 0) {
+                    endGame();
+                }
+            }, 1000);
+            
+            // 显示第一题
+            showQuestion();
+        }
+        
+        // 暂停游戏
+        function pauseGame() {
+            if (!gameState.isRunning) return;
+            
+            if (gameState.isPaused) {
+                // 继续游戏
+                gameState.isPaused = false;
+                elements.pauseBtn.textContent = '暂停';
+                elements.questionPanel.classList.remove('paused');
+                
+                // 恢复计时
+                gameState.timer = setInterval(() => {
+                    gameState.timeLeft--;
+                    elements.time.textContent = gameState.timeLeft;
+                    
+                    if (gameState.timeLeft <= 0) {
+                        endGame();
+                    }
+                }, 1000);
+            } else {
+                // 暂停游戏
+                gameState.isPaused = true;
+                elements.pauseBtn.textContent = '继续';
+                elements.questionPanel.classList.add('paused');
+                elements.questionPanel.textContent = '游戏已暂停';
+                
+                // 停止计时
+                clearInterval(gameState.timer);
+            }
+        }
+        
+        // 结束游戏
+        function endGame() {
+            gameState.isRunning = false;
+            clearInterval(gameState.timer);
+            
+            elements.questionPanel.textContent = '比赛结束!';
+            elements.startBtn.disabled = false;
+            elements.pauseBtn.disabled = true;
+            
+            // 启用设置按钮
+            document.querySelectorAll('.group-btn, .difficulty-btn, .time-btn').forEach(btn => {
+                btn.disabled = false;
+            });
+            
+            // 计算并显示结果
+            calculateResults();
+            
+            // 显示结果面板
+            elements.resultPanel.style.display = 'block';
+            
+            // 滚动到结果面板
+            elements.resultPanel.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // 计算游戏结果
+        function calculateResults() {
+            gameState.results = [];
+            
+            // 排序小组
+            const sortedGroups = [...gameState.groups].sort((a, b) => b.score - a.score);
+            
+            // 生成结果HTML
+            let resultHTML = '';
+            
+            if (sortedGroups[0].score > 0) {
+                // 计算名次
+                let rank = 1;
+                let prevScore = -1;
+                
+                sortedGroups.forEach((group, index) => {
+                    if (group.score !== prevScore) {
+                        rank = index + 1;
+                    }
+                    prevScore = group.score;
+                    
+                    let medal = '';
+                    if (rank === 1) medal = '<span class="medal gold-medal">🥇</span>';
+                    else if (rank === 2) medal = '<span class="medal silver-medal">🥈</span>';
+                    else if (rank === 3) medal = '<span class="medal bronze-medal">🥉</span>';
+                    
+                    // 计算平均反应时间
+                    const avgTime = group.responseTime.length > 0 
+                        ? group.responseTime.reduce((sum, time) => sum + time, 0) / group.responseTime.length 
+                        : 0;
+                    
+                    gameState.results.push({
+                        name: group.name,
+                        score: group.score,
+                        correct: group.correctCount,
+                        wrong: group.wrongCount,
+                        avgTime: avgTime.toFixed(2),
+                        rank: rank,
+                        color: group.color.accent
+                    });
+                });
+                
+                resultHTML = `
+                    <div class="winner">${sortedGroups[0].name}${sortedGroups[0].score > 0 ? ' 获胜!' : ''}</div>
+                    <div class="result-stats">
+                        共完成 ${gameState.questionCount} 道题目
+                    </div>
+                `;
+            } else {
+                resultHTML = `
+                    <div class="winner">没有小组得分!</div>
+                    <div class="result-stats">
+                        共完成 ${gameState.questionCount} 道题目
+                    </div>
+                `;
+            }
+            
+            elements.resultContent.innerHTML = resultHTML;
+            
+            // 绘制结果图表 - 如果需要图表功能，可以在这里添加
+        }
+        
+        // 重置游戏
+        function resetGame() {
+            clearInterval(gameState.timer);
+            gameState.isRunning = false;
+            gameState.isPaused = false;
+            
+            elements.questionPanel.textContent = '准备开始比赛...';
+            elements.round.textContent = '1';
+            elements.time.textContent = gameState.totalTime.toString();
+            elements.questionCount.textContent = '0';
+            elements.totalQuestions.textContent = '0';
+            
+            elements.startBtn.disabled = false;
+            elements.pauseBtn.disabled = true;
+            elements.resetBtn.disabled = true;
+            elements.pauseBtn.textContent = '暂停';
+            
+            // 启用设置按钮
+            document.querySelectorAll('.group-btn, .difficulty-btn, .time-btn').forEach(btn => {
+                btn.disabled = false;
+            });
+            
+            // 重置小组分数和输入
+            gameState.groups.forEach(group => {
+                group.score = 0;
+                group.currentInput = '';
+                group.correctCount = 0;
+                group.wrongCount = 0;
+                group.responseTime = [];
+                document.querySelector(`.group[data-group="${group.id}"] .group-score`).textContent = '0分';
+                document.getElementById(`input-${group.id}`).textContent = '0';
+            });
+            
+            // 隐藏结果面板
+            elements.resultPanel.style.display = 'none';
+        }
+        
+        // 新游戏
+        function newGame() {
+            resetGame();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // 设置难度
+        function setDifficulty(level) {
+            gameState.difficulty = level;
+        }
+        
+        // 设置游戏时长
+        function setGameTime(seconds) {
+            gameState.totalTime = parseInt(seconds);
+            elements.time.textContent = gameState.totalTime;
+        }
+        
+        // 事件监听
+        elements.startBtn.addEventListener('click', startGame);
+        elements.pauseBtn.addEventListener('click', pauseGame);
+        elements.resetBtn.addEventListener('click', resetGame);
+        elements.newGameBtn.addEventListener('click', newGame);
+        
+        // 分组选择器
+        elements.groupBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                elements.groupBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                initGroups(parseInt(this.dataset.count));
+            });
+        });
+        
+        // 难度选择器
+        elements.difficultyBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                elements.difficultyBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                setDifficulty(this.dataset.level);
+            });
+        });
+        
+        // 时间选择器
+        elements.timeBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                elements.timeBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                setGameTime(this.dataset.time);
+            });
+        });
+        
+        // 为动画添加CSS
+        const style = document.createElement('style');
+        style.textContent = `
+            .question-panel.new-question {
+                animation: pulse-in 0.3s ease-out;
+            }
+            
+            .question-panel.paused {
+                background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+                color: #aaa;
+            }
+            
+            @keyframes pulse-in {
+                0% { transform: scale(0.9); opacity: 0.5; }
+                50% { transform: scale(1.05); }
+                100% { transform: scale(1); opacity: 1; }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // 添加键盘支持
+        document.addEventListener('keydown', function(e) {
+            // 空格键开始/暂停游戏
+            if (e.code === 'Space') {
+                e.preventDefault();
+                if (!gameState.isRunning) {
+                    startGame();
+                } else {
+                    pauseGame();
+                }
+            }
+            
+            // ESC键重置游戏
+            if (e.code === 'Escape' && gameState.isRunning) {
+                resetGame();
+            }
+        });
+        
+        // 初始化默认3组
+        document.querySelector('.group-btn[data-count="3"]').classList.add('active');
+        initGroups(3);
+    </script>
+</body>
+</html>

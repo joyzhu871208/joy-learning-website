@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resource Detail - Joy Learning</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- PDF.js CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.4.120/web/pdf_viewer.min.css" rel="stylesheet">
+    <style>
+      /* Base styles */
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        line-height: 1.6;
+        color: #39353f;
+      }
+      
+      /* Card styles with hover effect */
+      .card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 0.75rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+      
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+      }
+      
+      /* Button style */
+      .btn-primary {
+        display: inline-block;
+        background-color: #ffd368;
+        color: #39353f;
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.5rem;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        text-align: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      
+      .btn-primary:hover {
+        background-color: #e6be5e;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      }
+
+      .btn-secondary {
+        display: inline-block;
+        background-color: #39353f;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.5rem;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        text-align: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      
+      .btn-secondary:hover {
+        background-color: #4a4550;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      }
+      
+      /* PDF preview container */
+      .pdf-preview {
+        display: none;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.5rem;
+        background-color: #f9fafb;
+        margin-top: 1rem;
+        height: 500px;
+        overflow: hidden;
+      }
+      
+      .pdf-preview.active {
+        display: block;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="flex justify-between items-center h-16">
+          <div class="text-lg md:text-xl font-bold text-[#39353f]">Joy AI for Teachers</div>
+          <nav class="hidden md:flex space-x-4">
+            <a href="index.html" class="font-bold text-base text-[#39353f] hover:text-[#ffd368] transition-colors duration-200">Home</a>
+            <a href="about-page.html" class="font-bold text-base text-[#39353f] hover:text-[#ffd368] transition-colors duration-200">About</a>
+            <a href="resources.html" class="font-bold text-base text-[#ffd368]">Resources</a>
+            <a href="#" class="font-bold text-base text-[#39353f] hover:text-[#ffd368] transition-colors duration-200">Contact</a>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 py-8">
+      <!-- Back to Resources Link -->
+      <a href="ai-resources-en.html" class="inline-flex items-center text-[#ffd368] mb-6 hover:underline">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+        </svg>
+        Back to Resources
+      </a>
+      
+      <!-- Resource Header -->
+      <div class="card mb-8">
+        <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
+          <div class="text-4xl md:text-5xl" id="resourceIcon">📝</div>
+          <div>
+            <h1 class="text-3xl font-bold mb-2" id="resourceTitle"></h1>
+            <p class="text-[#39353f] text-opacity-80" id="resourceDescription"></p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Resource Content -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Main Content -->
+        <div class="md:col-span-2">
+          <!-- Introduction -->
+          <div class="card mb-8">
+            <h2 class="text-xl font-semibold mb-4">Introduction</h2>
+            <p class="mb-4 whitespace-pre-line" id="resourceIntroduction"></p>
+          </div>
+          
+          <!-- Video Tutorial -->
+          <div class="card mb-8">
+            <h2 class="text-xl font-semibold mb-4">Video Tutorial</h2>
+            <div class="relative w-full" style="padding-top: 56.25%;">
+              <iframe id="videoFrame" class="absolute top-0 left-0 w-full h-full rounded-xl" frameborder="0" allowfullscreen></iframe>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Sidebar -->
+        <div>
+          <!-- Download Options -->
+          <div class="card mb-8">
+            <h2 class="text-xl font-semibold mb-4">Download PDF</h2>
+            
+            <!-- PDF Download -->
+            <div class="mb-4">
+              <h3 class="font-medium mb-2">Teaching Guide</h3>
+              <p class="text-sm text-[#39353f] text-opacity-70 mb-4">Download the detailed PDF teaching guide</p>
+              <a id="pdfDownload" href="#" class="btn-primary block w-full mb-2">Download PDF</a>
+              <button id="pdfPreviewBtn" class="btn-secondary block w-full">Preview PDF</button>
+            </div>
+
+            <!-- PDF Preview Container -->
+            <div id="pdfPreviewContainer" class="pdf-preview">
+              <div id="pdfViewer" class="w-full h-full"></div>
+            </div>
+          </div>
+          
+          <!-- Related Resources -->
+          <div class="card">
+            <h2 class="text-xl font-semibold mb-4">Related Resources</h2>
+            <ul id="relatedResourcesList" class="space-y-3">
+              <!-- Dynamically filled -->
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center py-6 text-sm text-gray-400">
+      © 2025 Joy AI for Teachers. All rights reserved.
+    </footer>
+
+    <!-- PDF.js Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.4.120/build/pdf.min.js"></script>
+    
+    <!-- Resource Data -->
+    <script src="../js/resource-data.js"></script>
+    
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        // Get resource ID from URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const resourceId = urlParams.get('id');
+        
+        // Load resource data
+        const resource = resourceDetails[resourceId];
+        if (!resource) {
+          console.error('Resource not found');
+          return;
+        }
+
+        // Function to convert video URL to embed URL
+        function getEmbedUrl(url) {
+          if (url.includes('bilibili.com')) {
+            // If the URL is already in embed format, return it as is
+            if (url.includes('player.bilibili.com/player.html')) {
+              return url;
+            }
+            // Extract BV ID from Bilibili URL
+            const bvid = url.match(/BV\w+/)?.[0];
+            if (bvid) {
+              return `https://player.bilibili.com/player.html?bvid=${bvid}&high_quality=1`;
+            }
+          } else if (url.includes('xiaohongshu.com')) {
+            // Extract note ID from Xiaohongshu URL
+            const noteId = url.split('/').pop();
+            if (noteId) {
+              return `https://www.xiaohongshu.com/embed/${noteId}`;
+            }
+          }
+          return url;
+        }
+        
+        // Update page content
+        document.title = `${resource.title} - Joy Learning`;
+        document.getElementById('resourceTitle').textContent = resource.title;
+        document.getElementById('resourceDescription').textContent = resource.description;
+        document.getElementById('resourceIntroduction').textContent = resource.introduction;
+        
+        // Set video source
+        const videoFrame = document.getElementById('videoFrame');
+        if (resource.videoUrl) {
+          videoFrame.src = getEmbedUrl(resource.videoUrl);
+        }
+        
+        // Set PDF download link
+        const pdfDownload = document.getElementById('pdfDownload');
+        const pdfPreviewBtn = document.getElementById('pdfPreviewBtn');
+        if (resource.pdfGuide) {
+          pdfDownload.href = resource.pdfGuide;
+          pdfPreviewBtn.style.display = 'block';
+        } else {
+          pdfDownload.style.display = 'none';
+          pdfPreviewBtn.style.display = 'none';
+        }
+        
+        // Fill related resources
+        const relatedList = document.getElementById('relatedResourcesList');
+        resource.relatedResources.forEach(related => {
+          const li = document.createElement('li');
+          li.innerHTML = `
+            <a href="resource-detail-en.html?id=${related.id}" class="block p-3 rounded-lg hover:bg-gray-50 transition">
+              <h3 class="font-medium text-[#39353f]">${related.title}</h3>
+              <p class="text-sm text-[#39353f] text-opacity-70">${related.description}</p>
+            </a>
+          `;
+          relatedList.appendChild(li);
+        });
+      });
+      
+      // Load PDF preview
+      function loadPDF(pdfUrl) {
+        pdfjsLib.getDocument(pdfUrl).promise.then(function(pdf) {
+          pdf.getPage(1).then(function(page) {
+            const canvas = document.createElement('canvas');
+            const viewer = document.getElementById('pdfViewer');
+            viewer.innerHTML = '';
+            viewer.appendChild(canvas);
+            
+            const scale = 1.5;
+            const viewport = page.getViewport({ scale: scale });
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+            
+            const context = canvas.getContext('2d');
+            const renderContext = {
+              canvasContext: context,
+              viewport: viewport
+            };
+            
+            page.render(renderContext);
+          });
+        }).catch(function(error) {
+          console.error('Error loading PDF:', error);
+          document.getElementById('pdfViewer').innerHTML = '<p class="text-red-500 p-4">PDF 加载失败，请尝试直接下载</p>';
+        });
+      }
+    </script>
+
+<!-- Cloudflare Web Analytics -->
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "815acc2e10b44841a90f1ff1da46d26b"}'></script>
+<!-- End Cloudflare Web Analytics -->
+  </body>
+</html> 

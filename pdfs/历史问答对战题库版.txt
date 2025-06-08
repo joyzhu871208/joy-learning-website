@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>历史知识竞赛PK</title>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-width: 1100px;
+            margin: 0 auto 30px;
+        }
+        .hidden {
+            display: none !important;
+        }
+        h2, h3 {
+            color: #2c3e50;
+            text-align: center;
+            margin-top: 0;
+        }
+        h2 {
+            font-size: 28px;
+            margin-bottom: 25px;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            margin: 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        button:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        button:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        #manual-form input {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+        #questions li {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .teams {
+            display: flex;
+            justify-content: space-between;
+            gap: 25px;
+        }
+        .team {
+            flex: 1;
+            border: 2px solid #3498db;
+            padding: 20px;
+            border-radius: 12px;
+            background: #f9f9f9;
+            transition: all 0.3s;
+        }
+        #team-a {
+            border-color: #e74c3c;
+            background-color: #fef5f5;
+        }
+        #team-b {
+            border-color: #3498db;
+            background-color: #f0f8ff;
+        }
+        .team.completed {
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0.3);
+            border-color: #4CAF50;
+        }
+        .team h3 {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .question-box {
+            min-height: 220px;
+            margin-top: 15px;
+            padding: 15px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .question {
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: 500;
+            line-height: 1.5;
+            color: #333;
+        }
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        .option {
+            padding: 15px;
+            cursor: pointer;
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 16px;
+            transition: all 0.2s;
+            color: #333;
+        }
+        .option:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+        }
+        .option.correct {
+            background: #d4edda;
+            color: #155724;
+            border-color: #c3e6cb;
+            font-weight: bold;
+        }
+        .option.wrong {
+            background: #f8d7da;
+            color: #721c24;
+            border-color: #f5c6cb;
+        }
+        .option:disabled {
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+        .score {
+            font-size: 28px;
+            color: #e91e63;
+            font-weight: bold;
+        }
+        .timer-display {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 24px;
+            color: #2196F3;
+            font-weight: bold;
+            margin: 10px 0;
+            font-family: monospace;
+        }
+        .controls {
+            text-align: center;
+            margin: 25px 0;
+        }
+        #end-game {
+            background: #f44336;
+        }
+        #end-game:hover {
+            background: #d32f2f;
+        }
+        .import-area {
+            width: 100%;
+            height: 300px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: monospace;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            resize: vertical;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        .format-guide {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            font-size: 15px;
+        }
+        .code {
+            font-family: monospace;
+            background: #e9ecef;
+            padding: 3px 6px;
+            border-radius: 4px;
+        }
+        .game-settings {
+            margin: 25px 0;
+            padding: 20px;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            background: #f8f9fa;
+        }
+        .game-settings div {
+            margin: 12px 0;
+        }
+        .game-settings label {
+            display: inline-block;
+            width: 180px;
+            font-weight: bold;
+        }
+        .game-settings input {
+            width: 100px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+        }
+        #game-status {
+            font-size: 22px;
+            text-align: center;
+            margin: 20px 0;
+            font-weight: bold;
+            color: #673AB7;
+            padding: 10px;
+            background: #f3e5f5;
+            border-radius: 8px;
+        }
+        .result-display {
+            text-align: center;
+            font-size: 24px;
+            margin: 20px 0;
+            padding: 25px;
+            border-radius: 8px;
+            background: #e8f5e9;
+            display: none;
+            color: #333;
+        }
+        .final-scores {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+        .team-result {
+            padding: 15px;
+            border-radius: 8px;
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            min-width: 200px;
+        }
+        .team-name {
+            font-weight: bold;
+            font-size: 20px;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #eee;
+        }
+        .winner {
+            font-size: 28px;
+            color: #e91e63;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        .congratulation {
+            font-size: 24px;
+            color: #4CAF50;
+            margin: 15px 0;
+            font-weight: bold;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .delete-btn {
+            background: #ff5722;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .delete-btn:hover {
+            background: #e64a19;
+        }
+        .progress-bar {
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        .progress {
+            height: 100%;
+            background: #4CAF50;
+            width: 0;
+            transition: width 0.2s;
+        }
+        .team-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #666;
+        }
+        .completion-status {
+            text-align: center;
+            background: #e8f5e9;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+            font-weight: bold;
+            color: #2e7d32;
+        }
+        /* 按钮悬停效果 */
+        #batch-add:hover {
+            background: #1976D2;
+        }
+        #batch-import:hover {
+            background: #388E3C;
+        }
+        #manual-add:hover {
+            background: #F57C00;
+        }
+        #start-game:hover {
+            background: #7B1FA2;
+        }
+    </style>
+</head>
+<body>
+    <!-- 题库生成部分 -->
+    <div id="question-bank" class="section">
+        <h2>历史知识竞赛 - 题库生成</h2>
+        
+        <div class="controls">
+            <button id="batch-add" style="background:#2196F3;">系统示例题目</button>
+            <button id="batch-import" style="background:#4CAF50;">批量导入题目</button>
+            <button id="manual-add" style="background:#FF9800;">手动添加题目</button>
+            <button onclick="showManageBanks()" style="background:#673AB7;">管理题库</button>
+            <button id="start-game" style="background:#9C27B0;" disabled>开始游戏</button>
+        </div>
+        
+        <!-- 保存题库对话框 -->
+        <div id="save-bank-modal" class="hidden" style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:white;padding:20px;border-radius:8px;box-shadow:0 2px 10px rgba(0,0,0,0.1);z-index:1000;">
+            <h3 style="margin-top:0;">保存题库</h3>
+            <p>导入成功！是否要保存此题库？</p>
+            <div>
+                <input type="text" id="bank-name" placeholder="请输入题库名称" style="width:200px;padding:8px;margin:10px 0;border:1px solid #ddd;border-radius:4px;">
+            </div>
+            <div style="text-align:right;margin-top:15px;">
+                <button onclick="cancelSave()" style="background:#999;">取消</button>
+                <button onclick="confirmSave()" style="background:#4CAF50;margin-left:10px;">保存</button>
+            </div>
+        </div>
+
+        <!-- 题库管理对话框 -->
+        <div id="manage-banks-modal" class="hidden" style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:white;padding:20px;border-radius:8px;box-shadow:0 2px 10px rgba(0,0,0,0.1);z-index:1000;min-width:300px;">
+            <h3 style="margin-top:0;">题库管理</h3>
+            <div id="banks-list" style="max-height:300px;overflow-y:auto;margin:15px 0;">
+                <!-- 题库列表将在这里动态生成 -->
+            </div>
+            <div style="text-align:right;">
+                <button onclick="closeManageBanks()" style="background:#999;">关闭</button>
+            </div>
+        </div>
+
+        <div id="batch-import-form" class="hidden">
+            <div class="format-guide">
+                <h3>题目格式说明</h3>
+                <p>每个题目使用一行，各部分用竖线(|)分隔，按以下顺序排列：</p>
+                <p class="code">问题内容|选项A|选项B|选项C|选项D|正确答案序号</p>
+                <p>正确答案序号为0-3，0代表选项A，1代表选项B，以此类推。</p>
+                <p>每行一个题目，不要空行，题目前面不要有序号。</p>
+                <p>示例：<br>
+                <span class="code">中国历史上第一个封建王朝是？|秦朝|夏朝|商朝|周朝|0</span></p>
+            </div>
+            <textarea id="import-area" class="import-area" placeholder="在此粘贴题目..."></textarea>
+            <button id="process-import">导入题目</button>
+        </div>
+        
+        <div id="manual-form" class="hidden">
+            <input type="text" id="question-text" placeholder="问题内容">
+            <input type="text" id="correct-answer" placeholder="正确答案">
+            <input type="text" id="wrong-answer1" placeholder="错误选项1">
+            <input type="text" id="wrong-answer2" placeholder="错误选项2">
+            <input type="text" id="wrong-answer3" placeholder="错误选项3">
+            <button id="add-question">添加题目</button>
+        </div>
+
+        <div class="game-settings">
+            <h3>游戏规则设置</h3>
+            <div>
+                <label for="correct-points">答对得分:</label>
+                <input type="number" id="correct-points" value="10" min="1" max="100">
+            </div>
+            <div>
+                <label for="rounds">游戏轮数:</label>
+                <input type="number" id="rounds" value="10" min="1" max="50">
+            </div>
+            <div>
+                <label for="use-same-questions">两队使用相同题目:</label>
+                <input type="checkbox" id="use-same-questions" checked>
+            </div>
+        </div>
+        
+        <div id="question-list">
+            <h3>当前题库 (<span id="question-count">0</span>题)</h3>
+            <ul id="questions"></ul>
+        </div>
+    </div>
+
+    <!-- 游戏对战部分 -->
+    <div id="game-arena" class="section hidden">
+        <div id="game-status">第 <span id="current-round">1</span>/<span id="total-rounds">5</span> 轮</div>
+        
+        <div class="controls">
+            <button id="next-question">下一题</button>
+            <button id="end-game">结束游戏</button>
+        </div>
+        
+        <div class="teams">
+            <div class="team" id="team-a">
+                <h3>A组 <span class="score">0</span>分</h3>
+                <div class="timer-display">计时: <span class="seconds">0</span>秒</div>
+                <div class="progress-bar"><div class="progress"></div></div>
+                <div class="team-stats">答对: <span class="correct-count">0</span> | 答错: <span class="wrong-count">0</span></div>
+                <div class="completion-status">完成用时: <span class="completion-time">0</span>秒 | 正确率: <span class="accuracy">0</span>%</div>
+                <div class="question-box"></div>
+            </div>
+            <div class="team" id="team-b">
+                <h3>B组 <span class="score">0</span>分</h3>
+                <div class="timer-display">计时: <span class="seconds">0</span>秒</div>
+                <div class="progress-bar"><div class="progress"></div></div>
+                <div class="team-stats">答对: <span class="correct-count">0</span> | 答错: <span class="wrong-count">0</span></div>
+                <div class="completion-status">完成用时: <span class="completion-time">0</span>秒 | 正确率: <span class="accuracy">0</span>%</div>
+                <div class="question-box"></div>
+            </div>
+        </div>
+        
+        <div class="result-display">
+            <div>比赛结束！</div>
+            <div class="final-scores">
+                <div class="team-result">
+                    <div class="team-name">A组</div>
+                    <div>得分: <span class="team-a-score">0</span>分</div>
+                    <div>用时: <span class="team-a-time">0</span>秒</div>
+                    <div>正确率: <span class="team-a-accuracy">0</span>%</div>
+                </div>
+                <div class="team-result">
+                    <div class="team-name">B组</div>
+                    <div>得分: <span class="team-b-score">0</span>分</div>
+                    <div>用时: <span class="team-b-time">0</span>秒</div>
+                    <div>正确率: <span class="team-b-accuracy">0</span>%</div>
+                </div>
+            </div>
+            <div class="winner">胜利者: <span></span></div>
+            <div class="congratulation">恭喜获得胜利！</div>
+        </div>
+    </div>
+
+    <script>
+        // 数据存储
+        let questionBank = [];
+        let gameQuestions = {
+            teamA: [],
+            teamB: []
+        };
+        let currentGame = {
+            teamA: { 
+                score: 0, 
+                currentQuestion: null, 
+                currentIndex: 0,
+                timer: null,
+                seconds: 0,
+                correctCount: 0,
+                wrongCount: 0,
+                completed: false,
+                completionTime: 0
+            },
+            teamB: { 
+                score: 0, 
+                currentQuestion: null, 
+                currentIndex: 0,
+                timer: null,
+                seconds: 0,
+                correctCount: 0,
+                wrongCount: 0,
+                completed: false,
+                completionTime: 0
+            },
+            round: 1,
+            totalRounds: 5,
+            active: false
+        };
+        
+        let gameSettings = {
+            correctPoints: 10,
+            rounds: 10,
+            useSameQuestions: true
+        };
+
+        // DOM元素
+        const elements = {
+            questionBank: document.getElementById('question-bank'),
+            gameArena: document.getElementById('game-arena'),
+            batchAdd: document.getElementById('batch-add'),
+            batchImport: document.getElementById('batch-import'),
+            batchImportForm: document.getElementById('batch-import-form'),
+            importArea: document.getElementById('import-area'),
+            processImport: document.getElementById('process-import'),
+            manualAdd: document.getElementById('manual-add'),
+            startGame: document.getElementById('start-game'),
+            manualForm: document.getElementById('manual-form'),
+            addQuestion: document.getElementById('add-question'),
+            questionCount: document.getElementById('question-count'),
+            questionsList: document.getElementById('questions'),
+            nextQuestion: document.getElementById('next-question'),
+            endGame: document.getElementById('end-game'),
+            correctPoints: document.getElementById('correct-points'),
+            rounds: document.getElementById('rounds'),
+            useSameQuestions: document.getElementById('use-same-questions'),
+            currentRound: document.getElementById('current-round'),
+            totalRounds: document.getElementById('total-rounds'),
+            resultDisplay: document.querySelector('.result-display'),
+            teamA: {
+                element: document.getElementById('team-a'),
+                score: document.querySelector('#team-a .score'),
+                seconds: document.querySelector('#team-a .seconds'),
+                progress: document.querySelector('#team-a .progress'),
+                questionBox: document.querySelector('#team-a .question-box'),
+                correctCount: document.querySelector('#team-a .correct-count'),
+                wrongCount: document.querySelector('#team-a .wrong-count'),
+                completionStatus: document.querySelector('#team-a .completion-status'),
+                completionTime: document.querySelector('#team-a .completion-time'),
+                accuracy: document.querySelector('#team-a .accuracy')
+            },
+            teamB: {
+                element: document.getElementById('team-b'),
+                score: document.querySelector('#team-b .score'),
+                seconds: document.querySelector('#team-b .seconds'),
+                progress: document.querySelector('#team-b .progress'),
+                questionBox: document.querySelector('#team-b .question-box'),
+                correctCount: document.querySelector('#team-b .correct-count'),
+                wrongCount: document.querySelector('#team-b .wrong-count'),
+                completionStatus: document.querySelector('#team-b .completion-status'),
+                completionTime: document.querySelector('#team-b .completion-time'),
+                accuracy: document.querySelector('#team-b .accuracy')
+            },
+            results: {
+                teamAScore: document.querySelector('.team-a-score'),
+                teamBScore: document.querySelector('.team-b-score'),
+                teamATime: document.querySelector('.team-a-time'),
+                teamBTime: document.querySelector('.team-b-time'),
+                teamAAccuracy: document.querySelector('.team-a-accuracy'),
+                teamBAccuracy: document.querySelector('.team-b-accuracy')
+            }
+        };
+
+        // 等待DOM加载完成后初始化事件监听
+        document.addEventListener('DOMContentLoaded', function() {
+            // 事件监听
+            elements.batchAdd.addEventListener('click', batchAddQuestions);
+            elements.batchImport.addEventListener('click', toggleBatchImport);
+            elements.processImport.addEventListener('click', processImportedQuestions);
+            elements.manualAdd.addEventListener('click', toggleManualForm);
+            elements.addQuestion.addEventListener('click', addManualQuestion);
+            elements.startGame.addEventListener('click', startGame);
+            elements.nextQuestion.addEventListener('click', startNewRound);
+            elements.endGame.addEventListener('click', endGame);
+            elements.correctPoints.addEventListener('change', updateGameSettings);
+            elements.rounds.addEventListener('change', updateGameSettings);
+            elements.useSameQuestions.addEventListener('change', updateGameSettings);
+
+            // 题库管理相关事件监听
+            bankManager.manageBtn.addEventListener('click', () => {
+                bankManager.modal.style.display = 'flex';
+                bankManager.modal.classList.remove('hidden');
+                bankManager.nameInput.value = '';
+                renderBankList();
+            });
+
+            bankManager.closeBtn.addEventListener('click', () => {
+                bankManager.modal.style.display = 'none';
+                bankManager.modal.classList.add('hidden');
+            });
+
+            bankManager.saveBtn.addEventListener('click', () => {
+                const name = bankManager.nameInput.value.trim();
+                if (!name) {
+                    alert('请输入题库名称');
+                    return;
+                }
+                if (questionBank.length === 0) {
+                    alert('题库为空，无法保存');
+                    return;
+                }
+                if (localStorage.getItem('quizbank_' + name)) {
+                    if (!confirm('已存在同名题库，是否覆盖？')) return;
+                }
+                localStorage.setItem('quizbank_' + name, JSON.stringify(questionBank));
+                alert('题库已保存');
+                renderBankList();
+            });
+
+            // 初始化题库管理相关事件
+            document.getElementById('confirm-save').addEventListener('click', function() {
+                const name = document.getElementById('bank-name').value.trim();
+                if (!name) {
+                    alert('请输入题库名称');
+                    return;
+                }
+                // 检查是否覆盖
+                if (localStorage.getItem('quizbank_' + name)) {
+                    if (!confirm('已存在同名题库，是否覆盖？')) return;
+                }
+                // 保存题库
+                localStorage.setItem('quizbank_' + name, JSON.stringify(questionBank));
+                alert('题库已保存');
+                document.getElementById('save-bank-modal').classList.add('hidden');
+                document.getElementById('bank-name').value = '';
+            });
+
+            document.getElementById('cancel-save').addEventListener('click', function() {
+                document.getElementById('save-bank-modal').classList.add('hidden');
+                document.getElementById('bank-name').value = '';
+            });
+
+            // 管理题库事件
+            document.getElementById('manage-banks').addEventListener('click', function() {
+                document.getElementById('manage-banks-modal').classList.remove('hidden');
+                updateBanksList();
+            });
+
+            document.getElementById('close-manage').addEventListener('click', function() {
+                document.getElementById('manage-banks-modal').classList.add('hidden');
+            });
+        });
+
+        // 更新游戏设置
+        function updateGameSettings() {
+            gameSettings.correctPoints = parseInt(elements.correctPoints.value) || 10;
+            gameSettings.rounds = parseInt(elements.rounds.value) || 10;
+            gameSettings.useSameQuestions = elements.useSameQuestions.checked;
+            
+            // 更新总轮数显示
+            elements.totalRounds.textContent = gameSettings.rounds;
+        }
+
+        // 切换批量导入表单
+        function toggleBatchImport() {
+            elements.batchImportForm.classList.toggle('hidden');
+            elements.manualForm.classList.add('hidden');
+        }
+
+        // 处理导入的题目
+        function processImportedQuestions() {
+            const importText = elements.importArea.value.trim();
+            if (!importText) {
+                alert('请粘贴题目内容');
+                return;
+            }
+            
+            const lines = importText.split('\n');
+            let importedCount = 0;
+            let errorLines = [];
+            
+            // 清空当前题库
+            questionBank = [];
+            
+            lines.forEach((line, index) => {
+                if (!line.trim()) return; // 跳过空行
+                
+                const parts = line.split('|');
+                if (parts.length !== 6) {
+                    errorLines.push(`行 ${index + 1}: 格式不正确`);
+                    return;
+                }
+                
+                const [question, optionA, optionB, optionC, optionD, correctIndex] = parts;
+                const correctIndexNum = parseInt(correctIndex);
+                
+                if (isNaN(correctIndexNum) || correctIndexNum < 0 || correctIndexNum > 3) {
+                    errorLines.push(`行 ${index + 1}: 正确答案序号不正确`);
+                    return;
+                }
+                
+                const options = [optionA, optionB, optionC, optionD];
+                const correctAnswer = options[correctIndexNum];
+                const wrongOptions = options.filter((_, i) => i !== correctIndexNum);
+                
+                questionBank.push({
+                    question: question,
+                    correct: correctAnswer,
+                    wrongs: wrongOptions
+                });
+                
+                importedCount++;
+            });
+            
+            // 更新题库显示
+            updateQuestionList();
+            
+            if (errorLines.length > 0) {
+                alert(`导入完成，但存在以下错误：\n${errorLines.join('\n')}`);
+            } else {
+                // 显示保存对话框
+                document.getElementById('save-bank-modal').classList.remove('hidden');
+            }
+            
+            // 清空导入区域并隐藏表单
+            elements.importArea.value = '';
+            elements.batchImportForm.classList.add('hidden');
+        }
+
+        // 批量生成题目
+        function batchAddQuestions() {
+            const presetQuestions = [
+                {
+                    question: "中国历史上第一个封建王朝是？",
+                    correct: "秦朝",
+                    wrongs: ["夏朝", "商朝", "周朝"]
+                },
+                {
+                    question: "下列哪位不是三国时期的人物？",
+                    correct: "岳飞",
+                    wrongs: ["曹操", "刘备", "孙权"]
+                },
+                {
+                    question: "郑和下西洋发生在哪个朝代？",
+                    correct: "明朝",
+                    wrongs: ["唐朝", "宋朝", "元朝"]
+                },
+                {
+                    question: "《资治通鉴》的作者是谁？",
+                    correct: "司马光",
+                    wrongs: ["司马迁", "司马懿", "司马炎"]
+                },
+                {
+                    question: "鸦片战争爆发于哪一年？",
+                    correct: "1840年",
+                    wrongs: ["1839年", "1842年", "1856年"]
+                },
+                {
+                    question: "下列哪项不是四大发明？",
+                    correct: "瓷器",
+                    wrongs: ["造纸术", "印刷术", "指南针"]
+                },
+                {
+                    question: "唐朝的都城是现在的哪个城市？",
+                    correct: "西安",
+                    wrongs: ["北京", "南京", "洛阳"]
+                },
+                {
+                    question: "《红楼梦》的作者是谁？",
+                    correct: "曹雪芹",
+                    wrongs: ["施耐庵", "罗贯中", "吴承恩"]
+                },
+                {
+                    question: "秦始皇统一了中国什么？",
+                    correct: "文字",
+                    wrongs: ["语言", "货币", "服饰"]
+                },
+                {
+                    question: "辛亥革命推翻了哪个王朝？",
+                    correct: "清朝",
+                    wrongs: ["明朝", "元朝", "宋朝"]
+                }
+            ];
+            
+            questionBank = questionBank.concat(presetQuestions);
+            updateQuestionList();
+        }
+
+        // 切换手动添加表单
+        function toggleManualForm() {
+            elements.manualForm.classList.toggle('hidden');
+            elements.batchImportForm.classList.add('hidden');
+        }
+
+        // 添加手动输入的题目
+        function addManualQuestion() {
+            const questionText = document.getElementById('question-text').value;
+            const correctAnswer = document.getElementById('correct-answer').value;
+            const wrong1 = document.getElementById('wrong-answer1').value;
+            const wrong2 = document.getElementById('wrong-answer2').value;
+            const wrong3 = document.getElementById('wrong-answer3').value;
+            
+            if (!questionText || !correctAnswer || !wrong1 || !wrong2 || !wrong3) {
+                alert('请填写所有字段');
+                return;
+            }
+            
+            questionBank.push({
+                question: questionText,
+                correct: correctAnswer,
+                wrongs: [wrong1, wrong2, wrong3]
+            });
+            
+            // 清空表单
+            document.getElementById('question-text').value = '';
+            document.getElementById('correct-answer').value = '';
+            document.getElementById('wrong-answer1').value = '';
+            document.getElementById('wrong-answer2').value = '';
+            document.getElementById('wrong-answer3').value = '';
+            
+            updateQuestionList();
+        }
+
+        // 更新题目列表显示
+        function updateQuestionList() {
+            elements.questionsList.innerHTML = '';
+            questionBank.forEach((q, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <span>${index + 1}. ${q.question} (正确答案: ${q.correct})</span>
+                    <button class="delete-btn" data-index="${index}">删除</button>
+                `;
+                elements.questionsList.appendChild(li);
+            });
+            
+            // 更新题目数量
+            elements.questionCount.textContent = questionBank.length;
+            
+            // 如果有足够题目，启用开始游戏按钮
+            elements.startGame.disabled = questionBank.length < gameSettings.rounds;
+            
+            // 添加删除按钮事件
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    questionBank.splice(index, 1);
+                    updateQuestionList();
+                });
+            });
+        }
+
+        // 准备游戏题目
+        function prepareGameQuestions() {
+            // 打乱题库顺序
+            const shuffledQuestions = [...questionBank].sort(() => Math.random() - 0.5);
+            
+            // 根据设置的轮数选择题目
+            const selectedQuestions = shuffledQuestions.slice(0, gameSettings.rounds);
+            
+            if (gameSettings.useSameQuestions) {
+                // 两队使用相同题目，但顺序不同
+                gameQuestions.teamA = [...selectedQuestions];
+                
+                // 为B队复制并重新打乱顺序
+                gameQuestions.teamB = [...selectedQuestions].sort(() => Math.random() - 0.5);
+            } else {
+                // 两队使用不同题目
+                const midpoint = Math.ceil(shuffledQuestions.length / 2);
+                gameQuestions.teamA = shuffledQuestions.slice(0, midpoint);
+                gameQuestions.teamB = shuffledQuestions.slice(midpoint);
+                
+                // 如果题目不够，可能需要重复使用
+                while (gameQuestions.teamA.length < gameSettings.rounds) {
+                    gameQuestions.teamA.push(gameQuestions.teamA[gameQuestions.teamA.length % gameQuestions.teamA.length]);
+                }
+                while (gameQuestions.teamB.length < gameSettings.rounds) {
+                    gameQuestions.teamB.push(gameQuestions.teamB[gameQuestions.teamB.length % gameQuestions.teamB.length]);
+                }
+                
+                // 截取需要的轮数
+                gameQuestions.teamA = gameQuestions.teamA.slice(0, gameSettings.rounds);
+                gameQuestions.teamB = gameQuestions.teamB.slice(0, gameSettings.rounds);
+            }
+        }
+
+        // 开始游戏
+        function startGame() {
+            if (questionBank.length < gameSettings.rounds) {
+                alert(`至少需要${gameSettings.rounds}道题目才能开始游戏`);
+                return;
+            }
+            
+            // 应用游戏设置
+            updateGameSettings();
+            
+            // 准备游戏题目
+            prepareGameQuestions();
+            
+            // 设置游戏状态
+            currentGame.totalRounds = gameSettings.rounds;
+            currentGame.round = 1;
+            currentGame.active = true;
+            
+            // 重置团队状态
+            resetTeamStatus('teamA');
+            resetTeamStatus('teamB');
+            
+            // 更新UI
+            elements.currentRound.textContent = currentGame.round;
+            elements.totalRounds.textContent = currentGame.totalRounds;
+            elements.resultDisplay.style.display = 'none';
+            
+            // 切换到游戏界面
+            elements.questionBank.classList.add('hidden');
+            elements.gameArena.classList.remove('hidden');
+            
+            // 显示第一题
+            displayQuestion('teamA', gameQuestions.teamA[0]);
+            displayQuestion('teamB', gameQuestions.teamB[0]);
+            
+            // 开始计时
+            startTimers();
+        }
+        
+        // 重置团队状态
+        function resetTeamStatus(team) {
+            const teamData = currentGame[team];
+            teamData.score = 0;
+            teamData.currentIndex = 0;
+            teamData.seconds = 0;
+            teamData.correctCount = 0;
+            teamData.wrongCount = 0;
+            teamData.completed = false;
+            teamData.completionTime = 0;
+            
+            if (teamData.timer) {
+                clearInterval(teamData.timer);
+                teamData.timer = null;
+            }
+            
+            // 重置UI
+            const ui = team === 'teamA' ? elements.teamA : elements.teamB;
+            ui.element.classList.remove('completed');
+            ui.completionStatus.style.display = 'none';
+            
+            updateTeamUI(team);
+        }
+        
+        // 更新团队UI
+        function updateTeamUI(team) {
+            const ui = team === 'teamA' ? elements.teamA : elements.teamB;
+            
+            ui.score.textContent = currentGame[team].score;
+            ui.seconds.textContent = currentGame[team].seconds;
+            ui.correctCount.textContent = currentGame[team].correctCount;
+            ui.wrongCount.textContent = currentGame[team].wrongCount;
+            
+            // 更新进度条
+            const progress = (currentGame[team].currentIndex / gameSettings.rounds) * 100;
+            ui.progress.style.width = `${progress}%`;
+        }
+
+        // 开始新一轮
+        function startNewRound() {
+            // 检查游戏是否结束
+            if (currentGame.round > currentGame.totalRounds) {
+                endGame();
+                return;
+            }
+            
+            // 更新轮数显示
+            elements.currentRound.textContent = currentGame.round;
+            
+            // 重置计时器
+            resetTimers();
+            
+            // 为两队选择题目
+            currentGame.teamA.currentQuestion = gameQuestions.teamA[currentGame.teamA.currentIndex];
+            currentGame.teamB.currentQuestion = gameQuestions.teamB[currentGame.teamB.currentIndex];
+            
+            // 更新UI显示题目
+            displayQuestion('teamA', currentGame.teamA.currentQuestion);
+            displayQuestion('teamB', currentGame.teamB.currentQuestion);
+            
+            // 开始计时
+            startTimers();
+            
+            // 增加轮数
+            currentGame.round++;
+        }
+        
+        // 重置计时器
+        function resetTimers() {
+            ['teamA', 'teamB'].forEach(team => {
+                if (currentGame[team].timer) {
+                    clearInterval(currentGame[team].timer);
+                    currentGame[team].timer = null;
+                }
+                
+                currentGame[team].seconds = 0;
+                const ui = team === 'teamA' ? elements.teamA : elements.teamB;
+                ui.seconds.textContent = '0';
+            });
+        }
+        
+        // 开始计时
+        function startTimers() {
+            ['teamA', 'teamB'].forEach(team => {
+                const ui = team === 'teamA' ? elements.teamA : elements.teamB;
+                
+                currentGame[team].timer = setInterval(() => {
+                    currentGame[team].seconds++;
+                    ui.seconds.textContent = currentGame[team].seconds;
+                }, 1000);
+            });
+        }
+
+        // 获取随机题目
+        function getRandomQuestion() {
+            const randomIndex = Math.floor(Math.random() * questionBank.length);
+            return questionBank[randomIndex];
+        }
+
+        // 显示题目
+        function displayQuestion(teamId, question) {
+            // 如果该队已完成所有题目，不再显示新题
+            if (currentGame[teamId].completed) {
+                return;
+            }
+            
+            const container = teamId === 'teamA' ? elements.teamA.questionBox : elements.teamB.questionBox;
+            
+            // 创建题目HTML
+            let html = `<div class="question"><strong>${question.question}</strong></div>`;
+            
+            // 合并选项并随机排序
+            const allOptions = [question.correct, ...question.wrongs];
+            shuffleArray(allOptions);
+            
+            // 添加选项
+            html += '<div class="options">';
+            allOptions.forEach(option => {
+                html += `<button class="option">${option}</button>`;
+            });
+            html += '</div>';
+            
+            container.innerHTML = html;
+            
+            // 添加选项点击事件
+            container.querySelectorAll('.option').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const isCorrect = btn.textContent === question.correct;
+                    
+                    if (isCorrect) {
+                        // 答对了
+                        currentGame[teamId].score += gameSettings.correctPoints;
+                        currentGame[teamId].correctCount++;
+                        btn.classList.add('correct');
+                    } else {
+                        // 答错了
+                        currentGame[teamId].wrongCount++;
+                        btn.classList.add('wrong');
+                        
+                        // 显示正确答案
+                        container.querySelectorAll('.option').forEach(opt => {
+                            if (opt.textContent === question.correct) {
+                                opt.classList.add('correct');
+                            }
+                        });
+                    }
+                    
+                    // 更新索引
+                    currentGame[teamId].currentIndex++;
+                    
+                    // 禁用所有选项
+                    container.querySelectorAll('.option').forEach(opt => {
+                        opt.disabled = true;
+                    });
+                    
+                    // 检查是否完成所有题目
+                    if (currentGame[teamId].currentIndex >= gameSettings.rounds) {
+                        completeTeamQuiz(teamId);
+                    } else if (currentGame.active) {
+                        // 显示下一题
+                        setTimeout(() => {
+                            const nextQuestion = gameQuestions[teamId][currentGame[teamId].currentIndex];
+                            displayQuestion(teamId, nextQuestion);
+                        }, 800);
+                    }
+                    
+                    // 更新UI
+                    updateTeamUI(teamId);
+                });
+            });
+        }
+        
+        // 完成队伍答题
+        function completeTeamQuiz(teamId) {
+            // 停止计时器
+            if (currentGame[teamId].timer) {
+                clearInterval(currentGame[teamId].timer);
+                currentGame[teamId].timer = null;
+            }
+            
+            // 标记为已完成
+            currentGame[teamId].completed = true;
+            currentGame[teamId].completionTime = currentGame[teamId].seconds;
+            
+            // 更新UI
+            const teamElement = teamId === 'teamA' ? elements.teamA : elements.teamB;
+            teamElement.element.classList.add('completed');
+            
+            // 计算并显示正确率
+            const total = currentGame[teamId].correctCount + currentGame[teamId].wrongCount;
+            const accuracy = total > 0 ? Math.round((currentGame[teamId].correctCount / total) * 100) : 0;
+            
+            teamElement.completionTime.textContent = currentGame[teamId].completionTime;
+            teamElement.accuracy.textContent = accuracy;
+            teamElement.completionStatus.style.display = 'block';
+            
+            // 检查是否两队都完成
+            checkGameCompletion();
+        }
+
+        // 检查游戏是否完成
+        function checkGameCompletion() {
+            if (currentGame.teamA.completed && currentGame.teamB.completed) {
+                // 两队都完成，延迟一下再结束游戏，让用户看清结果
+                setTimeout(endGame, 1500);
+            }
+        }
+
+        // 结束游戏
+        function endGame() {
+            // 停止所有计时器
+            ['teamA', 'teamB'].forEach(team => {
+                if (currentGame[team].timer) {
+                    clearInterval(currentGame[team].timer);
+                    currentGame[team].timer = null;
+                }
+                
+                // 确保显示完成状态
+                if (!currentGame[team].completed) {
+                    completeTeamQuiz(team);
+                }
+            });
+            
+            // 计算最终数据
+            const teamAAccuracy = calculateAccuracy('teamA');
+            const teamBAccuracy = calculateAccuracy('teamB');
+            const teamATime = currentGame.teamA.completionTime;
+            const teamBTime = currentGame.teamB.completionTime;
+            const teamAScore = currentGame.teamA.score;
+            const teamBScore = currentGame.teamB.score;
+            
+            // 决定胜利者 - 优先考虑分数，然后是时间，最后是正确率
+            let winner;
+            let winReason;
+            
+            if (teamAScore > teamBScore) {
+                winner = "A组";
+                winReason = "获得更高分数";
+            } else if (teamBScore > teamAScore) {
+                winner = "B组";
+                winReason = "获得更高分数";
+            } else if (teamATime < teamBTime) {
+                winner = "A组";
+                winReason = "用时更短";
+            } else if (teamBTime < teamATime) {
+                winner = "B组";
+                winReason = "用时更短";
+            } else if (teamAAccuracy > teamBAccuracy) {
+                winner = "A组";
+                winReason = "正确率更高";
+            } else if (teamBAccuracy > teamAAccuracy) {
+                winner = "B组";
+                winReason = "正确率更高";
+            } else {
+                winner = "平局";
+                winReason = "";
+            }
+            
+            // 更新结果UI
+            elements.results.teamAScore.textContent = teamAScore;
+            elements.results.teamBScore.textContent = teamBScore;
+            elements.results.teamATime.textContent = teamATime;
+            elements.results.teamBTime.textContent = teamBTime;
+            elements.results.teamAAccuracy.textContent = teamAAccuracy;
+            elements.results.teamBAccuracy.textContent = teamBAccuracy;
+            
+            document.querySelector('.winner span').textContent = winner;
+            
+            // 显示或隐藏恭喜信息
+            const congratulation = document.querySelector('.congratulation');
+            if (winner === "平局") {
+                congratulation.textContent = "双方平分秋色，再接再厉！";
+                congratulation.style.color = "#3F51B5"; // 蓝色
+            } else {
+                congratulation.textContent = `恭喜${winner}获得胜利！${winReason}`;
+                congratulation.style.color = "#4CAF50"; // 绿色
+            }
+            
+            elements.resultDisplay.style.display = 'block';
+            
+            // 禁用游戏控制按钮
+            elements.nextQuestion.disabled = true;
+            
+            // 设置游戏不活跃
+            currentGame.active = false;
+            
+            // 2秒后显示返回按钮
+            setTimeout(() => {
+                elements.nextQuestion.disabled = false;
+                elements.nextQuestion.textContent = '返回题库';
+                elements.nextQuestion.addEventListener('click', returnToQuestionBank, { once: true });
+            }, 2000);
+        }
+        
+        // 计算正确率
+        function calculateAccuracy(team) {
+            const total = currentGame[team].correctCount + currentGame[team].wrongCount;
+            return total > 0 ? Math.round((currentGame[team].correctCount / total) * 100) : 0;
+        }
+        
+        // 返回题库
+        function returnToQuestionBank() {
+            // 重置按钮
+            elements.nextQuestion.textContent = '下一题';
+            elements.nextQuestion.removeEventListener('click', returnToQuestionBank);
+            elements.nextQuestion.addEventListener('click', startNewRound);
+            
+            // 返回题库界面
+            elements.gameArena.classList.add('hidden');
+            elements.questionBank.classList.remove('hidden');
+        }
+
+        // 辅助函数：随机打乱数组
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // 渲染题库列表
+        function renderBankList() {
+            bankManager.list.innerHTML = '';
+            const keys = Object.keys(localStorage).filter(k => k.startsWith('quizbank_'));
+            if (keys.length === 0) {
+                bankManager.list.innerHTML = '<li style="color:#888;">暂无已保存题库</li>';
+                return;
+            }
+            keys.forEach(key => {
+                const name = key.replace('quizbank_', '');
+                const li = document.createElement('li');
+                li.style.display = 'flex';
+                li.style.alignItems = 'center';
+                li.style.justifyContent = 'space-between';
+                li.style.padding = '6px 0';
+                li.innerHTML = `
+                    <span style="font-size:16px;">${name}</span>
+                    <span>
+                        <button class="load-bank-btn" data-name="${name}" style="margin-right:8px;background:#2196F3;color:white;">加载</button>
+                        <button class="delete-bank-btn" data-name="${name}" style="background:#ff9800;color:white;">删除</button>
+                    </span>
+                `;
+                bankManager.list.appendChild(li);
+            });
+            // 加载题库
+            bankManager.list.querySelectorAll('.load-bank-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const name = this.getAttribute('data-name');
+                    const data = localStorage.getItem('quizbank_' + name);
+                    if (!data) return;
+                    if (!confirm('加载题库会覆盖当前题库，确定继续？')) return;
+                    questionBank = JSON.parse(data);
+                    updateQuestionList();
+                    bankManager.modal.classList.add('hidden');
+                });
+            });
+            // 删除题库
+            bankManager.list.querySelectorAll('.delete-bank-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const name = this.getAttribute('data-name');
+                    if (!confirm('确定要删除该题库吗？')) return;
+                    localStorage.removeItem('quizbank_' + name);
+                    renderBankList();
+                });
+            });
+        }
+
+        // 题库管理相关函数
+        function showManageBanks() {
+            document.getElementById('manage-banks-modal').classList.remove('hidden');
+            updateBanksList();
+        }
+
+        function closeManageBanks() {
+            document.getElementById('manage-banks-modal').classList.add('hidden');
+        }
+
+        // 更新题库列表显示
+        function updateBanksList() {
+            const banksList = document.getElementById('banks-list');
+            banksList.innerHTML = '';
+            
+            // 获取所有题库
+            const banks = Object.keys(localStorage)
+                .filter(key => key.startsWith('quizbank_'))
+                .map(key => ({
+                    name: key.replace('quizbank_', ''),
+                    questions: JSON.parse(localStorage.getItem(key))
+                }));
+            
+            if (banks.length === 0) {
+                banksList.innerHTML = '<p style="text-align:center;color:#666;">暂无保存的题库</p>';
+                return;
+            }
+            
+            banks.forEach(bank => {
+                const div = document.createElement('div');
+                div.style.padding = '10px';
+                div.style.borderBottom = '1px solid #eee';
+                div.style.display = 'flex';
+                div.style.justifyContent = 'space-between';
+                div.style.alignItems = 'center';
+                
+                div.innerHTML = `
+                    <div>
+                        <strong>${bank.name}</strong>
+                        <span style="color:#666;margin-left:10px;">(${bank.questions.length}题)</span>
+                    </div>
+                    <div>
+                        <button onclick="loadBank('${bank.name}')" style="background:#2196F3;margin-right:5px;">加载</button>
+                        <button onclick="deleteBank('${bank.name}')" style="background:#ff9800;">删除</button>
+                    </div>
+                `;
+                
+                banksList.appendChild(div);
+            });
+        }
+
+        // 加载题库
+        function loadBank(name) {
+            if (!confirm('加载题库将覆盖当前题目，是否继续？')) return;
+            
+            const data = localStorage.getItem('quizbank_' + name);
+            if (!data) {
+                alert('题库加载失败');
+                return;
+            }
+            
+            questionBank = JSON.parse(data);
+            updateQuestionList();
+            closeManageBanks();
+            alert('题库加载成功');
+        }
+
+        // 删除题库
+        function deleteBank(name) {
+            if (!confirm('确定要删除该题库吗？')) return;
+            
+            localStorage.removeItem('quizbank_' + name);
+            updateBanksList();
+            alert('题库已删除');
+        }
+
+        // 保存题库相关函数
+        function confirmSave() {
+            const name = document.getElementById('bank-name').value.trim();
+            if (!name) {
+                alert('请输入题库名称');
+                return;
+            }
+            // 检查是否覆盖
+            if (localStorage.getItem('quizbank_' + name)) {
+                if (!confirm('已存在同名题库，是否覆盖？')) return;
+            }
+            // 保存题库
+            localStorage.setItem('quizbank_' + name, JSON.stringify(questionBank));
+            alert('题库已保存');
+            document.getElementById('save-bank-modal').classList.add('hidden');
+            document.getElementById('bank-name').value = '';
+        }
+
+        function cancelSave() {
+            document.getElementById('save-bank-modal').classList.add('hidden');
+            document.getElementById('bank-name').value = '';
+        }
+    </script>
+</body>
+</html>

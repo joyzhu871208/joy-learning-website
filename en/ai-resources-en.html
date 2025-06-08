@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AI Teaching Resources - Joy Learning</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <!-- Add Swiper's CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <style>
+        /* Mobile menu styles */
+        .mobile-menu {
+            display: none;
+        }
+        .mobile-menu.active {
+            display: block;
+        }
+        @media (max-width: 768px) {
+            .desktop-menu {
+                display: none;
+            }
+        }
+        
+        /* 导航链接样式 */
+        .navigation-link {
+            color: #1a202c;
+            transition: color 0.3s ease;
+            font-weight: bold;
+        }
+        .navigation-link:hover {
+            color: #f59e0b;
+        }
+        .navigation-link.active {
+            color: #f59e0b;
+        }
+        
+        .custom-bg {
+            background-color: #ffd368;
+        }
+        .card-shadow {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+        .tool-card {
+            transition: all 0.3s ease;
+        }
+        .tool-card:hover {
+            transform: translateY(-5px);
+        }
+        .swiper-container {
+            width: 100%;
+            padding-top: 50px;
+            padding-bottom: 50px;
+        }
+        .swiper-slide {
+            background-position: center;
+            background-size: cover;
+            width: 300px;
+            height: 400px;
+        }
+        .speech-bubble {
+            position: relative;
+            background: #ffffff;
+            border-radius: 1rem;
+            padding: 1rem;
+        }
+        .speech-bubble:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 20%;
+            border: 20px solid transparent;
+            border-top-color: #ffffff;
+            border-bottom: 0;
+            margin-bottom: -20px;
+        }
+        .category-content {
+            display: none;
+        }
+        .category-content.active {
+            display: block;
+        }
+        .category-btn.active {
+            color: #39353f;
+            border-bottom: 2px solid #ffd368;
+        }
+        .subcategory-btn.active {
+            background-color: #ffd368;
+            color: #39353f;
+        }
+        .view-details-btn {
+            background-color: #39353f;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .view-details-btn:hover {
+            background-color: #ffd368;
+            color: #39353f;
+        }
+        .difficulty-badge-beginner {
+            background-color: #e8f5e9;
+            color: #39353f;
+        }
+        .difficulty-badge-intermediate {
+            background-color: #ffd368;
+            color: #39353f;
+        }
+    </style>    
+</head>
+
+<body class="bg-white text-gray-900 font-sans">
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="text-lg md:text-xl font-bold">
+                    <a href="../index-en.html" class="hover:text-yellow-500">Joy AI for Teachers</a>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-4">
+                    <a href="ai-home-en.html" class="font-bold text-base navigation-link" style="color: #1a202c;" onmouseover="this.style.color='#f59e0b'" onmouseout="this.style.color='#1a202c'">Home</a>
+                    <a href="ai-about-en.html" class="font-bold text-base navigation-link" style="color: #1a202c;" onmouseover="this.style.color='#f59e0b'" onmouseout="this.style.color='#1a202c'">About</a>
+                    <a href="ai-resources-en.html" class="font-bold text-base navigation-link" style="color: #f59e0b;">Resources</a>
+                    <a href="ai-contact-en.html" class="font-bold text-base navigation-link" style="color: #1a202c;" onmouseover="this.style.color='#f59e0b'" onmouseout="this.style.color='#1a202c'">Contact</a>
+                </nav>
+
+                <!-- Mobile menu button -->
+                <button class="md:hidden p-2" onclick="toggleMobileMenu()">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Navigation -->
+            <div id="mobile-menu" class="mobile-menu md:hidden pb-4 hidden">
+                <a href="ai-home-en.html" class="block py-2 px-4 text-sm font-bold" style="color: #1a202c;" onmouseover="this.style.color='#f59e0b'" onmouseout="this.style.color='#1a202c'">Home</a>
+                <a href="ai-about-en.html" class="block py-2 px-4 text-sm font-bold" style="color: #1a202c;" onmouseover="this.style.color='#f59e0b'" onmouseout="this.style.color='#1a202c'">About</a>
+                <a href="ai-resources-en.html" class="block py-2 px-4 text-sm font-bold bg-gray-100" style="color: #f59e0b;">Resources</a>
+                <a href="ai-contact-en.html" class="block py-2 px-4 text-sm font-bold" style="color: #1a202c;" onmouseover="this.style.color='#f59e0b'" onmouseout="this.style.color='#1a202c'">Contact</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="py-16 md:py-24 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-6xl font-black mb-6 text-[#39353f]">
+                    Transform Your Teaching with <span class="text-yellow-400">AI Tool</span>
+                </h1>
+                <p class="text-[#39353f] text-opacity-80 text-lg md:text-xl max-w-3xl mx-auto">
+                    Discover our curated collection of free resources designed to enhance your teaching experience
+                </p>
+            </div>
+
+            <!-- Swiper -->
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <!-- Deepseek Card -->
+                    <div class="swiper-slide bg-white rounded-2xl overflow-hidden card-shadow">
+                        <div class="relative h-full">
+                            <img src="../images/deepseek.jpg" alt="AI Writing" class="w-full h-2/3 object-cover">
+                            <div class="absolute bottom-8 left-4 right-4">
+                                <div class="speech-bubble">
+                                    <h3 class="font-bold text-xl mb-2">Deepseek</h3>
+                                    <p class="text-gray-600">Your AI Teaching Assistant</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Canva Card -->
+                    <div class="swiper-slide bg-white rounded-2xl overflow-hidden card-shadow">
+                        <div class="relative h-full">
+                            <img src="../images/canva.png" alt="Design" class="w-full h-2/3 object-cover">
+                            <div class="absolute bottom-8 left-4 right-4">
+                                <div class="speech-bubble">
+                                    <h3 class="font-bold text-xl mb-2">Canva</h3>
+                                    <p class="text-gray-600">Design Like a Pro</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Videoscribe Card -->
+                    <div class="swiper-slide bg-white rounded-2xl overflow-hidden card-shadow">
+                        <div class="relative h-full">
+                            <img src="../images/VideoScribe.gif" alt="Design" class="w-full h-2/3 object-cover">
+                            <div class="absolute bottom-8 left-4 right-4">
+                                <div class="speech-bubble">
+                                    <h3 class="font-bold text-xl mb-2">VideoScribe</h3>
+                                    <p class="text-gray-600">Create Animated Videos</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CapCut Card -->
+                    <div class="swiper-slide bg-white rounded-2xl overflow-hidden card-shadow">
+                        <div class="relative h-full">
+                            <img src="../images/capcut.png" alt="Video Editing" class="w-full h-2/3 object-cover">
+                            <div class="absolute bottom-8 left-4 right-4">
+                                <div class="speech-bubble">
+                                    <h3 class="font-bold text-xl mb-2">CapCut</h3>
+                                    <p class="text-gray-600">Create Engaging Videos</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add Navigation -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Navigation -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <!-- Main Categories -->
+            <div class="flex justify-center space-x-8 border-b border-gray-200 mb-8">
+                <button onclick="switchMainCategory('teaching')" class="text-xl font-bold text-[#39353f] pb-4 border-b-2 border-[#ffd368] category-btn" data-category="teaching">
+                    Teaching Enhancement
+                </button>
+                <button onclick="switchMainCategory('professional')" class="text-xl font-bold text-[#39353f] text-opacity-60 pb-4 hover:text-opacity-100 category-btn" data-category="professional">
+                    Professional Development
+                </button>
+            </div>
+
+            <!-- Sub Categories for Teaching Enhancement -->
+            <div id="teaching-subcategories" class="flex justify-center space-x-4 mb-12">
+                <button onclick="switchSubCategory('text')" class="px-4 py-2 bg-[#ffd368] text-[#39353f] rounded-full text-sm font-medium subcategory-btn" data-subcategory="text">
+                    Text & Teaching Aids
+                </button>
+                <button onclick="switchSubCategory('design')" class="px-4 py-2 bg-gray-100 text-[#39353f] text-opacity-60 rounded-full text-sm font-medium hover:bg-gray-200 subcategory-btn" data-subcategory="design">
+                    Design & Edit
+                </button>
+                <button onclick="switchSubCategory('video')" class="px-4 py-2 bg-gray-100 text-[#39353f] text-opacity-60 rounded-full text-sm font-medium hover:bg-gray-200 subcategory-btn" data-subcategory="video">
+                    Video Creation
+                </button>
+            </div>
+
+            <!-- Content Sections -->
+            <!-- Teaching Enhancement - Text & Teaching Aids -->
+            <div id="teaching-text" class="category-content active">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Deepseek Card -->
+                    <div class="bg-white rounded-2xl overflow-hidden card-shadow">
+                        <img src="../images/Coming Soon.jpg" alt="AI Writing" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-bold text-xl">Deepseek for Lesson Planning</h3>
+                            </div>
+                            <p class="text-gray-600 mb-4">Learn how to use Deepseek to create lesson plans and teaching materials efficiently</p>
+                            <a href="resource-detail-en.html" class="inline-block view-details-btn px-6 py-2 rounded-full text-sm font-bold">
+                                View Details
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Claude Card -->
+                    <div class="bg-white rounded-2xl overflow-hidden card-shadow">
+                        <img src="../images/Coming Soon.jpg" alt="Claude" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-bold text-xl">Claude for Worksheets</h3>
+                            </div>
+                            <p class="text-gray-600 mb-4">Create customized worksheets and exercises using Claude AI</p>
+                            <a href="#" class="inline-block view-details-btn px-6 py-2 rounded-full text-sm font-bold">
+                                View Details
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Notion Card -->
+                    <div class="bg-white rounded-2xl overflow-hidden card-shadow">
+                        <img src="../images/Coming Soon.jpg" alt="Notion" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-bold text-xl">Notion for Course Organization</h3>
+                            </div>
+                            <p class="text-gray-600 mb-4">Organize your teaching materials and resources effectively with Notion</p>
+                            <a href="#" class="inline-block view-details-btn px-6 py-2 rounded-full text-sm font-bold">
+                                View Details
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Google Workspace Card -->
+                    <div class="bg-white rounded-2xl overflow-hidden card-shadow">
+                        <img src="../images/Coming Soon.jpg" alt="Google Workspace" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-bold text-xl">Google Workspace Tips</h3>
+                            </div>
+                            <p class="text-gray-600 mb-4">Essential Google Workspace tools and tips for teachers</p>
+                            <a href="#" class="inline-block view-details-btn px-6 py-2 rounded-full text-sm font-bold">
+                                View Details
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Microsoft 365 Card -->
+                    <div class="bg-white rounded-2xl overflow-hidden card-shadow">
+                        <img src="../images/Coming Soon.jpg" alt="Microsoft 365" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-bold text-xl">Microsoft 365 for Education</h3>
+                            </div>
+                            <p class="text-gray-600 mb-4">Maximize Microsoft 365 tools for better teaching outcomes</p>
+                            <a href="#" class="inline-block view-details-btn px-6 py-2 rounded-full text-sm font-bold">
+                                View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Teaching Enhancement - Design & Edit -->
+            <div id="teaching-design" class="category-content hidden">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                    <!-- Canva Card -->
+                    <div class="bg-white rounded-2xl overflow-hidden card-shadow">
+                        <img src="../images/canva教程01b站封面.jpg" alt="Canva" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-bold text-xl">Canva for Teachers</h3>
+                            </div>
+                            <p class="text-gray-600 mb-4">Master Canva for creating engaging teaching content and activities</p>
+                            <a href="resource-detail-en.html?id=canva-bulk-creation" class="inline-block view-details-btn px-6 py-2 rounded-full text-sm font-bold">
+                                View Details
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Midjourney Card -->
+                    <div class="bg-white rounded-2xl overflow-hidden card-shadow">
+                        <img src="../images/Coming Soon.jpg" alt="Midjourney" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-bold text-xl">Midjourney for Education</h3>
+                            </div>
+                            <p class="text-gray-600 mb-4">Create unique educational illustrations with AI</p>
+                            <a href="#" class="inline-block view-details-btn px-6 py-2 rounded-full text-sm font-bold">
+                                View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Teaching Enhancement - Video Creation -->
+            <div id="teaching-video" class="category-content hidden">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- CapCut Card -->
+                    <div class="bg-white rounded-2xl overflow-hidden card-shadow">
+                        <img src="../images/Coming Soon.jpg" alt="CapCut" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-bold text-xl">CapCut for Teachers</h3>
+                            </div>
+                            <p class="text-gray-600 mb-4">Create engaging educational videos with ease</p>
+                            <a href="#" class="inline-block view-details-btn px-6 py-2 rounded-full text-sm font-bold">
+                                View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Professional Development -->
+            <div id="professional-content" class="category-content hidden">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- AI Teaching Skills Card -->
+                    <div class="bg-white rounded-2xl overflow-hidden card-shadow">
+                        <img src="../images/Coming Soon.jpg" alt="AI Teaching" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-bold text-xl">AI Teaching Skills</h3>
+                                <span class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm">Coming Soon</span>
+                            </div>
+                            <p class="text-gray-600 mb-4">Master essential AI tools and techniques for modern teaching</p>
+                            <a href="#" class="inline-block view-details-btn px-6 py-2 rounded-full text-sm font-bold">
+                                View Details
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Digital Pedagogy Card -->
+                    <div class="bg-white rounded-2xl overflow-hidden card-shadow">
+                        <img src="../images/Coming Soon.jpg" alt="Digital Pedagogy" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-bold text-xl">Digital Pedagogy</h3>
+                                <span class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm">Coming Soon</span>
+                            </div>
+                            <p class="text-gray-600 mb-4">Enhance your teaching methods with digital tools and strategies</p>
+                            <a href="#" class="inline-block view-details-btn px-6 py-2 rounded-full text-sm font-bold">
+                                View Details
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Educational Technology Card -->
+                    <div class="bg-white rounded-2xl overflow-hidden card-shadow">
+                        <img src="../images/Coming Soon.jpg" alt="Educational Technology" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-bold text-xl">Educational Technology</h3>
+                                <span class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm">Coming Soon</span>
+                            </div>
+                            <p class="text-gray-600 mb-4">Stay updated with the latest educational technology trends</p>
+                            <a href="#" class="inline-block view-details-btn px-6 py-2 rounded-full text-sm font-bold">
+                                View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+<footer class="bg-gray-800 text-white py-8 md:py-12 px-4 md:px-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-8 md:mb-12">
+        <h3 class="text-xl md:text-2xl font-bold mb-4 md:mb-6">More Information</h3>
+        <p class="text-gray-400 text-sm md:text-base mb-6 md:mb-8">Stay updated with our latest learning tips and tools!</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8">
+        <div>
+          <h3 class="text-base md:text-lg font-semibold mb-3 md:mb-4">Joy Learning</h3>
+          <p class="text-gray-400 text-sm md:text-base">Resources for English, teaching, and lifelong learning.</p>
+        </div>
+        <div>
+          <h3 class="text-base md:text-lg font-semibold mb-3 md:mb-4">Quick Links</h3>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-400 hover:text-yellow-500 text-sm md:text-base">Home</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-yellow-500 text-sm md:text-base">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-base md:text-lg font-semibold mb-3 md:mb-4">Explore</h3>
+          <ul class="space-y-2">
+            <li><a href="https://www.xiaohongshu.com/user/profile/67f36760000000000d008455" class="text-gray-400 hover:text-yellow-500 text-sm md:text-base">Red Book</a></li>
+            <li><a href="https://space.bilibili.com/3546894768802257?spm_id_from=333.1007.0.0" class="text-gray-400 hover:text-yellow-500 text-sm md:text-base">Bilibili</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-base md:text-lg font-semibold mb-3 md:mb-4">Contact</h3>
+          <ul class="space-y-2">
+            <li class="flex items-center justify-center md:justify-start">
+              <i class="fas fa-envelope text-yellow-500 mr-2"></i>
+              <a href="mailto:joyzhu1020@gmail.com" class="text-gray-400 hover:text-yellow-500 text-sm md:text-base">joyzhu1020@gmail.com</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-gray-700 mt-6 md:mt-8 pt-6 md:pt-8 text-center text-gray-400">
+        <p class="text-sm md:text-base">&copy; 2025 Joy Learning. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+    <!-- Add Swiper JS -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+        // Initialize Swiper
+        var swiper = new Swiper('.swiper-container', {
+            effect: 'coverflow',
+            grabCursor: true,
+            centeredSlides: true,
+            slidesPerView: 'auto',
+            coverflowEffect: {
+                rotate: 50,
+                stretch: 0,
+                depth: 100,
+                modifier: 1,
+                slideShadows: true,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            }
+        });
+
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        }
+
+        function switchMainCategory(category) {
+            // Hide all content sections
+            document.querySelectorAll('.category-content').forEach(content => {
+                content.classList.remove('active');
+                content.classList.add('hidden');
+            });
+
+            // Update main category buttons
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                if (btn.dataset.category === category) {
+                    btn.classList.add('active');
+                    btn.style.color = '#39353f';
+                    btn.style.borderBottom = '2px solid #ffd368';
+                } else {
+                    btn.classList.remove('active');
+                    btn.style.color = '#39353f';
+                    btn.style.borderBottom = 'none';
+                }
+            });
+
+            // Show/hide subcategories and content
+            const teachingSubcategories = document.getElementById('teaching-subcategories');
+            if (category === 'teaching') {
+                teachingSubcategories.classList.remove('hidden');
+                document.getElementById('teaching-text').classList.remove('hidden');
+                document.getElementById('teaching-text').classList.add('active');
+                document.getElementById('professional-content').classList.add('hidden');
+                document.getElementById('professional-content').classList.remove('active');
+            } else {
+                teachingSubcategories.classList.add('hidden');
+                document.getElementById('professional-content').classList.remove('hidden');
+                document.getElementById('professional-content').classList.add('active');
+                document.querySelectorAll('[id^="teaching-"]').forEach(content => {
+                    if (content.id !== 'teaching-subcategories') {
+                        content.classList.add('hidden');
+                        content.classList.remove('active');
+                    }
+            });
+            }
+
+            // Reset subcategory buttons if in teaching category
+            if (category === 'teaching') {
+                document.querySelectorAll('.subcategory-btn').forEach(btn => {
+                    if (btn.dataset.subcategory === 'text') {
+                        btn.classList.add('active', 'bg-[#ffd368]');
+                    } else {
+                        btn.classList.remove('active');
+                        btn.classList.add('bg-gray-100');
+                    }
+                });
+            }
+        }
+
+        function switchSubCategory(subcategory) {
+            // Hide all teaching content sections
+            document.querySelectorAll('[id^="teaching-"]').forEach(content => {
+                if (content.id !== 'teaching-subcategories') {
+                    content.classList.remove('active');
+                    content.classList.add('hidden');
+                }
+            });
+
+            // Show selected subcategory content
+            document.getElementById(`teaching-${subcategory}`).classList.add('active');
+            document.getElementById(`teaching-${subcategory}`).classList.remove('hidden');
+
+            // Update subcategory buttons
+            document.querySelectorAll('.subcategory-btn').forEach(btn => {
+                if (btn.dataset.subcategory === subcategory) {
+                    btn.classList.add('active', 'bg-[#ffd368]', 'text-[#39353f]');
+                    btn.classList.remove('bg-gray-100', 'text-[#39353f]');
+                } else {
+                    btn.classList.remove('active', 'bg-[#ffd368]', 'text-[#39353f]');
+                    btn.classList.add('bg-gray-100', 'text-[#39353f]');
+                }
+            });
+        }
+
+        // Initialize with Teaching Enhancement and Text & Teaching Aids selected
+        document.addEventListener('DOMContentLoaded', function() {
+            switchMainCategory('teaching');
+        });
+    </script>
+
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "815acc2e10b44841a90f1ff1da46d26b"}'></script>
+    <!-- End Cloudflare Web Analytics -->
+</body>
+</html> 

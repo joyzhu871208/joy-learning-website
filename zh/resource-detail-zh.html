@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resource Detail - Joy Learning</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- PDF.js CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.4.120/web/pdf_viewer.min.css" rel="stylesheet">
+    <style>
+      /* Base styles */
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        line-height: 1.6;
+        color: #39353f;
+      }
+      
+      /* Card styles with hover effect */
+      .card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 0.75rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+      
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+      }
+      
+      /* Button style */
+      .btn-primary {
+        display: inline-block;
+        background-color: #ffd368;
+        color: #39353f;
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.5rem;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        text-align: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      
+      .btn-primary:hover {
+        background-color: #e6be5e;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      }
+
+      .btn-secondary {
+        display: inline-block;
+        background-color: #39353f;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.5rem;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        text-align: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      
+      .btn-secondary:hover {
+        background-color: #4a4550;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      }
+      
+      /* PDF preview container */
+      .pdf-preview {
+        display: none;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.5rem;
+        background-color: #f9fafb;
+        margin-top: 1rem;
+        height: 500px;
+        overflow: hidden;
+      }
+      
+      .pdf-preview.active {
+        display: block;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="flex justify-between items-center h-16">
+          <div class="text-lg md:text-xl font-bold text-[#39353f]">Joy AI助力教师</div>
+          <nav class="hidden md:flex space-x-4">
+            <a href="ai-home-zh.html" class="font-bold text-base text-[#39353f] hover:text-[#ffd368] transition-colors duration-200">首页</a>
+            <a href="ai-about-zh.html" class="font-bold text-base text-[#39353f] hover:text-[#ffd368] transition-colors duration-200">关于我们</a>
+            <a href="ai-resources-zh.html" class="font-bold text-base text-[#ffd368]">资源</a>
+            <a href="ai-contact-zh.html" class="font-bold text-base text-[#39353f] hover:text-[#ffd368] transition-colors duration-200">联系我们</a>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 py-8">
+      <!-- Back to Resources Link -->
+      <a href="ai-resources-zh.html" class="inline-flex items-center text-[#ffd368] mb-6 hover:underline">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+        </svg>
+        返回资源页
+      </a>
+      
+      <!-- Resource Header -->
+      <div class="card mb-8">
+        <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
+          <div class="text-4xl md:text-5xl" id="resourceIcon">📝</div>
+          <div>
+            <h1 class="text-3xl font-bold mb-2" id="resourceTitle"></h1>
+            <p class="text-[#39353f] text-opacity-80" id="resourceDescription"></p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Resource Content -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Main Content -->
+        <div class="md:col-span-2">
+          <!-- Introduction -->
+          <div class="card mb-8">
+            <h2 class="text-xl font-semibold mb-4">简介</h2>
+            <p class="mb-4 whitespace-pre-line" id="resourceIntroduction"></p>
+          </div>
+          
+          <!-- Video Tutorial -->
+          <div class="card mb-8">
+            <h2 class="text-xl font-semibold mb-4">视频教程</h2>
+            <div class="relative w-full" style="padding-top: 56.25%;">
+              <iframe id="videoFrame" class="absolute top-0 left-0 w-full h-full rounded-xl" frameborder="0" allowfullscreen></iframe>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Sidebar -->
+        <div>
+          <!-- Download Options -->
+          <div class="card mb-8">
+            <h2 class="text-xl font-semibold mb-4">下载资源</h2>
+            
+            <!-- Prompt Template Download -->
+            <div class="mb-4">
+              <h3 class="font-medium mb-2">提示词模板</h3>
+              <p class="text-sm text-[#39353f] text-opacity-70 mb-4">下载PDF格式的提示词模板</p>
+              <a id="promptDownload" href="#" class="btn-primary block w-full">下载提示词模板</a>
+            </div>
+
+            <!-- Game Template Download -->
+            <div class="mb-4">
+              <h3 class="font-medium mb-2">游戏模板</h3>
+              <p class="text-sm text-[#39353f] text-opacity-70 mb-4">下载TXT格式的游戏模板</p>
+              <a id="gameDownload" href="#" class="btn-primary block w-full">下载游戏模板</a>
+            </div>
+          </div>
+          
+          <!-- Related Resources -->
+          <div class="card">
+            <h2 class="text-xl font-semibold mb-4">相关推荐</h2>
+            <ul id="relatedResourcesList" class="space-y-3">
+              <!-- Dynamically filled -->
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center py-6 text-sm text-gray-400">
+      © 2025 Joy AI for Teachers. All rights reserved.
+    </footer>
+    
+    <!-- Resource Data -->
+    <script src="../js/resource-data.js"></script>
+    
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        // Get resource ID from URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const resourceId = urlParams.get('id');
+        
+        // Load resource data
+        const resource = resourceDetails[resourceId];
+        if (!resource) {
+          window.location.href = 'ai-resources-zh.html';
+          return;
+        }
+        
+        // Set page content
+        document.getElementById('resourceTitle').textContent = resource.title;
+        document.getElementById('resourceDescription').textContent = resource.description;
+        document.getElementById('resourceIntroduction').textContent = resource.introduction;
+        document.getElementById('videoFrame').src = resource.videoUrl;
+        
+        // Set up prompt template download
+        const promptDownload = document.getElementById('promptDownload');
+        if (promptDownload) {
+          promptDownload.addEventListener('click', (e) => {
+            e.preventDefault();
+            const promptPath = '../' + resource.promptTemplate;
+            window.open(promptPath, '_blank');
+          });
+        }
+
+        // Set up game template download
+        const gameDownload = document.getElementById('gameDownload');
+        if (gameDownload) {
+          gameDownload.addEventListener('click', (e) => {
+            e.preventDefault();
+            const gamePath = '../' + resource.gameTemplate;
+            window.open(gamePath, '_blank');
+          });
+        }
+
+        // Hide buttons if resources are not available
+        if (!resource.promptTemplate) {
+          promptDownload.style.display = 'none';
+        }
+        if (!resource.gameTemplate) {
+          gameDownload.style.display = 'none';
+          }
+        
+        // Fill related resources
+        const relatedList = document.getElementById('relatedResourcesList');
+        resource.relatedResources.forEach(related => {
+          const li = document.createElement('li');
+          li.innerHTML = `
+            <a href="resource-detail-zh.html?id=${related.id}" class="block hover:bg-gray-50 p-3 rounded-lg">
+              <h3 class="font-medium text-[#39353f]">${related.title}</h3>
+              <p class="text-sm text-[#39353f] text-opacity-70">${related.description}</p>
+            </a>
+          `;
+          relatedList.appendChild(li);
+        });
+      });
+    </script>
+  </body>
+</html> 

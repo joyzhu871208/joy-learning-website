@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AI教学资源 - Joy Learning</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <!-- Add Swiper's CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <style>
+        /* 导入字体 */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap');
+        @font-face {
+            font-family: 'OPPO Sans';
+            src: url('https://cdn.jsdelivr.net/gh/wordshub/free-font/assets/font/OPPOSans/OPPOSans-R.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'OPPO Sans';
+            src: url('https://cdn.jsdelivr.net/gh/wordshub/free-font/assets/font/OPPOSans/OPPOSans-B.ttf') format('truetype');
+            font-weight: bold;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'LXGWWenKai';
+            src: url('https://cdn.jsdelivr.net/gh/chawyehsu/lxgw-wenkai-webfont@latest/dist/LXGWWenKai-Regular.woff2') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+        
+        /* 基础字体设置 */
+        body {
+            font-family: 'LXGWWenKai', -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+        }
+
+        /* 标题字体特殊样式 */
+        h1, h2, h3, .section-title, .font-bold {
+            font-family: 'OPPO Sans', 'Noto Sans SC', sans-serif;
+            letter-spacing: -0.02em;
+        }
+
+        /* 副标题样式 */
+        .subtitle, nav a, .text-lg {
+            font-family: 'Noto Sans SC', 'OPPO Sans', sans-serif;
+            letter-spacing: 0.01em;
+        }
+
+        /* 正文文本样式优化 */
+        p, .text-base, .text-sm {
+            font-family: 'LXGWWenKai', 'Noto Sans SC', sans-serif;
+            line-height: 1.8;
+            letter-spacing: 0.02em;
+        }
+
+        .custom-bg {
+            background-color: #ffd368;
+        }
+        .card-shadow {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+        .tool-card {
+            transition: all 0.3s ease;
+        }
+        .tool-card:hover {
+            transform: translateY(-5px);
+        }
+        .swiper-container {
+            width: 100%;
+            padding-top: 50px;
+            padding-bottom: 50px;
+        }
+        .swiper-slide {
+            background-position: center;
+            background-size: cover;
+            width: 300px;
+            height: 400px;
+        }
+        .speech-bubble {
+            position: relative;
+            background: #ffffff;
+            border-radius: 1rem;
+            padding: 1rem;
+        }
+        .speech-bubble:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 20%;
+            border: 20px solid transparent;
+            border-top-color: #ffffff;
+            border-bottom: 0;
+            margin-bottom: -20px;
+        }
+        .category-content {
+            display: none;
+        }
+        .category-content.active {
+            display: block;
+        }
+        .category-btn.active {
+            color: #39353f;
+            border-bottom: 2px solid #ffd368;
+        }
+        .subcategory-btn.active {
+            background-color: #ffd368;
+            color: #39353f;
+        }
+        .view-details-btn {
+            background-color: #39353f;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .view-details-btn:hover {
+            background-color: #ffd368;
+            color: #39353f;
+        }
+        .difficulty-badge-beginner {
+            background-color: #e8f5e9;
+            color: #39353f;
+        }
+        .difficulty-badge-intermediate {
+            background-color: #ffd368;
+            color: #39353f;
+        }
+    </style>    
+</head>
+
+<body class="bg-white text-gray-900 font-sans">
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="text-lg md:text-xl font-bold">
+                    <a href="../index-ch.html" class="hover:text-yellow-500">Joy AI助力教师</a>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-4">
+                    <a href="ai-home-zh.html" class="font-bold text-base text-[#39353f] hover:text-[#ffd368] transition-colors duration-200">首页</a>
+                    <a href="ai-about-zh.html" class="font-bold text-base text-[#39353f] hover:text-[#ffd368] transition-colors duration-200">关于我们</a>
+                    <a href="ai-resources-zh.html" class="font-bold text-base text-[#ffd368] active:text-[#ffd368]">免费资源</a>
+                    <a href="ai-contact-zh.html" class="font-bold text-base text-[#39353f] hover:text-[#ffd368] transition-colors duration-200">联系我们</a>
+                </nav>
+
+                <!-- Mobile menu button -->
+                <button class="md:hidden p-2 text-[#39353f]" onclick="toggleMobileMenu()">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Navigation -->
+            <div id="mobile-menu" class="mobile-menu md:hidden pb-4 hidden">
+                <a href="ai-home-zh.html" class="block py-2 px-4 text-sm font-bold hover:bg-gray-100 text-[#39353f]">首页</a>
+                <a href="ai-about-zh.html" class="block py-2 px-4 text-sm font-bold hover:bg-gray-100 text-[#39353f]">关于我们</a>
+                <a href="ai-resources-zh.html" class="block py-2 px-4 text-sm font-bold bg-gray-100 text-[#ffd368]">免费资源</a>
+                <a href="ai-contact-zh.html" class="block py-2 px-4 text-sm font-bold hover:bg-gray-100 text-[#39353f]">联系我们</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="py-16 md:py-24 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-6xl font-black mb-6 text-[#39353f]">
+                    <span class="text-yellow-400">AI工具</span>改变教学
+                </h1>
+                <p class="text-[#39353f] text-opacity-80 text-lg md:text-xl max-w-3xl mx-auto">
+                    探索我们精心策划的免费资源，提升您的教学体验
+                </p>
+            </div>
+
+            <!-- Swiper -->
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <!-- Deepseek Card -->
+                    <div class="swiper-slide bg-white rounded-2xl overflow-hidden card-shadow">
+                        <div class="relative h-full">
+                            <img src="../images/deepseek.jpg" alt="AI写作" class="w-full h-2/3 object-cover">
+                            <div class="absolute bottom-8 left-4 right-4">
+                                <div class="speech-bubble">
+                                    <h3 class="font-bold text-xl mb-2">Deepseek</h3>
+                                    <p class="text-gray-600">您的AI教学助手</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Canva Card -->
+                    <div class="swiper-slide bg-white rounded-2xl overflow-hidden card-shadow">
+                        <div class="relative h-full">
+                            <img src="../images/canva.png" alt="设计" class="w-full h-2/3 object-cover">
+                            <div class="absolute bottom-8 left-4 right-4">
+                                <div class="speech-bubble">
+                                    <h3 class="font-bold text-xl mb-2">Canva</h3>
+                                    <p class="text-gray-600">专业级设计工具</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Videoscribe Card -->
+                    <div class="swiper-slide bg-white rounded-2xl overflow-hidden card-shadow">
+                        <div class="relative h-full">
+                            <img src="../images/VideoScribe.gif" alt="设计" class="w-full h-2/3 object-cover">
+                            <div class="absolute bottom-8 left-4 right-4">
+                                <div class="speech-bubble">
+                                    <h3 class="font-bold text-xl mb-2">VideoScribe</h3>
+                                    <p class="text-gray-600">创建动画视频</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CapCut Card -->
+                    <div class="swiper-slide bg-white rounded-2xl overflow-hidden card-shadow">
+                        <div class="relative h-full">
+                            <img src="../images/capcut.png" alt="视频编辑" class="w-full h-2/3 object-cover">
+                            <div class="absolute bottom-8 left-4 right-4">
+                                <div class="speech-bubble">
+                                    <h3 class="font-bold text-xl mb-2">剪映</h3>
+                                    <p class="text-gray-600">制作精彩视频</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add Navigation -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Navigation -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <!-- Main Categories -->
+            <div class="flex justify-center space-x-8 border-b border-gray-200 mb-8">
+                <button onclick="switchMainCategory('teaching')" class="text-xl font-bold text-[#39353f] pb-4 border-b-2 border-[#ffd368] category-btn active" data-category="teaching">
+                    教学提升
+                </button>
+                <button onclick="switchMainCategory('professional')" class="text-xl font-bold text-[#39353f] text-opacity-60 pb-4 hover:text-opacity-100 category-btn" data-category="professional">
+                    专业发展
+                </button>
+            </div>
+
+            <!-- Sub Categories for Teaching Enhancement -->
+            <div id="teaching-subcategories" class="flex justify-center space-x-4 mb-12">
+                <button onclick="switchSubCategory('text')" class="px-4 py-2 bg-[#ffd368] text-[#39353f] rounded-full text-sm font-medium subcategory-btn active" data-subcategory="text">
+                    文本与教学辅助
+                </button>
+                <button onclick="switchSubCategory('design')" class="px-4 py-2 bg-gray-100 text-[#39353f] text-opacity-60 rounded-full text-sm font-medium hover:bg-gray-200 subcategory-btn" data-subcategory="design">
+                    设计与编辑
+                </button>
+                <button onclick="switchSubCategory('video')" class="px-4 py-2 bg-gray-100 text-[#39353f] text-opacity-60 rounded-full text-sm font-medium hover:bg-gray-200 subcategory-btn" data-subcategory="video">
+                    视频创作
+                </button>
+            </div>
+
+            <!-- Content Sections -->
+            <!-- Teaching Enhancement - Text & Teaching Aids -->
+            <div id="teaching-text" class="category-content active">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Deepseek Card -->
+                    <div class="bg-white rounded-2xl overflow-hidden card-shadow">
+                        <img src="../images/历史盲盒b站封面.jpg" alt="AI游戏" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-bold text-xl">Deepseek生成历史盲盒游戏</h3>
+                            </div>
+                            <p class="text-gray-600 mb-4">学习如何使用Deepseek高效创建历史盲盒游戏</p>
+                            <a href="resource-detail-zh.html?id=deepseek-game-tutorial" class="inline-block view-details-btn px-6 py-2 rounded-full text-sm font-bold">
+                                查看详情
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Deepseek Card -->
+                    <div class="bg-white rounded-2xl overflow-hidden card-shadow">
+                        <img src="../images/口算b站封面.jpg" alt="Deepseek制作课堂游戏" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-bold text-xl">DeepSeek制作数学口算对战游戏教程</h3>
+                            </div>
+                            <p class="text-gray-600 mb-4">使用DeepSeek高效创建数学口算对战游戏</p>
+                            <a href="resource-detail-zh.html?id=deepseek-math-battle" class="inline-block view-details-btn px-6 py-2 rounded-full text-sm font-bold">
+                                查看详情
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Deepseek Card -->
+                    <div class="bg-white rounded-2xl overflow-hidden card-shadow">
+                        <img src="../images/班级考情分析b站封面.jpg" alt="Deepseek制作课堂游戏" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-bold text-xl">DeepSeek班级考情分析提示词怎么写</h3>
+                            </div>
+                            <p class="text-gray-600 mb-4">使用DeepSeek高效分析班级考情</p>
+                            <a href="resource-detail-zh.html?id=deepseek-exam-analysis" class="inline-block view-details-btn px-6 py-2 rounded-full text-sm font-bold">
+                                查看详情
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Deepseek Card -->
+                    <div class="bg-white rounded-2xl overflow-hidden card-shadow">
+                        <img src="../images/历史对战游戏b站封面.jpg" alt="Deepseek制作课堂游戏" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-bold text-xl">DeepSeek制作历史知识竞赛游戏教程</h3>
+                            </div>
+                            <p class="text-gray-600 mb-4">学习如何使用DeepSeek制作历史知识竞赛游戏</p>
+                            <a href="resource-detail-zh.html?id=deepseek-history-quiz" class="inline-block view-details-btn px-6 py-2 rounded-full text-sm font-bold">
+                                查看详情
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Canva Card -->
+                    <div class="bg-white rounded-2xl overflow-hidden card-shadow">
+                        <img src="../images/canva教程01b站封面.jpg" alt="Canva批量创建" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-bold text-xl">Canva批量创建教学资源</h3>
+                            </div>
+                            <p class="text-gray-600 mb-4">掌握Canva批量创建教学内容和活动的技巧</p>
+                            <a href="resource-detail-zh.html?id=canva-bulk-creation" class="inline-block view-details-btn px-6 py-2 rounded-full text-sm font-bold">
+                                查看详情
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Notion Card -->
+                    <div class="bg-white rounded-2xl overflow-hidden card-shadow">
+                        <img src="../images/Coming Soon.jpg" alt="Notion" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-bold text-xl">Notion课程管理</h3>
+                            </div>
+                            <p class="text-gray-600 mb-4">使用Notion高效组织您的教学材料和资源</p>
+                            <a href="#" class="inline-block view-details-btn px-6 py-2 rounded-full text-sm font-bold">
+                                查看详情
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Teaching Enhancement - Design & Edit -->
+            <div id="teaching-design" class="category-content hidden">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Canva Card -->
+                    <div class="bg-white rounded-2xl overflow-hidden card-shadow">
+                        <img src="../images/canva教程01b站封面.jpg" alt="Canva" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-bold text-xl">Canva批量创建教学资源</h3>
+                            </div>
+                            <p class="text-gray-600 mb-4">掌握Canva批量创建教学内容和活动的技巧</p>
+                            <a href="resource-detail-zh.html?id=canva-bulk-creation" class="inline-block view-details-btn px-6 py-2 rounded-full text-sm font-bold">
+                                查看详情
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Midjourney Card -->
+                    <div class="bg-white rounded-2xl overflow-hidden card-shadow">
+                        <img src="../images/Coming Soon.jpg" alt="Midjourney" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-bold text-xl">教育版Midjourney</h3>
+                            </div>
+                            <p class="text-gray-600 mb-4">使用AI创建独特的教育插图</p>
+                            <a href="#" class="inline-block view-details-btn px-6 py-2 rounded-full text-sm font-bold">
+                                查看详情
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Teaching Enhancement - Video Creation -->
+            <div id="teaching-video" class="category-content hidden">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- CapCut Card -->
+                    <div class="bg-white rounded-2xl overflow-hidden card-shadow">
+                        <img src="../images/Coming Soon.jpg" alt="CapCut" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-bold text-xl">CapCut教学应用</h3>
+                            </div>
+                            <p class="text-gray-600 mb-4">轻松创建引人入胜的教学视频</p>
+                            <a href="#" class="inline-block view-details-btn px-6 py-2 rounded-full text-sm font-bold">
+                                查看详情
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Professional Development -->
+            <div id="professional-content" class="category-content hidden">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- AI Teaching Skills Card -->
+                    <div class="bg-white rounded-2xl overflow-hidden card-shadow">
+                        <img src="../images/Coming Soon.jpg" alt="AI教学" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-bold text-xl">AI教学技能</h3>
+                                <span class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm">即将推出</span>
+                            </div>
+                            <p class="text-gray-600 mb-4">掌握现代教学所需的AI工具和技巧</p>
+                            <a href="#" class="inline-block view-details-btn px-6 py-2 rounded-full text-sm font-bold">
+                                查看详情
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Digital Pedagogy Card -->
+                    <div class="bg-white rounded-2xl overflow-hidden card-shadow">
+                        <img src="../images/Coming Soon.jpg" alt="数字教学法" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-bold text-xl">数字教学法</h3>
+                                <span class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm">即将推出</span>
+                            </div>
+                            <p class="text-gray-600 mb-4">用数字工具和策略提升您的教学方法</p>
+                            <a href="#" class="inline-block view-details-btn px-6 py-2 rounded-full text-sm font-bold">
+                                查看详情
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Educational Technology Card -->
+                    <div class="bg-white rounded-2xl overflow-hidden card-shadow">
+                        <img src="../images/Coming Soon.jpg" alt="教育技术" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="font-bold text-xl">教育技术</h3>
+                                <span class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm">即将推出</span>
+                            </div>
+                            <p class="text-gray-600 mb-4">了解最新的教育技术发展趋势</p>
+                            <a href="#" class="inline-block view-details-btn px-6 py-2 rounded-full text-sm font-bold">
+                                查看详情
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 md:py-12 px-4 md:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-8 md:mb-12">
+                <h3 class="text-xl md:text-2xl font-bold mb-4 md:mb-6">更多信息</h3>
+                <p class="text-gray-400 text-sm md:text-base mb-6 md:mb-8">及时了解我们最新的学习技巧和工具！</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8">
+                <div>
+                    <h3 class="text-base md:text-lg font-semibold mb-3 md:mb-4">Joy Learning</h3>
+                    <p class="text-gray-400 text-sm md:text-base">英语、教学和终身学习的资源平台。</p>
+                </div>
+                <div>
+                    <h3 class="text-base md:text-lg font-semibold mb-3 md:mb-4">快速链接</h3>
+                    <ul class="space-y-2">
+                        <li><a href="ai-home-zh.html" class="text-gray-400 hover:text-yellow-500 text-sm md:text-base">首页</a></li>
+                        <li><a href="ai-contact-zh.html" class="text-gray-400 hover:text-yellow-500 text-sm md:text-base">联系我们</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-base md:text-lg font-semibold mb-3 md:mb-4">探索</h3>
+                    <ul class="space-y-2">
+                        <li><a href="https://www.xiaohongshu.com/user/profile/67f36760000000000d008455" class="text-gray-400 hover:text-yellow-500 text-sm md:text-base">小红书</a></li>
+                        <li><a href="https://space.bilibili.com/3546894768802257?spm_id_from=333.1007.0.0" class="text-gray-400 hover:text-yellow-500 text-sm md:text-base">Bilibili</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-base md:text-lg font-semibold mb-3 md:mb-4">联系方式</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center justify-center md:justify-start">
+                            <i class="fas fa-envelope text-yellow-500 mr-2"></i>
+                            <a href="mailto:joyzhu1020@gmail.com" class="text-gray-400 hover:text-yellow-500 text-sm md:text-base">joyzhu1020@gmail.com</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-6 md:mt-8 pt-6 md:pt-8 text-center text-gray-400">
+                <p class="text-sm md:text-base">&copy; 2025 Joy Learning. 保留所有权利。</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Add Swiper JS -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+        // Initialize Swiper
+        var swiper = new Swiper('.swiper-container', {
+            effect: 'coverflow',
+            grabCursor: true,
+            centeredSlides: true,
+            slidesPerView: 'auto',
+            coverflowEffect: {
+                rotate: 50,
+                stretch: 0,
+                depth: 100,
+                modifier: 1,
+                slideShadows: true,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            }
+        });
+
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        }
+
+        function switchMainCategory(category) {
+            // Hide all content sections
+            document.querySelectorAll('.category-content').forEach(content => {
+                content.classList.remove('active');
+                content.classList.add('hidden');
+            });
+
+            // Update main category buttons
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                if (btn.dataset.category === category) {
+                    btn.classList.add('active');
+                    btn.style.color = '#39353f';
+                    btn.style.borderBottom = '2px solid #ffd368';
+                } else {
+                    btn.classList.remove('active');
+                    btn.style.color = '#39353f';
+                    btn.style.borderBottom = 'none';
+                }
+            });
+
+            // Show/hide subcategories and content
+            const teachingSubcategories = document.getElementById('teaching-subcategories');
+            if (category === 'teaching') {
+                teachingSubcategories.classList.remove('hidden');
+                document.getElementById('teaching-text').classList.remove('hidden');
+                document.getElementById('teaching-text').classList.add('active');
+                document.getElementById('professional-content').classList.add('hidden');
+                document.getElementById('professional-content').classList.remove('active');
+            } else {
+                teachingSubcategories.classList.add('hidden');
+                document.getElementById('professional-content').classList.remove('hidden');
+                document.getElementById('professional-content').classList.add('active');
+                document.querySelectorAll('[id^="teaching-"]').forEach(content => {
+                    if (content.id !== 'teaching-subcategories') {
+                        content.classList.add('hidden');
+                        content.classList.remove('active');
+                    }
+                });
+            }
+
+            // Reset subcategory buttons if in teaching category
+            if (category === 'teaching') {
+                document.querySelectorAll('.subcategory-btn').forEach(btn => {
+                    if (btn.dataset.subcategory === 'text') {
+                        btn.classList.add('active', 'bg-[#ffd368]');
+                    } else {
+                        btn.classList.remove('active');
+                        btn.classList.add('bg-gray-100');
+                    }
+                });
+            }
+        }
+
+        function switchSubCategory(subcategory) {
+            // Hide all teaching content sections
+            document.querySelectorAll('[id^="teaching-"]').forEach(content => {
+                if (content.id !== 'teaching-subcategories') {
+                    content.classList.remove('active');
+                    content.classList.add('hidden');
+                }
+            });
+
+            // Show selected subcategory content
+            document.getElementById(`teaching-${subcategory}`).classList.add('active');
+            document.getElementById(`teaching-${subcategory}`).classList.remove('hidden');
+
+            // Update subcategory buttons
+            document.querySelectorAll('.subcategory-btn').forEach(btn => {
+                if (btn.dataset.subcategory === subcategory) {
+                    btn.classList.add('active', 'bg-[#ffd368]', 'text-[#39353f]');
+                    btn.classList.remove('bg-gray-100', 'text-[#39353f]');
+                } else {
+                    btn.classList.remove('active', 'bg-[#ffd368]', 'text-[#39353f]');
+                    btn.classList.add('bg-gray-100', 'text-[#39353f]');
+                }
+            });
+        }
+
+        // Initialize with Teaching Enhancement and Text & Teaching Aids selected
+        document.addEventListener('DOMContentLoaded', function() {
+            switchMainCategory('teaching');
+        });
+    </script>
+
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "815acc2e10b44841a90f1ff1da46d26b"}'></script>
+    <!-- End Cloudflare Web Analytics -->
+</body>
+</html> 

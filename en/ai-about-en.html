@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About Joy - AI Education Expert</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <style>
+    .custom-bg {
+      background-color: #ffd368;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .float-animation {
+      animation: float 3s ease-in-out infinite;
+    }
+  </style>
+</head>
+
+<body class="bg-white text-gray-900 font-sans">
+
+<!-- Header -->
+<header class="bg-white shadow-md sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4">
+    <div class="flex justify-between items-center h-16">
+      <!-- Logo -->
+      <div class="text-lg md:text-xl font-bold">
+        <a href="../index-en.html" class="hover:text-yellow-500">Joy AI for Teachers</a>
+      </div>
+      
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex space-x-4">
+        <a href="ai-home-en.html" class="font-bold text-base hover:text-yellow-500">Home</a>
+        <a href="ai-about-en.html" class="font-bold text-base text-yellow-500">About</a>
+        <a href="ai-resources-en.html" class="font-bold text-base hover:text-yellow-500">Resources</a>
+        <a href="ai-contact-en.html" class="font-bold text-base hover:text-yellow-500">Contact</a>
+      </nav>
+
+      <!-- Mobile menu button -->
+      <button class="md:hidden p-2" onclick="toggleMobileMenu()">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <div id="mobile-menu" class="mobile-menu md:hidden pb-4 hidden">
+      <a href="ai-home-en.html" class="block py-2 px-4 text-sm font-bold hover:bg-gray-100">Home</a>
+      <a href="ai-about-en.html" class="block py-2 px-4 text-sm font-bold bg-gray-100">About</a>
+      <a href="ai-resources-en.html" class="block py-2 px-4 text-sm font-bold hover:bg-gray-100">Resources</a>
+      <a href="ai-contact-en.html" class="block py-2 px-4 text-sm font-bold hover:bg-gray-100">Contact</a>
+    </div>
+  </div>
+</header>
+
+<!-- Hero Section -->
+<section class="py-16 md:py-24 overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 md:px-8">
+    <div class="grid md:grid-cols-2 gap-8 items-center">
+      <!-- Text Content -->
+      <div class="text-left md:pr-8">
+        <div class="inline-block custom-bg rounded-full px-4 py-1 text-sm md:text-base text-black mb-6">
+          AI Education Expert & Teacher Trainer
+        </div>
+        <h1 class="text-4xl md:text-6xl font-black mb-6 leading-tight">
+          Bridging <span class="text-yellow-400">AI Technology</span> with Teaching Excellence
+        </h1>
+        <p class="text-gray-600 text-lg md:text-xl mb-8 leading-relaxed">
+          With 13+ years of teaching experience and deep expertise in AI integration, I help educators transform their teaching methods and embrace the future of education.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href="school-workshop-en.html" class="bg-black text-white px-8 py-3 rounded-full text-base md:text-lg font-bold hover:transform hover:scale-105 transition-transform inline-flex items-center">
+            Book a Workshop
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/>
+            </svg>
+          </a>
+          <a href="ai-contact-en.html" class="bg-white border-2 border-black text-black px-8 py-3 rounded-full text-base md:text-lg font-bold hover:bg-gray-50 transition-colors">
+            Learn More
+          </a>
+        </div>
+      </div>
+      
+      <!-- Hero Image -->
+      <div class="relative">
+        <div class="absolute -top-10 -right-10 w-40 h-40 bg-yellow-400 rounded-full opacity-50 blur-3xl"></div>
+        <div class="relative z-10 transform hover:-rotate-2 transition-transform duration-300">
+          <img src="../images/joyteach.png" alt="Joy Teaching" class="rounded-3xl shadow-2xl w-full">
+          <div class="absolute -bottom-6 -right-6 bg-white p-4 rounded-2xl shadow-lg transform rotate-3">
+            <p class="text-sm md:text-base font-medium">Empowering Teachers with AI 🚀</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Experience Showcase -->
+<section class="py-16 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 md:px-8">
+    <div class="grid md:grid-cols-3 gap-8">
+      <!-- AI Education Expert -->
+      <div class="bg-white rounded-2xl shadow-lg p-8 transform hover:-translate-y-2 transition-transform">
+        <div class="w-16 h-16 custom-bg rounded-full flex items-center justify-center mb-6">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold mb-4">AI Education Expert</h3>
+        <p class="text-gray-600">Helping teachers harness the power of AI tools to enhance their teaching effectiveness and student engagement.</p>
+      </div>
+
+      <!-- Teaching Experience -->
+      <div class="bg-white rounded-2xl shadow-lg p-8 transform hover:-translate-y-2 transition-transform">
+        <div class="w-16 h-16 custom-bg rounded-full flex items-center justify-center mb-6">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold mb-4">13+ Years Experience</h3>
+        <p class="text-gray-600">Rich experience in teaching and teacher training, bringing practical insights and proven methodologies.</p>
+      </div>
+
+      <!-- EdTech Integration -->
+      <div class="bg-white rounded-2xl shadow-lg p-8 transform hover:-translate-y-2 transition-transform">
+        <div class="w-16 h-16 custom-bg rounded-full flex items-center justify-center mb-6">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold mb-4">EdTech Integration</h3>
+        <p class="text-gray-600">Seamlessly integrating technology into teaching practices, making AI tools accessible and practical for educators.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services Section -->
+<section class="py-16 md:py-24">
+  <div class="max-w-7xl mx-auto px-4 md:px-8">
+    <h2 class="text-3xl md:text-5xl font-bold text-center mb-16">Services</h2>
+
+    <!-- School Workshops -->
+    <div class="grid md:grid-cols-2 gap-8 mb-20 items-center">
+      <div class="relative max-w-lg mx-auto md:mx-0">
+        <img src="../images/about1.png" alt="School Workshop" class="rounded-2xl shadow-lg w-full object-cover h-[300px]">
+        <div class="absolute -bottom-4 -right-4 bg-white p-3 rounded-xl shadow-md">
+          <span class="text-sm font-medium">Interactive Sessions 🎯</span>
+        </div>
+      </div>
+      <div class="md:pl-8">
+        <h3 class="text-2xl md:text-3xl font-bold mb-4">School Workshops</h3>
+        <p class="text-gray-600 mb-6">Customized training sessions designed to help your teaching staff master AI tools and integrate them effectively into their curriculum.</p>
+        <ul class="space-y-3 mb-8">
+          <li class="flex items-center">
+            <span class="w-6 h-6 custom-bg rounded-full flex items-center justify-center mr-3">✓</span>
+            <span>Hands-on AI tool training</span>
+          </li>
+          <li class="flex items-center">
+            <span class="w-6 h-6 custom-bg rounded-full flex items-center justify-center mr-3">✓</span>
+            <span>Practical implementation strategies</span>
+          </li>
+          <li class="flex items-center">
+            <span class="w-6 h-6 custom-bg rounded-full flex items-center justify-center mr-3">✓</span>
+            <span>Customized to your school's needs</span>
+          </li>
+        </ul>
+        <a href="school-workshop-en.html" class="inline-flex items-center text-black font-bold hover:text-yellow-500 transition-colors">
+          Learn More
+          <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- AI Training -->
+    <div class="grid md:grid-cols-2 gap-8 mb-20 items-center">
+      <div class="md:pr-8 order-2 md:order-1">
+        <h3 class="text-2xl md:text-3xl font-bold mb-4">AI Teaching Training</h3>
+        <p class="text-gray-600 mb-6">Comprehensive training programs that empower teachers to leverage AI tools effectively in their daily teaching practice.</p>
+        <ul class="space-y-3 mb-8">
+          <li class="flex items-center">
+            <span class="w-6 h-6 custom-bg rounded-full flex items-center justify-center mr-3">✓</span>
+            <span>AI tool mastery workshops</span>
+          </li>
+          <li class="flex items-center">
+            <span class="w-6 h-6 custom-bg rounded-full flex items-center justify-center mr-3">✓</span>
+            <span>Personalized guidance</span>
+          </li>
+          <li class="flex items-center">
+            <span class="w-6 h-6 custom-bg rounded-full flex items-center justify-center mr-3">✓</span>
+            <span>Ongoing support</span>
+          </li>
+        </ul>
+        <a href="ai-train-en.html" class="inline-flex items-center text-black font-bold hover:text-yellow-500 transition-colors">
+          Book Consultation
+          <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+          </svg>
+        </a>
+      </div>
+      <div class="relative max-w-lg mx-auto md:mx-0 order-1 md:order-2">
+        <img src="../images/about2.png" alt="AI Training" class="rounded-2xl shadow-lg w-full object-cover h-[300px]">
+        <div class="absolute -bottom-4 -left-4 bg-white p-3 rounded-xl shadow-md">
+          <span class="text-sm font-medium">Expert Guidance 🎓</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Teacher Development -->
+    <div class="grid md:grid-cols-2 gap-8 items-center">
+      <div class="relative max-w-lg mx-auto md:mx-0">
+        <img src="../images/about3.png" alt="Teacher Development" class="rounded-2xl shadow-lg w-full object-cover h-[300px]">
+        <div class="absolute -bottom-4 -right-4 bg-white p-3 rounded-xl shadow-md">
+          <span class="text-sm font-medium">Professional Growth 🌱</span>
+        </div>
+      </div>
+      <div class="md:pl-8">
+        <h3 class="text-2xl md:text-3xl font-bold mb-4">Teacher Development</h3>
+        <p class="text-gray-600 mb-6">Comprehensive professional development programs designed to enhance teaching skills and technological competency.</p>
+        <ul class="space-y-3 mb-8">
+          <li class="flex items-center">
+            <span class="w-6 h-6 custom-bg rounded-full flex items-center justify-center mr-3">✓</span>
+            <span>Skill enhancement workshops</span>
+          </li>
+          <li class="flex items-center">
+            <span class="w-6 h-6 custom-bg rounded-full flex items-center justify-center mr-3">✓</span>
+            <span>Technology integration training</span>
+          </li>
+          <li class="flex items-center">
+            <span class="w-6 h-6 custom-bg rounded-full flex items-center justify-center mr-3">✓</span>
+            <span>Professional growth support</span>
+          </li>
+        </ul>
+        <a href="teacher-development-en.html" class="inline-flex items-center text-black font-bold hover:text-yellow-500 transition-colors">
+          Learn More
+          <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Success Stories -->
+<section class="py-16 md:py-24 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 md:px-8">
+    <h2 class="text-3xl md:text-5xl font-bold text-center mb-16">Teachers' Comments</h2>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Story 1 -->
+      <div class="bg-white rounded-2xl shadow-lg p-8">
+        <div class="mb-6">
+          <h4 class="font-bold text-lg">Sarah Chen</h4>
+          <p class="text-sm text-gray-500">English Teacher, Middle School</p>
+        </div>
+        <p class="text-gray-600">"Joy's workshop transformed how our teachers approach technology in the classroom. The practical strategies and tools she shared are now an integral part of our daily teaching."</p>
+      </div>
+
+      <!-- Story 2 -->
+      <div class="bg-white rounded-2xl shadow-lg p-8">
+        <div class="mb-6">
+          <h4 class="font-bold text-lg">Michael Zhang</h4>
+          <p class="text-sm text-gray-500">Math Teacher, High School</p>
+        </div>
+        <p class="text-gray-600">"The AI integration training provided by Joy has significantly improved our teaching efficiency. Our students are more engaged, and our teachers feel more confident with technology."</p>
+      </div>
+
+      <!-- Story 3 -->
+      <div class="bg-white rounded-2xl shadow-lg p-8">
+        <div class="mb-6">
+          <h4 class="font-bold text-lg">Lisa Wang</h4>
+          <p class="text-sm text-gray-500">Principal, Middle School</p>
+        </div>
+        <p class="text-gray-600">"Joy's expertise in both teaching and AI technology has been invaluable. Her training sessions are practical, engaging, and immediately applicable in the classroom."</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-gray-800 text-white py-8 md:py-12 px-4 md:px-8">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-8 md:mb-12">
+      <h3 class="text-xl md:text-2xl font-bold mb-4 md:mb-6">More Information</h3>
+      <p class="text-gray-400 text-sm md:text-base mb-6 md:mb-8">Stay updated with our latest learning tips and tools!</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8">
+      <div>
+        <h3 class="text-base md:text-lg font-semibold mb-3 md:mb-4">Joy Learning</h3>
+        <p class="text-gray-400 text-sm md:text-base">Resources for English, teaching, and lifelong learning.</p>
+      </div>
+      <div>
+        <h3 class="text-base md:text-lg font-semibold mb-3 md:mb-4">Quick Links</h3>
+        <ul class="space-y-2">
+          <li><a href="#" class="text-gray-400 hover:text-yellow-500 text-sm md:text-base">Home</a></li>
+          <li><a href="#" class="text-gray-400 hover:text-yellow-500 text-sm md:text-base">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-base md:text-lg font-semibold mb-3 md:mb-4">Explore</h3>
+        <ul class="space-y-2">
+          <li><a href="https://www.xiaohongshu.com/user/profile/67f36760000000000d008455" class="text-gray-400 hover:text-yellow-500 text-sm md:text-base">Red Book</a></li>
+          <li><a href="https://space.bilibili.com/3546894768802257?spm_id_from=333.1007.0.0" class="text-gray-400 hover:text-yellow-500 text-sm md:text-base">Bilibili</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-base md:text-lg font-semibold mb-3 md:mb-4">Contact</h3>
+        <ul class="space-y-2">
+          <li class="flex items-center justify-center md:justify-start">
+            <i class="fas fa-envelope text-yellow-500 mr-2"></i>
+            <a href="mailto:joyzhu1020@gmail.com" class="text-gray-400 hover:text-yellow-500 text-sm md:text-base">joyzhu1020@gmail.com</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-gray-700 mt-6 md:mt-8 pt-6 md:pt-8 text-center text-gray-400">
+      <p class="text-sm md:text-base">&copy; 2025 Joy Learning. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleMobileMenu() {
+  const mobileMenu = document.getElementById('mobile-menu');
+  mobileMenu.classList.toggle('hidden');
+}
+</script>
+
+<!-- Cloudflare Web Analytics -->
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "815acc2e10b44841a90f1ff1da46d26b"}'></script>
+<!-- End Cloudflare Web Analytics -->
+</body>
+</html> 

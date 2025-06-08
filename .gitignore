@@ -1,0 +1,13 @@
+.DS_Store
+.Trash/
+.vscode/
+.idea/
+node_modules/
+*.log
+.cursor/
+.CFUserTextEncoding
+.npm/
+.ssh/
+.zprofile
+.zsh_history
+.zsh_sessions/ 
