@@ -211,6 +211,112 @@ Deepseek不仅仅是一个AI助手，它能成为你教学中的"游戏设计师
             }
         ]
     },
+    "deepseek-witch-poison": {
+        title: "Deepseek制作女巫的毒药游戏",
+        description: "5分钟掌握AI制作女巫的毒药游戏方法",
+        introduction: `这期视频我教你用 DeepSeek 5分钟生成一个"女巫的毒药游戏"👇
+
+🎯 神秘剧情 + 解谜挑战，学生玩到停不下来！
+
+✔️ 不会写代码 ✅
+✔️ 免费下载模板 ✅
+✔️ 自定义定制 ✅
+
+完整流程：
+- 设计神秘剧情背景
+- 一键生成游戏代码
+- 个性化定制（动画、奖励机制、画面优化）
+- 直接保存为 HTML 文件，随时本地运行！
+
+这不仅能帮老师们节省大量时间，更能让课堂变得神秘有趣！
+Deepseek不仅仅是一个AI助手，它能成为你教学中的"游戏设计师"，帮你在教学中融入趣味性和互动性。
+
+💡 适用人群：
+教师
+需要提升课堂趣味性的教育工作者
+想用科技改变传统教学方式的老师们
+
+📎 更多资源：
+在我的网站里，你还能找到更多教师专用工具教学、模板推荐和AI应用技巧，一起用科技点亮教育吧！
+别忘了关注我，获取更多实用教程哦～`,
+        videoUrl: "https://player.bilibili.com/player.html?bvid=BV1PLN8zpEvT&page=1&high_quality=1",
+        promptTemplate: "pdfs/女巫的毒药提示词.pdf",
+        gameTemplate: "pdfs/女巫的毒药提示词.pdf",
+        downloadLinks: {
+            prompt: "pdfs/女巫的毒药提示词.pdf",
+            template: "pdfs/女巫的毒药提示词.pdf"
+        },
+        relatedResources: [
+            {
+                id: "deepseek-exercise",
+                title: "使用Deepseek生成练习题",
+                description: "快速生成符合教学目标的练习题"
+            },
+            {
+                id: "deepseek-feedback",
+                title: "使用Deepseek生成学生反馈",
+                description: "为学生作业生成个性化反馈"
+            },
+            {
+                id: "chatgpt-lesson-plan",
+                title: "使用ChatGPT优化教案",
+                description: "使用ChatGPT完善和改进教案内容"
+            }
+        ]
+    },
+    "deepseek-vocabulary-flip": {
+        title: "Deepseek生词翻翻乐游戏",
+        description: "5分钟掌握AI生词翻翻乐游戏方法",
+        introduction: `这期视频我教你用 DeepSeek 5分钟生成一个"生词翻翻乐游戏"👇
+
+🎯 趣味翻牌 + 词汇记忆，学生玩到停不下来！
+
+✔️ 不会写代码 ✅
+✔️ 免费下载模板 ✅
+✔️ 自定义定制 ✅
+
+完整流程：
+- 导入生词列表
+- 一键生成翻牌游戏代码
+- 个性化定制（动画、奖励机制、画面优化）
+- 直接保存为 HTML 文件，随时本地运行！
+
+这不仅能帮老师们节省大量时间，更能让词汇学习变得生动有趣！
+Deepseek不仅仅是一个AI助手，它能成为你教学中的"游戏设计师"，帮你在教学中融入趣味性和互动性。
+
+💡 适用人群：
+语文教师、英语教师、班主任
+需要提升课堂趣味性的教育工作者
+想用科技改变传统教学方式的老师们
+
+📎 更多资源：
+在我的网站里，你还能找到更多教师专用工具教学、模板推荐和AI应用技巧，一起用科技点亮教育吧！
+别忘了关注我，获取更多实用教程哦～`,
+        videoUrl: "https://www.xiaohongshu.com/explore/685a950f000000000b02e9ac",
+        promptTemplate: "pdfs/生词翻翻乐提示词模板.pdf",
+        gameTemplate: "pdfs/生词翻翻乐提示词模板.pdf",
+        downloadLinks: {
+            prompt: "pdfs/生词翻翻乐提示词模板.pdf",
+            template: "pdfs/生词翻翻乐提示词模板.pdf"
+        },
+        relatedResources: [
+            {
+                id: "deepseek-exercise",
+                title: "使用Deepseek生成练习题",
+                description: "快速生成符合教学目标的练习题"
+            },
+            {
+                id: "deepseek-feedback",
+                title: "使用Deepseek生成学生反馈",
+                description: "为学生作业生成个性化反馈"
+            },
+            {
+                id: "chatgpt-lesson-plan",
+                title: "使用ChatGPT优化教案",
+                description: "使用ChatGPT完善和改进教案内容"
+            }
+        ]
+    },
     "canva-bulk-creation": {
         title: "Canva可画批量创建教学资源",
         description: "5分钟掌握AI批量创建教学资源技巧",
