@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joy's Reading Journey</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
+    <link rel="stylesheet" href="../css/reading.css">
+    <!-- Animate.css for smooth animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="navbar flex justify-between items-center p-6 shadow-md sticky top-0 bg-white z-50">
+        <h1 class="text-2xl font-bold">Joy Learning</h1>
+        <div class="nav-links flex items-center space-x-4">
+            <!-- English 按钮 -->
+            <span class="bg-black text-white px-4 py-1.5 rounded-full text-sm font-medium">
+                English
+            </span>
+
+            <!-- 中文按钮 -->
+            <a href="../zh/reading-zh.html" class="bg-yellow-400 text-black px-4 py-1.5 rounded-full text-sm font-medium hover:bg-yellow-300 transition">
+                中文
+            </a>
+        </div>
+        <!-- Mobile menu toggle -->
+        <button class="menu-toggle md:hidden">
+            <i class="fas fa-bars"></i>
+        </button>
+    </nav>
+
+    <!-- Title Section -->
+    <div class="text-center mt-16 mb-12">
+        <h1 class="text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-red-500 animate__animated animate__fadeIn">
+            Reading with JOY
+        </h1>
+        <p class="mt-4 text-gray-600 text-xl animate__animated animate__fadeIn animate__delay-1s">
+            <i class="fas fa-quote-left text-yellow-400 mr-2"></i>
+            Every book opens a new door to imagination
+            <i class="fas fa-quote-right text-yellow-400 ml-2"></i>
+        </p>
+    </div>
+
+    <!-- Hero Images Section -->
+    <section class="reading-hero-images">
+        <div class="swiper hero-swiper">
+            <div class="swiper-wrapper">
+                <!-- Slide 1 -->
+                <div class="swiper-slide">
+                    <div class="hero-slide">
+                        <img src="../images/reading-hero-1.png" alt="Reading Journey 1" class="slide-image">
+                        <div class="slide-content">
+                            <h2>Reading Journey</h2>
+                            <p>Books are lighthouses in the ocean of knowledge</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slide 2 -->
+                <div class="swiper-slide">
+                    <div class="hero-slide">
+                        <img src="../images/reading-hero-2.png" alt="Reading Journey 2" class="slide-image">
+                        <div class="slide-content">
+                            <h2>Book Collection</h2>
+                            <p>Sharing the books that shaped my thoughts</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slide 3 -->
+                <div class="swiper-slide">
+                    <div class="hero-slide">
+                        <img src="../images/reading-hero-3.png" alt="Reading Journey 3" class="slide-image">
+                        <div class="slide-content">
+                            <h2>Reading Time</h2>
+                            <p>A moment of peace in a busy world</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slide 4 -->
+                <div class="swiper-slide">
+                    <div class="hero-slide">
+                        <img src="../images/reading-hero-4.png" alt="Reading Journey 4" class="slide-image">
+                        <div class="slide-content">
+                            <h2>Book Reviews</h2>
+                            <p>Discover new perspectives through reading</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Navigation -->
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <!-- Pagination -->
+            <div class="swiper-pagination"></div>
+        </div>
+    </section>
+
+    <!-- Reading Videos Section -->
+    <section class="reading-videos-section py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">Reading Video Shares</h2>
+                <p class="text-xl text-gray-600">Sharing my reading insights and recommendations</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Video Card 1 -->
+                <div class="bg-white rounded-2xl overflow-hidden card-shadow tool-card" data-video-id="reading-video-1">
+                    <img src="../images/爱丽丝封面.jpg" alt="Reading Video 1" class="w-full">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-xl">"Alice in Wonderland" Reading Share</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">Alice's magical journey, exploring the unknown world</p>
+                        <a href="reading-detail-en.html?id=reading-video-1" class="view-video-btn px-6 py-2 rounded-full text-sm font-bold bg-yellow-400 text-black hover:bg-yellow-300 transition inline-block">
+                            Watch Video
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Video Card 2 -->
+                <div class="bg-white rounded-2xl overflow-hidden card-shadow tool-card" data-video-id="reading-video-2">
+                    <img src="../images/基层女性.jpg" alt="Reading Video 2" class="w-full">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-xl">"Grassroots Women" Reading Share</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">Essential reading list for women's growth and consciousness awakening</p>
+                        <a href="reading-detail-en.html?id=reading-video-2" class="view-video-btn px-6 py-2 rounded-full text-sm font-bold bg-yellow-400 text-black hover:bg-yellow-300 transition inline-block">
+                            Watch Video
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Video Card 3 -->
+                <div class="bg-white rounded-2xl overflow-hidden card-shadow tool-card" data-video-id="reading-video-3">
+                    <img src="../images/小春日和封面.jpg" alt="Reading Video 3" class="w-full">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-xl">"Little Spring Day" Reading Share</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">Japanese life aesthetics, experiencing the wisdom and warmth of slow living</p>
+                        <a href="reading-detail-en.html?id=reading-video-3" class="view-video-btn px-6 py-2 rounded-full text-sm font-bold bg-yellow-400 text-black hover:bg-yellow-300 transition inline-block">
+                            Watch Video
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Video Card 4 -->
+                <div class="bg-white rounded-2xl overflow-hidden card-shadow tool-card" data-video-id="reading-video-4">
+                    <img src="../images/柳比歇夫封面.jpg" alt="Reading Video 4" class="w-full">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-xl">"Strange Life" Time Management Share</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">Lyubishchev, the pioneer of time management - ultimate self-discipline is freedom</p>
+                        <a href="reading-detail-en.html?id=reading-video-4" class="view-video-btn px-6 py-2 rounded-full text-sm font-bold bg-yellow-400 text-black hover:bg-yellow-300 transition inline-block">
+                            Watch Video
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Video Card 5 -->
+                <div class="bg-white rounded-2xl overflow-hidden card-shadow tool-card" data-video-id="reading-video-5">
+                    <img src="../images/女性传记书单封面.jpg" alt="Reading Video 5" class="w-full">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-xl">Three Women's Biographies Recommendation</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">Not defined, not arranged - they taught me how to be human</p>
+                        <a href="reading-detail-en.html?id=reading-video-5" class="view-video-btn px-6 py-2 rounded-full text-sm font-bold bg-yellow-400 text-black hover:bg-yellow-300 transition inline-block">
+                            Watch Video
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Video Card 6 -->
+                <div class="bg-white rounded-2xl overflow-hidden card-shadow tool-card" data-video-id="reading-video-6">
+                    <img src="../images/醒来的女性封面.jpg" alt="Reading Video 6" class="w-full">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-xl">"The Awakening" Book Recommendation</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">Essential reading list for women's growth and consciousness awakening</p>
+                        <a href="reading-detail-en.html?id=reading-video-6" class="view-video-btn px-6 py-2 rounded-full text-sm font-bold bg-yellow-400 text-black hover:bg-yellow-300 transition inline-block">
+                            Watch Video
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Video Card 7 -->
+                <div class="bg-white rounded-2xl overflow-hidden card-shadow tool-card" data-video-id="reading-video-7">
+                    <img src="../images/八平米封面.jpg" alt="Reading Video 7" class="w-full">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-xl">"Tokyo 8 Square Meters" Book Recommendation</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">Lonely, lost, and small as we are, we always have the right to restart life</p>
+                        <a href="reading-detail-en.html?id=reading-video-7" class="view-video-btn px-6 py-2 rounded-full text-sm font-bold bg-yellow-400 text-black hover:bg-yellow-300 transition inline-block">
+                            Watch Video
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Video Card 8 -->
+                <div class="bg-white rounded-2xl overflow-hidden card-shadow tool-card" data-video-id="reading-video-8">
+                    <img src="../images/习惯的力量封面.jpg" alt="Reading Video 8" class="w-full">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-xl">"Atomic Habits" Book Recommendation</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">How to build habits? How to become addicted to self-discipline? Four steps to build habits</p>
+                        <a href="reading-detail-en.html?id=reading-video-8" class="view-video-btn px-6 py-2 rounded-full text-sm font-bold bg-yellow-400 text-black hover:bg-yellow-300 transition inline-block">
+                            Watch Video
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Video Card 9 -->
+                <div class="bg-white rounded-2xl overflow-hidden card-shadow tool-card" data-video-id="reading-video-9">
+                    <img src="../images/埃莉诺罗斯福封面.jpg" alt="Reading Video 9" class="w-full">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-xl">"The Story of My Life" Women's Biography</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">Life cannot be just about living - Eleanor Roosevelt's legendary life</p>
+                        <a href="reading-detail-en.html?id=reading-video-9" class="view-video-btn px-6 py-2 rounded-full text-sm font-bold bg-yellow-400 text-black hover:bg-yellow-300 transition inline-block">
+                            Watch Video
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Video Card 10 -->
+                <div class="bg-white rounded-2xl overflow-hidden card-shadow tool-card" data-video-id="reading-video-10">
+                    <img src="../images/松浦米太郎封面.jpg" alt="Reading Video 10" class="w-full">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-xl">Matsuura Yataro's Healing Book List</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">Life magnifying glass book list - healing life book list - keep living!</p>
+                        <a href="reading-detail-en.html?id=reading-video-10" class="view-video-btn px-6 py-2 rounded-full text-sm font-bold bg-yellow-400 text-black hover:bg-yellow-300 transition inline-block">
+                            Watch Video
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Video Card 11 -->
+                <div class="bg-white rounded-2xl overflow-hidden card-shadow tool-card" data-video-id="reading-video-11">
+                    <img src="../images/战争中没有女性封面.jpg" alt="Reading Video 11" class="w-full">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-xl">"War Has No Female Face" Book Recommendation</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">Small lives in grand narratives - Alexievich Nobel Prize in Literature</p>
+                        <a href="reading-detail-en.html?id=reading-video-11" class="view-video-btn px-6 py-2 rounded-full text-sm font-bold bg-yellow-400 text-black hover:bg-yellow-300 transition inline-block">
+                            Watch Video
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Video Card 12 -->
+                <div class="bg-white rounded-2xl overflow-hidden card-shadow tool-card" data-video-id="reading-video-12">
+                    <img src="../images/如果你生而为女人封面.jpg" alt="Reading Video 12" class="w-full">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-xl">"If You Are Born a Woman" Book Recommendation</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">Oriana Fallaci's women's interview collection - feminist book list</p>
+                        <a href="reading-detail-en.html?id=reading-video-12" class="view-video-btn px-6 py-2 rounded-full text-sm font-bold bg-yellow-400 text-black hover:bg-yellow-300 transition inline-block">
+                            Watch Video
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comments Section -->
+    <section class="comments-section">
+        <h2>Share Your Thoughts</h2>
+        <div class="comment-form">
+            <input type="text" placeholder="Your Name" id="commenter-name">
+            <textarea placeholder="Share your thoughts about reading..." id="comment-content"></textarea>
+            <button type="submit" class="submit-comment">Submit</button>
+        </div>
+        <div class="comments-list">
+            <!-- Comments will be dynamically added here -->
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+    <script>
+        // Initialize Swiper
+        const swiper = new Swiper('.hero-swiper', {
+            // Enable loop mode
+            loop: true,
+            // Enable autoplay
+            autoplay: {
+                delay: 5000, // 5 seconds
+                disableOnInteraction: false,
+            },
+            // Enable smooth transition
+            effect: 'fade',
+            fadeEffect: {
+                crossFade: true
+            },
+            // Speed of transition
+            speed: 1500,
+            // Navigation arrows
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            // Pagination
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+        });
+
+        // Simple comment functionality
+        document.querySelector('.submit-comment').addEventListener('click', function() {
+            const name = document.getElementById('commenter-name').value;
+            const content = document.getElementById('comment-content').value;
+            
+            if (name && content) {
+                const commentsList = document.querySelector('.comments-list');
+                const newComment = document.createElement('div');
+                newComment.className = 'comment';
+                newComment.innerHTML = `
+                    <div class="comment-header">
+                        <strong>${name}</strong>
+                        <span>${new Date().toLocaleDateString()}</span>
+                    </div>
+                    <div class="comment-content">${content}</div>
+                `;
+                commentsList.prepend(newComment);
+                
+                // Clear form
+                document.getElementById('commenter-name').value = '';
+                document.getElementById('comment-content').value = '';
+            }
+        });
+    </script>
+</body>
+</html> 

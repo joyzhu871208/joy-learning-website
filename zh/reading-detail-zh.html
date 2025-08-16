@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>读书视频详情 - Joy Learning</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/reading.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* Base styles */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: #39353f;
+        }
+        
+        /* Card styles with hover effect */
+        .reading-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .reading-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Button style */
+        .reading-btn-primary {
+            display: inline-block;
+            background-color: #ffd368;
+            color: #39353f;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .reading-btn-primary:hover {
+            background-color: #e6be5e;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .reading-btn-secondary {
+            display: inline-block;
+            background-color: #39353f;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .reading-btn-secondary:hover {
+            background-color: #4a4550;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Video container */
+        .reading-video-container {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%;
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .reading-video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="text-lg md:text-xl font-bold text-[#39353f]">Joy Learning</div>
+                <nav class="hidden md:flex space-x-4">
+                    <a href="ai-home-zh.html" class="font-bold text-base text-[#39353f] hover:text-[#ffd368] transition-colors duration-200">首页</a>
+                    <a href="ai-about-zh.html" class="font-bold text-base text-[#39353f] hover:text-[#ffd368] transition-colors duration-200">关于我们</a>
+                    <a href="reading-zh.html" class="font-bold text-base text-[#ffd368]">读书分享</a>
+                    <a href="ai-contact-zh.html" class="font-bold text-base text-[#39353f] hover:text-[#ffd368] transition-colors duration-200">联系我们</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 py-8">
+        <!-- Back to Reading Link -->
+        <a href="reading-zh.html" class="inline-flex items-center text-[#ffd368] mb-6 hover:underline">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+            </svg>
+            返回读书页面
+        </a>
+        
+        <!-- Reading Video Header -->
+        <div class="reading-card mb-8">
+            <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
+                <div class="text-4xl md:text-5xl" id="readingVideoIcon">📚</div>
+                <div>
+                    <h1 class="text-3xl font-bold mb-2" id="readingVideoTitle"></h1>
+                    <p class="text-[#39353f] text-opacity-80" id="readingVideoDescription"></p>
+                    <div class="flex items-center mt-2 text-sm text-gray-500">
+                        <span id="readingVideoDuration"></span>
+                        <span class="mx-2">•</span>
+                        <span id="readingVideoViews"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Reading Video Content -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Main Content -->
+            <div class="md:col-span-2">
+                <!-- Video Player -->
+                <div class="reading-card mb-8">
+                    <h2 class="text-xl font-semibold mb-4">视频播放</h2>
+                    <div class="reading-video-container">
+                        <iframe id="readingVideoFrame" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                </div>
+                
+                <!-- Video Description -->
+                <div class="reading-card mb-8">
+                    <h2 class="text-xl font-semibold mb-4">视频介绍</h2>
+                    <div class="prose max-w-none">
+                        <div id="readingVideoContent" class="whitespace-pre-line"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sidebar -->
+            <div>
+                <!-- Share Options -->
+                <div class="reading-card mb-8">
+                    <h2 class="text-xl font-semibold mb-4">分享视频</h2>
+                    <div class="space-y-3">
+                        <button id="copyLink" class="reading-btn-secondary block w-full">
+                            <i class="fas fa-link mr-2"></i>复制链接
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Related Videos -->
+                <div class="reading-card">
+                    <h2 class="text-xl font-semibold mb-4">相关推荐</h2>
+                    <ul id="relatedVideosList" class="space-y-3">
+                        <!-- Dynamically filled -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center py-6 text-sm text-gray-400">
+        © 2025 Joy Learning. All rights reserved.
+    </footer>
+    
+    <!-- Reading Videos Data -->
+    <script src="../js/reading-videos.js"></script>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Get video ID from URL parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const videoId = urlParams.get('id');
+            
+            // Load video data
+            const video = readingVideos[videoId];
+            if (!video) {
+                window.location.href = 'reading-zh.html';
+                return;
+            }
+            
+            // Set page content
+            document.getElementById('readingVideoTitle').textContent = video.title;
+            document.getElementById('readingVideoDescription').textContent = video.description.split('\n')[0]; // First line as description
+            document.getElementById('readingVideoDuration').textContent = `时长: ${video.duration}`;
+            document.getElementById('readingVideoViews').textContent = `观看: ${video.views}`;
+            document.getElementById('readingVideoFrame').src = video.videoUrl;
+            document.getElementById('readingVideoContent').innerHTML = video.description.replace(/\n/g, '<br>');
+            
+            // Set page title
+            document.title = `${video.title} - Joy Learning`;
+            
+            // Load related videos
+            const relatedVideosList = document.getElementById('relatedVideosList');
+            Object.keys(readingVideos).forEach(id => {
+                if (id !== videoId) {
+                    const relatedVideo = readingVideos[id];
+                    const li = document.createElement('li');
+                    li.className = 'border-b border-gray-200 pb-3 last:border-b-0';
+                    li.innerHTML = `
+                        <a href="reading-detail-zh.html?id=${id}" class="block hover:bg-gray-50 p-2 rounded transition-colors">
+                            <h3 class="font-medium text-sm mb-1">${relatedVideo.title}</h3>
+                            <p class="text-xs text-gray-500">${relatedVideo.duration} • ${relatedVideo.views}</p>
+                        </a>
+                    `;
+                    relatedVideosList.appendChild(li);
+                }
+            });
+            
+            // Share functionality
+            document.getElementById('copyLink').addEventListener('click', function() {
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    alert('链接已复制到剪贴板！');
+                });
+            });
+            
+            document.getElementById('shareWeChat').addEventListener('click', function() {
+                alert('请使用微信扫描二维码分享');
+            });
+            
+            document.getElementById('shareWeibo').addEventListener('click', function() {
+                const url = encodeURIComponent(window.location.href);
+                const title = encodeURIComponent(video.title);
+                window.open(`https://service.weibo.com/share/share.php?url=${url}&title=${title}`, '_blank');
+            });
+        });
+    </script>
+</body>
+</html>

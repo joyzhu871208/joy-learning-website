@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joy的阅读之旅</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
+    <link rel="stylesheet" href="../css/reading.css">
+    <!-- Animate.css for smooth animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="navbar flex justify-between items-center p-6 shadow-md sticky top-0 bg-white z-50">
+        <h1 class="text-2xl font-bold">Joy Learning</h1>
+        <div class="nav-links flex items-center space-x-4">
+            <!-- English 按钮 -->
+            <a href="../en/reading-en.html" class="bg-yellow-400 text-black px-4 py-1.5 rounded-full text-sm font-medium hover:bg-yellow-300 transition">
+                English
+            </a>
+
+            <!-- 中文按钮 -->
+            <span class="bg-black text-white px-4 py-1.5 rounded-full text-sm font-medium">
+                中文
+            </span>
+        </div>
+        <!-- Mobile menu toggle -->
+        <button class="menu-toggle md:hidden">
+            <i class="fas fa-bars"></i>
+        </button>
+    </nav>
+
+    <!-- Title Section -->
+    <div class="text-center mt-16 mb-12">
+        <h1 class="text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-yellow-400 to-red-500 animate__animated animate__fadeIn">
+            与JOY一起阅读
+        </h1>
+        <p class="mt-4 text-gray-600 text-xl animate__animated animate__fadeIn animate__delay-1s">
+            <i class="fas fa-quote-left text-yellow-400 mr-2"></i>
+            每一本书都是通往想象世界的新大门
+            <i class="fas fa-quote-right text-yellow-400 ml-2"></i>
+        </p>
+    </div>
+
+    <!-- Hero Images Section -->
+    <section class="reading-hero-images">
+        <div class="swiper hero-swiper">
+            <div class="swiper-wrapper">
+                <!-- Slide 1 -->
+                <div class="swiper-slide">
+                    <div class="hero-slide">
+                        <img src="../images/reading-hero-1.png" alt="阅读之旅 1" class="slide-image">
+                        <div class="slide-content">
+                            <h2>阅读之旅</h2>
+                            <p>书籍是知识海洋中的灯塔</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slide 2 -->
+                <div class="swiper-slide">
+                    <div class="hero-slide">
+                        <img src="../images/reading-hero-2.png" alt="阅读之旅 2" class="slide-image">
+                        <div class="slide-content">
+                            <h2>书籍收藏</h2>
+                            <p>分享那些塑造我思想的书籍</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slide 3 -->
+                <div class="swiper-slide">
+                    <div class="hero-slide">
+                        <img src="../images/reading-hero-3.png" alt="阅读之旅 3" class="slide-image">
+                        <div class="slide-content">
+                            <h2>阅读时光</h2>
+                            <p>忙碌世界中的片刻宁静</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slide 4 -->
+                <div class="swiper-slide">
+                    <div class="hero-slide">
+                        <img src="../images/reading-hero-4.png" alt="阅读之旅 4" class="slide-image">
+                        <div class="slide-content">
+                            <h2>书评分享</h2>
+                            <p>通过阅读发现新的视角</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Navigation -->
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <!-- Pagination -->
+            <div class="swiper-pagination"></div>
+        </div>
+    </section>
+
+
+    <!-- Reading Videos Section -->
+    <section class="reading-videos-section py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">读书视频分享</h2>
+                <p class="text-xl text-gray-600">分享我的读书心得和推荐</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Video Card 1 -->
+                <div class="bg-white rounded-2xl overflow-hidden card-shadow tool-card" data-video-id="reading-video-1">
+                    <img src="../images/爱丽丝封面.jpg" alt="读书视频1" class="w-full">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-xl">《爱丽丝梦游仙境》读书分享</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">爱丽丝的奇幻之旅，探索未知的世界</p>
+                        <a href="reading-detail-zh.html?id=reading-video-1" class="view-video-btn px-6 py-2 rounded-full text-sm font-bold bg-yellow-400 text-black hover:bg-yellow-300 transition inline-block">
+                            观看视频
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Video Card 2 -->
+                <div class="bg-white rounded-2xl overflow-hidden card-shadow tool-card" data-video-id="reading-video-2">
+                    <img src="../images/基层女性.jpg" alt="读书视频2" class="w-full">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-xl">《基层女性》读书分享</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">女性成长必读书单，女性意识的觉醒与成长</p>
+                        <a href="reading-detail-zh.html?id=reading-video-2" class="view-video-btn px-6 py-2 rounded-full text-sm font-bold bg-yellow-400 text-black hover:bg-yellow-300 transition inline-block">
+                            观看视频
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Video Card 3 -->
+                <div class="bg-white rounded-2xl overflow-hidden card-shadow tool-card" data-video-id="reading-video-3">
+                    <img src="../images/小春日和封面.jpg" alt="读书视频3" class="w-full">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-xl">《小春日和》读书分享</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">日本生活美学，感受慢生活的智慧与温暖</p>
+                        <a href="reading-detail-zh.html?id=reading-video-3" class="view-video-btn px-6 py-2 rounded-full text-sm font-bold bg-yellow-400 text-black hover:bg-yellow-300 transition inline-block">
+                            观看视频
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Video Card 4 -->
+                <div class="bg-white rounded-2xl overflow-hidden card-shadow tool-card" data-video-id="reading-video-4">
+                    <img src="../images/柳比歇夫封面.jpg" alt="读书视频4" class="w-full">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-xl">《奇特的一生》时间管理分享</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">柳比歇夫时间管理鼻祖，顶级自律才是自由</p>
+                        <a href="reading-detail-zh.html?id=reading-video-4" class="view-video-btn px-6 py-2 rounded-full text-sm font-bold bg-yellow-400 text-black hover:bg-yellow-300 transition inline-block">
+                            观看视频
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Video Card 5 -->
+                <div class="bg-white rounded-2xl overflow-hidden card-shadow tool-card" data-video-id="reading-video-5">
+                    <img src="../images/女性传记书单封面.jpg" alt="读书视频5" class="w-full">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-xl">三本女性传记推荐</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">不被定义，不被安排，我被她们教做人</p>
+                        <a href="reading-detail-zh.html?id=reading-video-5" class="view-video-btn px-6 py-2 rounded-full text-sm font-bold bg-yellow-400 text-black hover:bg-yellow-300 transition inline-block">
+                            观看视频
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Video Card 6 -->
+                <div class="bg-white rounded-2xl overflow-hidden card-shadow tool-card" data-video-id="reading-video-6">
+                    <img src="../images/醒来的女性封面.jpg" alt="读书视频6" class="w-full">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-xl">《醒来的女性》好书推荐</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">女性成长必读书单，女性意识的觉醒与成长</p>
+                        <a href="reading-detail-zh.html?id=reading-video-6" class="view-video-btn px-6 py-2 rounded-full text-sm font-bold bg-yellow-400 text-black hover:bg-yellow-300 transition inline-block">
+                            观看视频
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Video Card 7 -->
+                <div class="bg-white rounded-2xl overflow-hidden card-shadow tool-card" data-video-id="reading-video-7">
+                    <img src="../images/八平米封面.jpg" alt="读书视频7" class="w-full">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-xl">《东京八平米》好书推荐</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">孤独迷惘渺小的你我，永远拥有重启人生的权利</p>
+                        <a href="reading-detail-zh.html?id=reading-video-7" class="view-video-btn px-6 py-2 rounded-full text-sm font-bold bg-yellow-400 text-black hover:bg-yellow-300 transition inline-block">
+                            观看视频
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Video Card 8 -->
+                <div class="bg-white rounded-2xl overflow-hidden card-shadow tool-card" data-video-id="reading-video-8">
+                    <img src="../images/习惯的力量封面.jpg" alt="读书视频8" class="w-full">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-xl">《掌控习惯》好书推荐</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">如何建立习惯？如何自律成瘾？四个步骤建立习惯</p>
+                        <a href="reading-detail-zh.html?id=reading-video-8" class="view-video-btn px-6 py-2 rounded-full text-sm font-bold bg-yellow-400 text-black hover:bg-yellow-300 transition inline-block">
+                            观看视频
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Video Card 9 -->
+                <div class="bg-white rounded-2xl overflow-hidden card-shadow tool-card" data-video-id="reading-video-9">
+                    <img src="../images/埃莉诺罗斯福封面.jpg" alt="读书视频9" class="w-full">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-xl">《我一生的故事》女性传记</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">人生，不能仅仅是活着丨埃莉诺·罗斯福的传奇人生</p>
+                        <a href="reading-detail-zh.html?id=reading-video-9" class="view-video-btn px-6 py-2 rounded-full text-sm font-bold bg-yellow-400 text-black hover:bg-yellow-300 transition inline-block">
+                            观看视频
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Video Card 10 -->
+                <div class="bg-white rounded-2xl overflow-hidden card-shadow tool-card" data-video-id="reading-video-10">
+                    <img src="../images/松浦米太郎封面.jpg" alt="读书视频10" class="w-full">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-xl">松浦弥太郎治愈系书单</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">生活放大镜书单丨治愈系生活书单丨活下去吧！</p>
+                        <a href="reading-detail-zh.html?id=reading-video-10" class="view-video-btn px-6 py-2 rounded-full text-sm font-bold bg-yellow-400 text-black hover:bg-yellow-300 transition inline-block">
+                            观看视频
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Video Card 11 -->
+                <div class="bg-white rounded-2xl overflow-hidden card-shadow tool-card" data-video-id="reading-video-11">
+                    <img src="../images/战争中没有女性封面.jpg" alt="读书视频11" class="w-full">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-xl">《战争中没有女性》好书推荐</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">宏大叙事中的渺小人生丨阿列克西耶维奇 诺贝尔文学奖</p>
+                        <a href="reading-detail-zh.html?id=reading-video-11" class="view-video-btn px-6 py-2 rounded-full text-sm font-bold bg-yellow-400 text-black hover:bg-yellow-300 transition inline-block">
+                            观看视频
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Video Card 12 -->
+                <div class="bg-white rounded-2xl overflow-hidden card-shadow tool-card" data-video-id="reading-video-12">
+                                            <img src="../images/如果你生而为女人封面.jpg" alt="读书视频12" class="w-full">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-xl">《如果你生而为女人》好书推荐</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">奥利维亚·法拉奇 女性访谈合集丨女性主义书单</p>
+                        <a href="reading-detail-zh.html?id=reading-video-12" class="view-video-btn px-6 py-2 rounded-full text-sm font-bold bg-yellow-400 text-black hover:bg-yellow-300 transition inline-block">
+                            观看视频
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Comments Section -->
+    <section class="comments-section">
+        <h2>分享你的想法</h2>
+        <div class="comment-form">
+            <input type="text" placeholder="你的姓名" id="commenter-name">
+            <textarea placeholder="分享你对阅读的想法..." id="comment-content"></textarea>
+            <button type="submit" class="submit-comment">提交</button>
+        </div>
+        <div class="comments-list">
+            <!-- Comments will be dynamically added here -->
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+    <script>
+        // Initialize Swiper
+        const swiper = new Swiper('.hero-swiper', {
+            // Enable loop mode
+            loop: true,
+            // Enable autoplay
+            autoplay: {
+                delay: 5000, // 5 seconds
+                disableOnInteraction: false,
+            },
+            // Enable smooth transition
+            effect: 'fade',
+            fadeEffect: {
+                crossFade: true
+            },
+            // Speed of transition
+            speed: 1500,
+            // Navigation arrows
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            // Pagination
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+        });
+
+        // Simple comment functionality
+        document.querySelector('.submit-comment').addEventListener('click', function() {
+            const name = document.getElementById('commenter-name').value;
+            const content = document.getElementById('comment-content').value;
+            
+            if (name && content) {
+                const commentsList = document.querySelector('.comments-list');
+                const newComment = document.createElement('div');
+                newComment.className = 'comment';
+                newComment.innerHTML = `
+                    <div class="comment-header">
+                        <strong>${name}</strong>
+                        <span>${new Date().toLocaleDateString()}</span>
+                    </div>
+                    <div class="comment-content">${content}</div>
+                `;
+                commentsList.prepend(newComment);
+                
+                // Clear form
+                document.getElementById('commenter-name').value = '';
+                document.getElementById('comment-content').value = '';
+            }
+        });
+    </script>
+</body>
+</html>

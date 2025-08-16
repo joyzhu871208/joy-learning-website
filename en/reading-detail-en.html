@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading Video Detail - Joy Learning</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/reading.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="navbar flex justify-between items-center p-6 shadow-md sticky top-0 bg-white z-50">
+        <h1 class="text-2xl font-bold">Joy Learning</h1>
+        <div class="nav-links flex items-center space-x-4">
+            <!-- English button -->
+            <span class="bg-black text-white px-4 py-1.5 rounded-full text-sm font-medium">
+                English
+            </span>
+
+            <!-- Chinese button -->
+            <a href="../zh/reading-detail-zh.html" class="bg-yellow-400 text-black px-4 py-1.5 rounded-full text-sm font-medium hover:bg-yellow-300 transition">
+                中文
+            </a>
+        </div>
+        <!-- Mobile menu toggle -->
+        <button class="menu-toggle md:hidden">
+            <i class="fas fa-bars"></i>
+        </button>
+    </nav>
+
+    <!-- Back to Reading Page -->
+    <div class="max-w-7xl mx-auto px-4 py-6">
+        <a href="reading-en.html" class="inline-flex items-center text-yellow-600 hover:text-yellow-700 mb-6">
+            <i class="fas fa-arrow-left mr-2"></i>
+            Back to Reading Videos
+        </a>
+    </div>
+
+    <!-- Video Content -->
+    <div class="max-w-7xl mx-auto px-4 py-8">
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+            <!-- Video Header -->
+            <div class="p-8 border-b border-gray-200">
+                <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between">
+                    <div class="flex-1">
+                        <h1 id="videoTitle" class="text-3xl font-bold text-gray-800 mb-4">Loading...</h1>
+                        <p id="videoDescription" class="text-gray-600 text-lg mb-4">Loading...</p>
+                        <div class="flex items-center space-x-6 text-sm text-gray-500">
+                            <span id="videoDuration"><i class="fas fa-clock mr-1"></i>Loading...</span>
+                            <span id="videoViews"><i class="fas fa-eye mr-1"></i>Loading...</span>
+                        </div>
+                    </div>
+                    <div class="mt-4 lg:mt-0 lg:ml-6">
+                        <div class="flex space-x-2">
+                            <button onclick="shareVideo()" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">
+                                <i class="fas fa-share mr-2"></i>Share
+                            </button>
+                            <button onclick="likeVideo()" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition">
+                                <i class="fas fa-heart mr-2"></i>Like
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Player -->
+            <div class="p-8">
+                <div class="relative w-full" style="padding-bottom: 56.25%;">
+                    <iframe id="videoPlayer" 
+                            class="absolute top-0 left-0 w-full h-full rounded-lg"
+                            src=""
+                            frameborder="0"
+                            allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+
+            <!-- Related Videos -->
+            <div class="p-8 border-t border-gray-200">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6">Related Videos</h3>
+                <div id="relatedVideos" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Related videos will be populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comments Section -->
+    <section class="comments-section max-w-7xl mx-auto px-4 py-8">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">Share Your Thoughts</h2>
+        <div class="comment-form bg-white rounded-lg p-6 shadow-md">
+            <input type="text" placeholder="Your Name" id="commenter-name" class="w-full p-3 border border-gray-300 rounded-lg mb-4">
+            <textarea placeholder="Share your thoughts about this video..." id="comment-content" class="w-full p-3 border border-gray-300 rounded-lg mb-4 h-24 resize-none"></textarea>
+            <button type="submit" class="submit-comment bg-yellow-400 text-black px-6 py-2 rounded-lg hover:bg-yellow-300 transition">Submit</button>
+        </div>
+        <div class="comments-list mt-6">
+            <!-- Comments will be dynamically added here -->
+        </div>
+    </section>
+
+    <script src="../js/reading-videos.js"></script>
+    <script>
+        // Get video ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const videoId = urlParams.get('id');
+
+        // Load video data
+        function loadVideoData() {
+            if (!videoId || !readingVideos[videoId]) {
+                document.getElementById('videoTitle').textContent = 'Video Not Found';
+                document.getElementById('videoDescription').textContent = 'The requested video could not be found.';
+                return;
+            }
+
+            const video = readingVideos[videoId];
+            
+            // Update page content
+            document.getElementById('videoTitle').textContent = video.title;
+            document.getElementById('videoDescription').textContent = video.description;
+            document.getElementById('videoDuration').innerHTML = `<i class="fas fa-clock mr-1"></i>${video.duration}`;
+            document.getElementById('videoViews').innerHTML = `<i class="fas fa-eye mr-1"></i>${video.views}`;
+            document.getElementById('videoPlayer').src = video.videoUrl;
+            
+            // Update page title
+            document.title = `${video.title} - Joy Learning`;
+        }
+
+        // Load related videos
+        function loadRelatedVideos() {
+            const relatedVideosContainer = document.getElementById('relatedVideos');
+            const currentVideoId = videoId;
+            
+            // Get 3 random videos (excluding current)
+            const allVideoIds = Object.keys(readingVideos);
+            const otherVideos = allVideoIds.filter(id => id !== currentVideoId);
+            const randomVideos = otherVideos.sort(() => 0.5 - Math.random()).slice(0, 3);
+            
+            relatedVideosContainer.innerHTML = randomVideos.map(id => {
+                const video = readingVideos[id];
+                return `
+                    <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition">
+                        <img src="${video.coverImage || '../images/placeholder-cover.jpg'}" alt="${video.title}" class="w-full h-48 object-cover">
+                        <div class="p-4">
+                            <h4 class="font-bold text-lg mb-2">${video.title}</h4>
+                            <p class="text-gray-600 text-sm mb-3">${video.description.substring(0, 100)}...</p>
+                            <a href="reading-detail-en.html?id=${id}" class="text-yellow-600 hover:text-yellow-700 font-medium">
+                                Watch Video <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Share functionality
+        function shareVideo() {
+            if (navigator.share) {
+                navigator.share({
+                    title: document.getElementById('videoTitle').textContent,
+                    text: document.getElementById('videoDescription').textContent,
+                    url: window.location.href
+                });
+            } else {
+                // Fallback: copy to clipboard
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    alert('Link copied to clipboard!');
+                });
+            }
+        }
+
+        // Like functionality
+        function likeVideo() {
+            const button = event.target.closest('button');
+            button.classList.toggle('bg-red-500');
+            button.classList.toggle('bg-gray-500');
+            
+            if (button.classList.contains('bg-red-500')) {
+                button.innerHTML = '<i class="fas fa-heart mr-2"></i>Liked';
+            } else {
+                button.innerHTML = '<i class="fas fa-heart mr-2"></i>Like';
+            }
+        }
+
+        // Comment functionality
+        document.querySelector('.submit-comment').addEventListener('click', function() {
+            const name = document.getElementById('commenter-name').value;
+            const content = document.getElementById('comment-content').value;
+            
+            if (name && content) {
+                const commentsList = document.querySelector('.comments-list');
+                const newComment = document.createElement('div');
+                newComment.className = 'comment bg-white rounded-lg p-4 shadow-md mb-4';
+                newComment.innerHTML = `
+                    <div class="comment-header flex justify-between items-center mb-2">
+                        <strong class="text-gray-800">${name}</strong>
+                        <span class="text-gray-500 text-sm">${new Date().toLocaleDateString()}</span>
+                    </div>
+                    <div class="comment-content text-gray-700">${content}</div>
+                `;
+                commentsList.prepend(newComment);
+                
+                // Clear form
+                document.getElementById('commenter-name').value = '';
+                document.getElementById('comment-content').value = '';
+            }
+        });
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadVideoData();
+            loadRelatedVideos();
+        });
+    </script>
+</body>
+</html>

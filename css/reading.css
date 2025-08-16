@@ -171,6 +171,15 @@
     transition: transform 0.3s ease;
 }
 
+/* Video card images - ensure full display */
+.tool-card img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
 /* Overlay Effects */
 .book-overlay {
     position: absolute;
@@ -250,6 +259,8 @@
 .comments-section h2 {
     text-align: center;
     margin-bottom: 30px;
+    font-size: 2em;
+    color: #333;
 }
 
 .comment-form {
@@ -265,6 +276,14 @@
     border: 1px solid #ddd;
     border-radius: 8px;
     font-size: 1em;
+    transition: border-color 0.3s ease;
+}
+
+.comment-form input:focus,
+.comment-form textarea:focus {
+    outline: none;
+    border-color: #ffd700;
+    box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.2);
 }
 
 .comment-form textarea {
@@ -281,12 +300,97 @@
     cursor: pointer;
     transition: all 0.3s ease;
     align-self: flex-end;
+    font-weight: 600;
 }
 
 .submit-comment:hover {
     background: #ffed4a;
     transform: scale(1.05);
 }
+
+/* Comment Display Styles */
+.comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.comment {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-left: 4px solid #ffd700;
+    animation: slideIn 0.5s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.comment-header strong {
+    color: #333;
+    font-size: 1.1em;
+}
+
+.comment-header span {
+    color: #666;
+    font-size: 0.9em;
+}
+
+.comment-content {
+    color: #555;
+    line-height: 1.6;
+    font-size: 1em;
+}
+
+/* Reading Videos Section */
+.reading-videos-section {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.card-shadow {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.tool-card {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.tool-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+}
+
+.view-video-btn {
+    background: linear-gradient(135deg, #ffd700 0%, #ffed4a 100%);
+    transition: all 0.3s ease;
+}
+
+.view-video-btn:hover {
+    background: linear-gradient(135deg, #ffed4a 0%, #ffd700 100%);
+    transform: scale(1.05);
+}
+
+
 
 /* Responsive Design */
 @media (max-width: 1024px) {
@@ -329,6 +433,53 @@
     .book-card {
         transform: none !important;
     }
+
+    /* Reading Videos Mobile */
+    .reading-videos-section .grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .reading-videos-section h2 {
+        font-size: 2.5em;
+    }
+
+    .reading-videos-section p {
+        font-size: 1.1em;
+    }
+
+
+
+    /* Mobile Navigation */
+    .nav-links {
+        display: none;
+    }
+
+    .nav-links.active {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        z-index: 1000;
+    }
+
+    .menu-toggle {
+        display: block !important;
+        background: none;
+        border: none;
+        font-size: 1.5em;
+        color: #333;
+        cursor: pointer;
+    }
+
+    .navbar {
+        position: relative;
+    }
 }
 
 @media (max-width: 480px) {
@@ -352,5 +503,19 @@
 
     .books-grid {
         grid-template-columns: 1fr;
+    }
+
+    .comments-section {
+        padding: 15px;
+    }
+
+    .comment {
+        padding: 15px;
+    }
+
+    .comment-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
     }
 } 
