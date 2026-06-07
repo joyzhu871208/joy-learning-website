@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>在线试玩课堂游戏｜Joyzhu</title>
+    <meta name="description" content="在线试玩 Joyzhu 课堂互动游戏。" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="game-player.css" />
+    <link rel="stylesheet" href="game-access.css" />
+  </head>
+  <body>
+    <main class="player-page">
+      <header class="player-header">
+        <a class="brand" href="index.html" aria-label="Joyzhu 首页"><span>Joyzhu</span><span class="brand-swoosh" aria-hidden="true"></span></a>
+        <div class="player-heading"><span>免费试玩</span><h1></h1></div>
+        <div class="player-actions">
+          <a href="games.html"><i data-lucide="arrow-left"></i> 返回游戏库</a>
+          <button class="player-fullscreen" type="button"><i data-lucide="maximize-2"></i><span>全屏试玩</span></button>
+        </div>
+      </header>
+      <section class="player-stage">
+        <iframe class="player-frame" title="Joyzhu 课堂游戏免费试玩"></iframe>
+        <a class="player-watermark" href="https://joyzhu.com" target="_blank" rel="noopener noreferrer" aria-label="访问 joyzhu.com">
+          <strong>Joyzhu</strong><span>joyzhu.com</span>
+        </a>
+      </section>
+    </main>
+    <script src="game-player.js"></script>
+    <script src="game-access.js"></script>
+  </body>
+</html>

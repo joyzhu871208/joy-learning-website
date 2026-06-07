@@ -1,17 +1,333 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=/index-ch.html">
-    <script>
-        window.location.href = "/index-ch.html";
-    </script>
-  <title>Joy Learning</title>
-</head>
-<body>
-    <p style="text-align: center; margin-top: 20px;">
-        如果页面没有自动跳转，请<a href="/index-ch.html">点击这里</a>。<br>
-        If you are not redirected automatically, please <a href="/index-en.html">click here</a>.
-    </p>
-</body>
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Joyzhu｜教师 AI 灵感、学习与成长</title>
+    <meta name="description" content="Joyzhu 分享教师 AI 教学资源、课堂游戏、互动网页制作教程，以及阅读与英语学习内容。" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@600;700&family=Playfair+Display:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="index.html" aria-label="Joyzhu 首页">
+          <span>Joyzhu</span>
+          <span class="brand-swoosh" aria-hidden="true"></span>
+        </a>
+
+        <nav class="site-nav" aria-label="主导航">
+          <a href="#teaching-hub">教学灵感</a>
+          <a href="#learning-growth">学习与成长</a>
+          <div class="resource-menu">
+            <button class="resource-trigger" type="button" aria-expanded="false">
+              免费资源
+              <i data-lucide="chevron-down"></i>
+            </button>
+            <div class="resource-dropdown">
+              <div class="dropdown-column">
+                <p>拿来即用</p>
+                <a href="games.html"><span class="menu-icon icon-game"><i data-lucide="gamepad-2"></i></span>课堂游戏</a>
+                <a href="#inspiration-lab"><span class="menu-icon icon-tool"><i data-lucide="briefcase-business"></i></span>教师工具</a>
+                <a href="ielts.html"><span class="menu-icon icon-ielts"><i data-lucide="book-a"></i></span>雅思资源</a>
+              </div>
+              <div class="dropdown-column">
+                <p>跟着 Joy 学</p>
+                <a href="ai-basics.html"><span class="menu-icon icon-ai"><i data-lucide="laptop"></i></span>AI 教程</a>
+                <a href="web-making.html"><span class="menu-icon icon-make"><i data-lucide="wand-sparkles"></i></span>游戏制作</a>
+                <a href="reading.html"><span class="menu-icon icon-read"><i data-lucide="book-open"></i></span>阅读分享</a>
+              </div>
+            </div>
+          </div>
+        </nav>
+
+        <a class="follow-button" href="together.html">一起成长</a>
+
+        <button class="menu-button" aria-label="打开导航菜单" aria-expanded="false">
+          <i data-lucide="menu"></i>
+        </button>
+      </header>
+
+      <section class="hero">
+        <div class="hero-photo">
+          <div class="photo-placeholder">
+            <img src="assets/portraits/joyzhu-hero.png" alt="Joyzhu 微笑着欢迎大家来到学习空间" />
+          </div>
+        </div>
+
+        <div class="hero-copy">
+          <h1>嗨，我是 JoyZhu。<span class="wave">👋</span></h1>
+          <div class="hero-lead">
+            <p>我是教师培训工作者，<br />也是停不下来的学习者。</p>
+            <p>
+              我不只分享答案，<br />
+              <strong>也分享通往答案的路径。</strong>
+            </p>
+          </div>
+          <a class="hero-button" href="#teaching-hub">从这里开始探索 <i data-lucide="arrow-right"></i></a>
+        </div>
+      </section>
+
+      <section class="teaching-hub" id="teaching-hub">
+        <div class="hub-heading">
+          <div>
+            <p class="section-kicker"><span>✦</span> 教学灵感</p>
+            <h2>今天，想从哪里开始？</h2>
+          </div>
+          <p>带走一个现成的课堂点子，或者跟着 Joy，把自己的想法亲手做出来。</p>
+        </div>
+
+        <div class="hub-entrances">
+          <a class="hub-entrance lab-entrance" href="#inspiration-lab">
+            <div class="entrance-art lab-art" aria-hidden="true">
+              <svg class="hub-flask" viewBox="0 0 220 250">
+                <defs>
+                  <linearGradient id="hubGlass" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="#fff" stop-opacity=".96" />
+                    <stop offset=".62" stop-color="#b8efff" stop-opacity=".82" />
+                    <stop offset="1" stop-color="#48c8ee" stop-opacity=".96" />
+                  </linearGradient>
+                  <linearGradient id="hubLiquid" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#ff6d79" />
+                    <stop offset="1" stop-color="#d92fd0" />
+                  </linearGradient>
+                </defs>
+                <ellipse cx="110" cy="228" rx="75" ry="16" fill="#512669" opacity=".18" />
+                <path d="M82 22h56v62l51 93c18 34-4 57-39 57H70c-35 0-57-23-39-57l51-93Z" fill="url(#hubGlass)" stroke="#45364e" stroke-width="6" />
+                <path d="M45 176c32-20 58 11 86-2 28-12 43-2 53 8 11 29-9 43-38 43H75c-28 0-47-17-30-49Z" fill="url(#hubLiquid)" />
+                <path d="M92 37h36M93 58h34" stroke="#45364e" stroke-width="6" stroke-linecap="round" />
+                <circle cx="81" cy="194" r="9" fill="#ffd43b" /><circle cx="124" cy="205" r="7" fill="#fff" opacity=".8" /><circle cx="151" cy="188" r="11" fill="#ffad35" />
+              </svg>
+              <svg class="hub-die" viewBox="0 0 120 120">
+                <defs>
+                  <linearGradient id="dieTop" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff58a"/><stop offset="1" stop-color="#ffd22e"/></linearGradient>
+                  <linearGradient id="dieSide" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffb526"/><stop offset="1" stop-color="#f28719"/></linearGradient>
+                </defs>
+                <path d="M18 37 61 13l42 24-43 25Z" fill="url(#dieTop)" stroke="#45364e" stroke-width="5"/>
+                <path d="m18 37 42 25v45L18 83Z" fill="#ffcc2f" stroke="#45364e" stroke-width="5"/>
+                <path d="m60 62 43-25v46l-43 24Z" fill="url(#dieSide)" stroke="#45364e" stroke-width="5"/>
+                <circle cx="61" cy="35" r="6" fill="#45364e"/><circle cx="37" cy="61" r="5" fill="#45364e"/><circle cx="41" cy="84" r="5" fill="#45364e"/><circle cx="82" cy="61" r="5" fill="#45364e"/><circle cx="83" cy="84" r="5" fill="#45364e"/>
+              </svg>
+              <span class="hub-letter letter-a">A</span>
+              <span class="hub-letter letter-b">B</span>
+              <span class="hub-spark spark-one">✦</span>
+              <span class="hub-spark spark-two">✦</span>
+            </div>
+            <div class="entrance-copy">
+              <p>拿来即用</p>
+              <h3>灵感实验室</h3>
+              <span>课堂游戏、管理工具与教学点子，明天就能带进课堂。</span>
+              <strong>进入实验室 <i data-lucide="arrow-right"></i></strong>
+            </div>
+          </a>
+
+          <a class="hub-entrance studio-entrance" href="#creation-studio">
+            <div class="entrance-art studio-art" aria-hidden="true">
+              <svg class="hub-screen" viewBox="0 0 300 230">
+                <defs>
+                  <linearGradient id="screenFace" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff"/><stop offset="1" stop-color="#ddecff"/></linearGradient>
+                  <linearGradient id="screenBody" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#7a76ff"/><stop offset="1" stop-color="#4a48ca"/></linearGradient>
+                </defs>
+                <ellipse cx="150" cy="209" rx="108" ry="17" fill="#413c78" opacity=".18"/>
+                <path d="M34 28h232v151H34z" fill="url(#screenBody)" stroke="#322c45" stroke-width="7" stroke-linejoin="round"/>
+                <path d="M48 45h204v116H48z" fill="url(#screenFace)"/>
+                <circle cx="61" cy="57" r="5" fill="#ff6f78"/><circle cx="78" cy="57" r="5" fill="#ffd238"/><circle cx="95" cy="57" r="5" fill="#4ed38a"/>
+                <path d="M79 87h62M79 108h105M79 129h78" stroke="#54bce2" stroke-width="9" stroke-linecap="round"/>
+                <path d="M128 179h44l10 24h-64Z" fill="#625de2" stroke="#322c45" stroke-width="6" stroke-linejoin="round"/>
+                <path d="M100 205h100" stroke="#322c45" stroke-width="7" stroke-linecap="round"/>
+              </svg>
+              <svg class="hub-wand" viewBox="0 0 150 150">
+                <path d="m35 125 69-76" stroke="#322c45" stroke-width="13" stroke-linecap="round"/>
+                <path d="m35 125 69-76" stroke="#ff8a66" stroke-width="7" stroke-linecap="round"/>
+                <path d="m111 13 8 22 23 6-20 13 2 24-19-15-22 9 8-22-15-18 24 1Z" fill="#ffd238" stroke="#322c45" stroke-width="5" stroke-linejoin="round"/>
+              </svg>
+              <span class="code-chip chip-html">&lt;/&gt;</span>
+              <span class="code-chip chip-ai">AI</span>
+              <span class="code-chip chip-design">Aa</span>
+            </div>
+            <div class="entrance-copy">
+              <p>制作同款</p>
+              <h3>创作工作室</h3>
+              <span>学习 AI、网页、软件与 Canva，把脑海里的想法真正做出来。</span>
+              <strong>开始动手 <i data-lucide="arrow-right"></i></strong>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <section class="teaching-inspiration" id="inspiration-lab">
+        <div class="lab-intro lab-intro-3d">
+          <p class="section-kicker"><span>✦</span> 教学灵感</p>
+          <h2><strong>灵感实验室</strong></h2>
+          <p class="lab-description">为下一堂课，带走一个新点子。</p>
+          <div class="lab-core-3d" aria-hidden="true">
+            <span class="lab-core-orbit orbit-wide"></span>
+            <span class="lab-core-orbit orbit-tall"></span>
+            <img loading="lazy" src="assets/studio/inspiration-bulb.webp" alt="" />
+            <span class="lab-core-spark spark-a">✦</span>
+            <span class="lab-core-spark spark-b">✦</span>
+          </div>
+        </div>
+
+        <div class="lab-doors lab-doors-3d">
+          <a class="lab-door game-door" href="games.html">
+            <div class="door-number">01</div>
+            <div class="door-scene door-render-stage game-render-stage">
+              <span class="render-orbit"></span>
+              <img loading="lazy" src="assets/studio/html-making.webp" alt="课堂游戏互动网页" />
+              <span class="render-chip">PLAY</span>
+            </div>
+            <div class="door-copy">
+              <h3>课堂游戏</h3>
+              <p>把知识练习，变成学生想参与的挑战。</p>
+              <span>探索游戏 <i data-lucide="arrow-right"></i></span>
+            </div>
+          </a>
+
+          <a class="lab-door manage-door" href="classroom-management.html">
+            <div class="door-number">02</div>
+            <div class="door-scene door-render-stage manage-render-stage">
+              <span class="render-orbit"></span>
+              <img loading="lazy" src="assets/studio/ai-toolbox.webp" alt="课堂管理工具" />
+              <span class="render-chip">TOOLS</span>
+            </div>
+            <div class="door-copy">
+              <h3>课堂管理</h3>
+              <p>把重复的小事交给工具，把时间留给学生。</p>
+              <span>发现工具 <i data-lucide="arrow-right"></i></span>
+            </div>
+          </a>
+
+          <a class="lab-door lesson-door" href="lesson-review.html">
+            <div class="door-number">03</div>
+            <div class="door-scene door-render-stage lesson-render-stage">
+              <span class="render-orbit"></span>
+              <img loading="lazy" src="assets/studio/ai-foundations.webp" alt="备课与讲评知识积木" />
+              <span class="render-chip">IDEAS</span>
+            </div>
+            <div class="door-copy">
+              <h3>备课与讲评</h3>
+              <p>让备课更有灵感，让讲评更有回应。</p>
+              <span>查看案例 <i data-lucide="arrow-right"></i></span>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <section class="creation-studio" id="creation-studio">
+        <div class="studio-heading">
+          <p class="section-kicker"><span>✦</span> 自己动手</p>
+          <h2><strong>创作工作室</strong></h2>
+          <p>转动创作星轨，选择今天最想探索的方向。</p>
+        </div>
+
+        <div class="orbit-studio">
+          <div class="orbit-scene" aria-label="创作工作室课程星轨">
+            <div class="orbit-ring ring-outer"></div>
+            <div class="orbit-ring ring-inner"></div>
+            <div class="orbit-core" aria-label="创作工作室">
+              <div class="studio-tool-icon">
+                <i data-lucide="pencil-ruler"></i>
+                <b>JOY</b>
+                <span class="tool-spark tool-spark-one">✦</span>
+                <span class="tool-spark tool-spark-two">✦</span>
+              </div>
+            </div>
+
+            <button class="orbit-station station-ai active" type="button" data-studio="0" aria-label="查看 AI 基础课">
+              <img loading="lazy" class="station-object station-render" src="assets/studio/ai-foundations.webp" alt="" />
+              <strong>AI 基础课</strong>
+            </button>
+            <button class="orbit-station station-html" type="button" data-studio="1" aria-label="查看互动网页制作">
+              <img loading="lazy" class="station-object station-render" src="assets/studio/html-making.webp" alt="" />
+              <strong>互动网页制作</strong>
+            </button>
+            <button class="orbit-station station-tools" type="button" data-studio="2" aria-label="查看 AI 工具箱">
+              <img loading="lazy" class="station-object station-render" src="assets/studio/ai-toolbox.webp" alt="" />
+              <strong>AI 工具箱</strong>
+            </button>
+            <button class="orbit-station station-canva" type="button" data-studio="3" aria-label="查看 Canva 视觉教室">
+              <img loading="lazy" class="station-object station-render" src="assets/studio/canva-visual.webp" alt="" />
+              <strong>Canva 视觉教室</strong>
+            </button>
+          </div>
+
+          <div class="orbit-detail" aria-live="polite">
+            <div class="orbit-detail-title">
+              <p class="orbit-count"><b>01</b> / 04</p>
+              <span class="orbit-label">Joy 最推荐的学习起点</span>
+              <h3>AI 基础课</h3>
+            </div>
+            <div class="orbit-detail-copy">
+              <p class="orbit-description">它可能不是最热闹的系列，却能让之后的每一次学习和创作事半功倍。</p>
+              <a class="orbit-action" href="ai-basics.html">静下心，从第一课开始 <i data-lucide="arrow-right"></i></a>
+            </div>
+            <div class="orbit-detail-nav">
+              <div class="orbit-controls">
+                <button class="orbit-prev" type="button" aria-label="上一个课程"><i data-lucide="arrow-left"></i></button>
+                <span><i class="active"></i><i></i><i></i><i></i></span>
+                <button class="orbit-next" type="button" aria-label="下一个课程"><i data-lucide="arrow-right"></i></button>
+              </div>
+              <small>上方选择课程预览，下方按钮进入学习</small>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="learning-growth" id="learning-growth">
+        <div class="growth-heading">
+          <div>
+            <p class="section-kicker"><span>✦</span> 学习与成长</p>
+            <h2>学习，不只有一种路径。</h2>
+          </div>
+          <p>可以通过阅读理解自己与世界，还可以建立能够长期持续的英语学习系统。</p>
+        </div>
+
+        <div class="growth-entrances">
+          <a class="growth-entrance reading-entrance" href="reading.html">
+            <div class="growth-visual reading-growth-visual" aria-hidden="true">
+              <span class="growth-sun"></span>
+              <img loading="lazy" class="growth-book book-a" src="assets/reading/tokyo-eight.jpg" alt="" />
+              <img loading="lazy" class="growth-book book-b" src="assets/reading/war-woman.jpg" alt="" />
+              <img loading="lazy" class="growth-book book-c" src="assets/reading/little-spring.jpg" alt="" />
+              <span class="growth-note">READ<br />A LITTLE</span>
+            </div>
+            <div class="growth-copy">
+              <span>理解自己，也看见世界</span>
+              <h3>阅读空间</h3>
+              <p>从提出问题开始，走进未曾经历的人生。</p>
+              <strong>走进书房 <i data-lucide="arrow-right"></i></strong>
+            </div>
+          </a>
+
+          <a class="growth-entrance ielts-entrance" href="ielts.html">
+            <div class="growth-visual ielts-growth-visual" aria-hidden="true">
+              <div class="growth-console">
+                <span class="console-head">MY ENGLISH SYSTEM</span>
+                <span class="console-row row-one"></span><span class="console-row row-two"></span>
+                <span class="console-chart"><i></i><i></i><i></i></span>
+              </div>
+              <span class="growth-word">WORD<br /><b>curious</b></span>
+              <span class="growth-ielts">IELTS</span>
+            </div>
+            <div class="growth-copy">
+              <span>让每一次学习都有积累</span>
+              <h3>英语自学系统</h3>
+              <p>用方法、Notion 与专项训练，建立可以持续的学习系统。</p>
+              <strong>开始学习 <i data-lucide="arrow-right"></i></strong>
+            </div>
+          </a>
+        </div>
+      </section>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
 </html>

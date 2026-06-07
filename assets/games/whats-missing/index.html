@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What's Missing? - 单词记忆挑战</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Varela+Round&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-start: #f6d365; /* Gradient start */
+            --bg-end: #fda085;   /* Gradient end */
+            --panel-bg: #ffffff;
+            --primary-btn: #ff6f61; /* Coral */
+            --primary-btn-hover: #ff855d;
+            --secondary-btn: #ffc529; /* Sunflower */
+            --secondary-btn-hover: #ffb200;
+            --font-color: #4B5320; /* Keep readable earthy tone */
+            --shadow: 5px 5px 15px rgba(0, 0, 0, 0.15);
+            --border-radius: 20px;
+            --primary-font: 'Fredoka One', cursive;
+            --secondary-font: 'Varela Round', sans-serif;
+        }
+
+        body {
+            font-family: var(--secondary-font);
+            margin: 0;
+            padding: 0;
+            background-image: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
+            color: var(--font-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            overflow: hidden;
+        }
+        
+        .screen {
+            display: none;
+            width: 100%;
+            max-width: 1000px;
+            height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .screen.active {
+            display: flex;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--primary-font);
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        /* 欢迎界面 */
+        #welcome-screen h1 {
+            font-size: 5rem;
+            margin-bottom: 0;
+        }
+
+        #welcome-screen p {
+            font-size: 1.3rem;
+            color: #fff;
+            margin-bottom: 40px;
+            font-weight: bold;
+        }
+
+        /* 设置界面 */
+        .settings-form {
+            background: var(--panel-bg);
+            padding: 30px 40px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .form-group { display: flex; flex-direction: column; }
+        .form-group label { margin-bottom: 8px; font-weight: bold; color: #555; }
+        .form-group input, .form-group select {
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: var(--secondary-font);
+        }
+
+        #player-names-container { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+
+        /* 游戏界面 */
+        #game-screen { gap: 20px; }
+        .control-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 900px;
+            background: var(--panel-bg);
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            flex-shrink: 0;
+        }
+
+        .score-board { display: flex; gap: 20px; align-items: center; }
+        .player-score { font-size: 1.1rem; font-weight: bold; }
+        .add-point-btn { padding: 5px 10px; margin-left: 8px; font-size: 0.9rem; }
+        #round-info { font-size: 1.2rem; font-weight: bold; font-family: var(--primary-font); }
+
+        #game-area {
+            position: relative;
+            width: 100%;
+            height: 65vmin;
+            max-height: 600px;
+            flex-grow: 1;
+        }
+        
+        #word-orbit-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        #central-display {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 35vmin;
+            height: 35vmin;
+            max-width: 250px;
+            max-height: 250px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.8);
+            border: 5px solid #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform: translate(-50%, -50%);
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.1);
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        
+        .word-bubble {
+            position: absolute;
+            width: 18vmin;
+            height: 18vmin;
+            max-width: 120px;
+            max-height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-btn), #ff9340);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: var(--primary-font);
+            font-size: 1.5rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+            box-shadow: var(--shadow);
+            transform: translate(-50%, -50%) scale(1);
+            transition: transform 0.3s ease, background 0.3s;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .word-bubble:nth-child(2n) { background: linear-gradient(135deg, #4ecdc4, #26a69a); animation-delay: -3s; }
+        .word-bubble:nth-child(3n) { background: linear-gradient(135deg, #ffc529, #ffb200); animation-delay: -1.5s; }
+        .word-bubble:nth-child(4n) { background: linear-gradient(135deg, #935dff, #6b50ff); animation-delay: -4.5s; }
+        .word-bubble:hover { transform: translate(-50%, -50%) scale(1.1); animation-play-state: paused; }
+
+        @keyframes float {
+            0% { transform: translate(-50%, -50%) translateY(0px); }
+            50% { transform: translate(-50%, -50%) translateY(-15px); }
+            100% { transform: translate(-50%, -50%) translateY(0px); }
+        }
+
+        #timer-display {
+            font-size: 7rem;
+            font-family: var(--primary-font);
+            color: var(--font-color);
+        }
+
+        #answer-display {
+            font-size: 1.5rem;
+            text-align: center;
+            line-height: 1.4;
+        }
+        #answer-display span {
+            font-family: var(--primary-font);
+            font-size: 2.5rem;
+            color: #E55451;
+            display: block;
+        }
+
+        /* 游戏结束界面 */
+        #gameOverScreen h2 { font-size: 3rem; }
+        #final-scores li { font-size: 1.4rem; list-style-type: none; padding: 5px; color: #fff; font-weight: bold;}
+
+        /* 模态框 */
+        .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); align-items: center; justify-content: center; }
+        .modal.active { display: flex; }
+        .modal-content { background-color: var(--panel-bg); padding: 20px; border-radius: var(--border-radius); width: 90%; max-width: 500px; text-align: left; }
+        #word-bank-list { max-height: 150px; overflow-y: auto; border: 1px solid #ccc; padding: 10px; margin-bottom: 15px; border-radius: 12px;}
+        #wordBankTextarea { width: 100%; box-sizing: border-box; font-size: 1rem; border-radius: 12px; }
+
+        /* 通用按钮 */
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: var(--border-radius);
+            background-color: var(--primary-btn);
+            color: var(--font-color);
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-family: var(--primary-font);
+            transition: background-color 0.3s, transform 0.2s;
+            margin: 5px;
+            box-shadow: 0 4px 0 #d9b700;
+        }
+        .btn:hover { background-color: var(--primary-btn-hover); transform: translateY(-2px); box-shadow: 0 6px 0 #d9b700;}
+        .btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #d9b700;}
+        .btn:disabled { background-color: #B0C4DE; color: #778899; cursor: not-allowed; transform: none; box-shadow: 0 4px 0 #9aabbc; }
+        
+        .btn-secondary { background-color: var(--secondary-btn); box-shadow: 0 4px 0 #d37455; }
+        .btn-secondary:hover { background-color: var(--secondary-btn-hover); box-shadow: 0 6px 0 #d37455; }
+        .btn-secondary:active { box-shadow: 0 2px 0 #d37455; }
+    </style>
+</head>
+<body>
+
+    <!-- 欢迎界面 -->
+    <div id="welcome-screen" class="screen active">
+        <h1>What's Missing?</h1>
+        <p>一个刺激的单词记忆比赛，看看谁的眼力最强、记忆力最好！</p>
+        <div>
+            <button id="manageWordBanksBtn" class="btn btn-secondary">管理词库</button>
+            <button id="showGameSettingsBtn" class="btn">开始游戏</button>
+        </div>
+    </div>
+
+    <!-- 设置界面 -->
+    <div id="settings-screen" class="screen">
+        <h2>游戏设置</h2>
+        <div class="settings-form">
+            <div class="form-group">
+                <label for="player-count">选择玩家人数 (2-4 人)</label>
+                <select id="player-count">
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>输入每位玩家的姓名</label>
+                <div id="player-names-container"></div>
+            </div>
+            <div class="form-group">
+                <label for="word-count">选择本轮使用的词汇数量</label>
+                <select id="word-count">
+                    <option value="6">6个</option>
+                    <option value="9">9个</option>
+                    <option value="12">12个</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="word-bank-select">选择词库</label>
+                <select id="word-bank-select"></select>
+            </div>
+            <button id="prepareGameBtn" class="btn" disabled>准备开始游戏</button>
+        </div>
+    </div>
+
+    <!-- 游戏界面 -->
+    <div id="game-screen" class="screen">
+        <div class="control-bar">
+            <div id="score-board" class="score-board"></div>
+            <div id="round-info">第 1 / 5 轮</div>
+            <div>
+                <button id="showAnswerBtn" class="btn btn-secondary" disabled>显示答案</button>
+                <button id="nextRoundBtn" class="btn" disabled>下一轮</button>
+            </div>
+        </div>
+        <div id="game-area">
+            <div id="word-orbit-container"></div>
+            <div id="central-display">
+                <div id="timer-display"></div>
+                <div id="answer-display"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 游戏结束界面 -->
+    <div id="gameOverScreen" class="screen">
+        <h2>游戏结束！</h2>
+        <h3 id="winner-display"></h3>
+        <ul id="final-scores"></ul>
+        <button id="playAgainBtn" class="btn">再玩一次</button>
+    </div>
+
+    <!-- 词库管理模态框 -->
+    <div id="wordBankModal" class="modal">
+        <div class="modal-content">
+            <h3>管理词库</h3>
+            <div id="word-bank-list"></div>
+            <div class="form-group">
+                <label for="wordBankName">词库名称</label>
+                <input type="text" id="wordBankName" placeholder="例如: 校园物品">
+            </div>
+            <div class="form-group">
+                <label for="wordBankTextarea">词汇列表 (每行一个)</label>
+                <textarea id="wordBankTextarea" rows="6" placeholder="apple
+banana
+cat
+..."></textarea>
+            </div>
+            <div>
+                <button id="importWordBankBtn" class="btn">导入</button>
+                <button id="closeModalBtn" class="btn btn-secondary">取消</button>
+            </div>
+        </div>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    // DOM Elements
+    const screens = {
+        welcome: document.getElementById('welcome-screen'),
+        settings: document.getElementById('settings-screen'),
+        game: document.getElementById('game-screen'),
+        gameOver: document.getElementById('gameOverScreen'),
+    };
+    const wordBankModal = document.getElementById('wordBankModal');
+    const wordOrbitContainer = document.getElementById('word-orbit-container');
+    const centralDisplay = document.getElementById('central-display');
+    const timerDisplay = document.getElementById('timer-display');
+    const answerDisplay = document.getElementById('answer-display');
+
+    // Buttons
+    const showGameSettingsBtn = document.getElementById('showGameSettingsBtn');
+    const manageWordBanksBtn = document.getElementById('manageWordBanksBtn');
+    const prepareGameBtn = document.getElementById('prepareGameBtn');
+    const showAnswerBtn = document.getElementById('showAnswerBtn');
+    const nextRoundBtn = document.getElementById('nextRoundBtn');
+    const playAgainBtn = document.getElementById('playAgainBtn');
+    const importWordBankBtn = document.getElementById('importWordBankBtn');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+
+    // Settings Inputs
+    const playerCountSelect = document.getElementById('player-count');
+    const playerNamesContainer = document.getElementById('player-names-container');
+    const wordCountSelect = document.getElementById('word-count');
+    const wordBankSelect = document.getElementById('word-bank-select');
+    const wordBankNameInput = document.getElementById('wordBankName');
+    const wordBankTextarea = document.getElementById('wordBankTextarea');
+
+    // Game State
+    let gameState = {};
+    let wordBanks = {
+        '默认-动物': ['cat', 'dog', 'elephant', 'lion', 'tiger', 'giraffe', 'monkey', 'panda', 'fish', 'bird', 'bear', 'rabbit'],
+        '默认-水果': ['apple', 'banana', 'orange', 'grape', 'watermelon', 'strawberry', 'pear', 'peach', 'cherry', 'lemon', 'mango', 'kiwi']
+    };
+
+    function init() {
+        loadWordBanks();
+        updateWordBankSelect();
+        setupEventListeners();
+        navigateTo('welcome');
+        playerCountSelect.dispatchEvent(new Event('change')); // Initial player name inputs
+    }
+
+    function setupEventListeners() {
+        showGameSettingsBtn.addEventListener('click', () => navigateTo('settings'));
+        manageWordBanksBtn.addEventListener('click', () => wordBankModal.classList.add('active'));
+        closeModalBtn.addEventListener('click', () => wordBankModal.classList.remove('active'));
+        
+        playerCountSelect.addEventListener('change', updatePlayerNameInputs);
+        playerNamesContainer.addEventListener('input', validateSettings);
+        
+        importWordBankBtn.addEventListener('click', importCustomWordBank);
+        prepareGameBtn.addEventListener('click', startGame);
+        showAnswerBtn.addEventListener('click', showAnswer);
+        nextRoundBtn.addEventListener('click', nextRound);
+        playAgainBtn.addEventListener('click', () => window.location.reload());
+    }
+
+    function navigateTo(screenName) {
+        Object.values(screens).forEach(screen => screen.classList.remove('active'));
+        screens[screenName].classList.add('active');
+    }
+
+    // --- Word Bank Management ---
+    function loadWordBanks() {
+        const savedBanks = localStorage.getItem('customWordBanks');
+        if (savedBanks) {
+            Object.assign(wordBanks, JSON.parse(savedBanks));
+        }
+        renderWordBankList();
+    }
+
+    function saveWordBanks() {
+        const customBanks = {};
+        for (const name in wordBanks) {
+            if (!name.startsWith('默认-')) {
+                customBanks[name] = wordBanks[name];
+            }
+        }
+        localStorage.setItem('customWordBanks', JSON.stringify(customBanks));
+    }
+
+    function renderWordBankList() {
+        const listContainer = document.getElementById('word-bank-list');
+        listContainer.innerHTML = '<h4>现有词库:</h4>';
+        const ul = document.createElement('ul');
+        for (const name in wordBanks) {
+            const li = document.createElement('li');
+            li.textContent = `${name} (${wordBanks[name].length}词)`;
+            ul.appendChild(li);
+        }
+        listContainer.appendChild(ul);
+    }
+    
+    function updateWordBankSelect() {
+        wordBankSelect.innerHTML = '';
+        for (const name in wordBanks) {
+            if (wordBanks[name].length >= 6) {
+                const option = document.createElement('option');
+                option.value = name;
+                option.textContent = `${name} (${wordBanks[name].length}词)`;
+                wordBankSelect.appendChild(option);
+            }
+        }
+    }
+
+    function importCustomWordBank() {
+        const name = wordBankNameInput.value.trim();
+        const words = wordBankTextarea.value.split('\n').map(w => w.trim()).filter(Boolean);
+        
+        if (!name) { alert('请输入词库名称！'); return; }
+        if (words.length < 6) { alert('每个词库至少需要6个单词！'); return; }
+        
+        wordBanks[name] = words;
+        saveWordBanks();
+        updateWordBankSelect();
+        renderWordBankList();
+        
+        wordBankNameInput.value = '';
+        wordBankTextarea.value = '';
+        alert(`词库 "${name}" 已成功导入！`);
+        wordBankModal.classList.remove('active');
+    }
+
+    // --- Game Setup ---
+    function updatePlayerNameInputs() {
+        playerNamesContainer.innerHTML = '';
+        const count = parseInt(playerCountSelect.value);
+        for (let i = 0; i < count; i++) {
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.placeholder = `玩家 ${i + 1} 姓名`;
+            input.className = 'player-name-input';
+            playerNamesContainer.appendChild(input);
+        }
+        validateSettings();
+    }
+
+    function validateSettings() {
+        const inputs = playerNamesContainer.querySelectorAll('.player-name-input');
+        const allNamesEntered = [...inputs].every(input => input.value.trim() !== '');
+        prepareGameBtn.disabled = !allNamesEntered;
+    }
+
+    // --- Game Logic ---
+    function startGame() {
+        const playerInputs = playerNamesContainer.querySelectorAll('.player-name-input');
+        gameState = {
+            players: [...playerInputs].map(input => ({ name: input.value.trim(), score: 0 })),
+            totalRounds: 5,
+            currentRound: 0,
+            wordCount: parseInt(wordCountSelect.value),
+            currentWordBankName: wordBankSelect.value,
+            currentWords: [],
+            missingWord: null
+        };
+        updateScoreBoard();
+        navigateTo('game');
+        nextRound();
+    }
+
+    function nextRound() {
+        if (gameState.currentRound >= gameState.totalRounds) {
+            endGame();
+            return;
+        }
+        gameState.currentRound++;
+        resetRoundUI();
+        startMemoryPhase();
+    }
+
+    function startMemoryPhase() {
+        const bank = wordBanks[gameState.currentWordBankName];
+        const shuffled = [...bank].sort(() => 0.5 - Math.random());
+        gameState.currentWords = shuffled.slice(0, gameState.wordCount);
+        gameState.missingWord = gameState.currentWords[Math.floor(Math.random() * gameState.currentWords.length)];
+        
+        displayWords(gameState.currentWords);
+        
+        let timeLeft = 5;
+        timerDisplay.textContent = timeLeft;
+        timerDisplay.style.display = 'block';
+        answerDisplay.style.display = 'none';
+        playSound('countdown');
+        
+        const timer = setInterval(() => {
+            timeLeft--;
+            timerDisplay.textContent = timeLeft;
+            if (timeLeft <= 0) {
+                clearInterval(timer);
+                startAnsweringPhase();
+            }
+        }, 1000);
+    }
+    
+    function startAnsweringPhase() {
+        timerDisplay.style.display = 'none';
+        const wordsToShow = gameState.currentWords.filter(word => word !== gameState.missingWord);
+        displayWords(wordsToShow);
+        showAnswerBtn.disabled = false;
+    }
+    
+    function showAnswer() {
+        answerDisplay.innerHTML = `消失的单词是: <span>${gameState.missingWord}</span>`;
+        answerDisplay.style.display = 'block';
+        playSound('correct');
+        showAnswerBtn.disabled = true;
+        nextRoundBtn.disabled = false;
+        document.querySelectorAll('.add-point-btn').forEach(btn => btn.disabled = false);
+    }
+
+    function endGame() {
+        const winner = gameState.players.reduce((prev, current) => (prev.score > current.score) ? prev : current);
+        document.getElementById('winner-display').textContent = `胜利者是: ${winner.name}!`;
+        const finalScoresList = document.getElementById('final-scores');
+        finalScoresList.innerHTML = '';
+        gameState.players.sort((a,b) => b.score - a.score).forEach(player => {
+            const li = document.createElement('li');
+            li.textContent = `${player.name}: ${player.score} 分`;
+            finalScoresList.appendChild(li);
+        });
+        navigateTo('gameOver');
+    }
+
+    // --- UI Update Functions ---
+    function updateScoreBoard() {
+        const board = document.getElementById('score-board');
+        board.innerHTML = '';
+        gameState.players.forEach((player, index) => {
+            const playerScoreDiv = document.createElement('div');
+            playerScoreDiv.className = 'player-score';
+            playerScoreDiv.innerHTML = `
+                <span>${player.name}: ${player.score}</span>
+                <button class="btn add-point-btn" data-player-index="${index}" disabled>+1分</button>
+            `;
+            board.appendChild(playerScoreDiv);
+        });
+        
+        board.querySelectorAll('.add-point-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const playerIndex = parseInt(e.target.dataset.playerIndex);
+                gameState.players[playerIndex].score++;
+                updateScoreBoard();
+            });
+        });
+    }
+
+    function displayWords(words) {
+        wordOrbitContainer.innerHTML = '';
+        const containerRect = wordOrbitContainer.getBoundingClientRect();
+        const centerX = containerRect.width / 2;
+        const centerY = containerRect.height / 2;
+        const radius = Math.min(centerX, centerY) * 0.8;
+        const wordCount = words.length;
+
+        words.forEach((word, index) => {
+            const angle = (index / wordCount) * 2 * Math.PI - (Math.PI / 2);
+            const x = centerX + radius * Math.cos(angle);
+            const y = centerY + radius * Math.sin(angle);
+
+            const bubble = document.createElement('div');
+            bubble.className = 'word-bubble';
+            bubble.textContent = word;
+            bubble.style.left = `${x}px`;
+            bubble.style.top = `${y}px`;
+            
+            wordOrbitContainer.appendChild(bubble);
+        });
+    }
+
+    function resetRoundUI() {
+        document.getElementById('round-info').textContent = `第 ${gameState.currentRound} / ${gameState.totalRounds} 轮`;
+        wordOrbitContainer.innerHTML = '';
+        answerDisplay.innerHTML = '';
+        timerDisplay.innerHTML = '';
+        showAnswerBtn.disabled = true;
+        nextRoundBtn.disabled = true;
+        document.querySelectorAll('.add-point-btn').forEach(btn => btn.disabled = true);
+    }
+    
+    function playSound(type) {
+        console.log(`Playing sound: ${type}`);
+    }
+
+    init();
+});
+</script>
+</body>
+</html>

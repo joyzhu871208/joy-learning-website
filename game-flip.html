@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>生词翻翻乐｜Joyzhu 课堂游戏</title>
+    <meta name="description" content="生词翻翻乐是一款适合多人分组对战的词汇记忆游戏，由 Joyzhu 提供试玩与使用指南。" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="game-detail.css" />
+    <link rel="stylesheet" href="game-access.css" />
+  </head>
+  <body>
+    <div class="page-shell detail-shell">
+      <header class="site-header">
+        <a class="brand" href="index.html"><span>Joyzhu</span><span class="brand-swoosh" aria-hidden="true"></span></a>
+        <nav class="site-nav" aria-label="主导航">
+          <a href="index.html#how-i-can-help">教学灵感</a>
+          <a href="index.html#learning-growth">学习与成长</a>
+          <a href="games.html">课堂游戏</a>
+        </nav>
+        <a class="follow-button" href="together.html">一起成长</a>
+        <button class="menu-button" aria-label="打开导航菜单" aria-expanded="false"><i data-lucide="menu"></i></button>
+      </header>
+
+      <main>
+        <section class="detail-hero">
+          <div class="detail-hero-copy">
+            <a class="back-link" href="games.html"><i data-lucide="arrow-left"></i> 返回课堂游戏</a>
+            <p class="detail-kicker">英语课堂 · 多人词汇对战</p>
+            <h1>生词翻翻乐</h1>
+            <h2>让每一次翻牌，<br /><strong>都成为一次主动回忆。</strong></h2>
+            <div class="detail-actions">
+              <a class="detail-primary" href="#try-game">立即试玩 <i data-lucide="play"></i></a>
+              <button class="detail-secondary guide-open" type="button">查看使用指南 <i data-lucide="book-open"></i></button>
+            </div>
+          </div>
+          <div class="detail-symbol-stage flip-symbol" aria-label="翻牌游戏互动插画"><span>A</span><span>?</span><span>B</span><i data-lucide="rotate-3d"></i></div>
+        </section>
+
+        <section class="feature-strip" aria-label="游戏特点">
+          <div><i data-lucide="users"></i><span><strong>多人分组对战</strong><small>适合全班共同参与</small></span></div>
+          <div><i data-lucide="brain"></i><span><strong>强化主动回忆</strong><small>翻牌前先说出答案</small></span></div>
+          <div><i data-lucide="shuffle"></i><span><strong>适配不同词汇</strong><small>用于新授、复习与检测</small></span></div>
+        </section>
+
+        <section class="try-game" id="try-game">
+          <div class="detail-section-heading">
+            <p>先玩一局</p>
+            <h2>再决定要不要<br /><strong>带进课堂。</strong></h2>
+          </div>
+          <div class="game-frame-shell">
+            <div class="game-frame-bar">
+              <span><i></i><i></i><i></i></span>
+              <p>生词翻翻乐 · 免费试玩</p>
+              <button class="fullscreen-button" type="button" aria-label="全屏试玩"><i data-lucide="maximize-2"></i></button>
+            </div>
+            <iframe
+              class="game-frame"
+              title="生词翻翻乐免费试玩"
+              data-src="assets/games/word-flip/index.html"
+            ></iframe>
+            <a class="game-frame-watermark" href="https://joyzhu.com" target="_blank" rel="noopener noreferrer"><strong>Joyzhu</strong><span>joyzhu.com</span></a>
+          </div>
+          <p class="game-data-note"><i data-lucide="hard-drive"></i> 游戏内容与修改数据仅保存在当前浏览器中，更换设备或清除浏览器数据后不会同步。</p>
+        </section>
+
+        <section class="video-guide">
+          <a class="video-placeholder has-video-cover" style="--video-cover:url('assets/game-covers/word-flip-cover.png')" href="https://www.xiaohongshu.com/explore/685a950f000000000b02e9ac" target="_blank" rel="noopener noreferrer">
+            <i data-lucide="play"></i><span>观看游戏演示</span>
+          </a>
+          <div>
+            <p>先看看，再动手</p>
+            <h2>看看生词翻翻乐如何让词汇复习变成多人对战。</h2>
+            <div class="video-actions">
+              <a class="detail-secondary" href="https://www.xiaohongshu.com/explore/685a950f000000000b02e9ac" target="_blank" rel="noopener noreferrer">观看游戏演示 <i data-lucide="play"></i></a>
+              <a class="detail-primary" href="web-making.html">做同款 <i data-lucide="arrow-right"></i></a>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <div class="pdf-modal" aria-hidden="true">
+        <div class="pdf-dialog" role="dialog" aria-modal="true" aria-label="生词翻翻乐使用指南">
+          <div class="pdf-dialog-bar">
+            <strong>《生词翻翻乐》多人对战版使用指南</strong>
+            <button class="pdf-close" type="button" aria-label="关闭使用指南"><i data-lucide="x"></i></button>
+          </div>
+          <iframe title="生词翻翻乐使用指南" src="assets/guides/word-flip/guide.pdf#toolbar=0&navpanes=0&scrollbar=1"></iframe>
+        </div>
+      </div>
+    </div>
+    <script src="app.js"></script>
+    <script src="game-detail.js"></script>
+    <script src="game-access.js"></script>
+    <script src="social-follow.js"></script>
+  </body>
+</html>

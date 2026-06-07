@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>互动网页制作｜Joyzhu</title>
+    <meta name="description" content="跟随 Joyzhu 学习使用 AI 制作课堂游戏、互动课件、试卷与教学网页。" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="web-making.css" />
+  </head>
+  <body>
+    <div class="page-shell making-shell">
+      <header class="site-header">
+        <a class="brand" href="index.html" aria-label="Joyzhu 首页">
+          <span>Joyzhu</span><span class="brand-swoosh" aria-hidden="true"></span>
+        </a>
+        <nav class="site-nav" aria-label="主导航">
+          <a href="index.html#teaching-hub">教学灵感</a>
+          <a href="index.html#learning-growth">学习与成长</a>
+          <div class="resource-menu">
+            <button class="resource-trigger" type="button" aria-expanded="false">免费资源 <i data-lucide="chevron-down"></i></button>
+            <div class="resource-dropdown">
+              <div class="dropdown-column">
+                <p>拿来即用</p>
+                <a href="games.html"><span class="menu-icon icon-game"><i data-lucide="gamepad-2"></i></span>课堂游戏</a>
+                <a href="classroom-management.html"><span class="menu-icon icon-tool"><i data-lucide="briefcase-business"></i></span>教师工具</a>
+                <a href="ielts.html"><span class="menu-icon icon-ielts"><i data-lucide="book-a"></i></span>雅思资源</a>
+              </div>
+              <div class="dropdown-column">
+                <p>跟着 Joy 学</p>
+                <a href="ai-basics.html"><span class="menu-icon icon-ai"><i data-lucide="laptop"></i></span>AI 教程</a>
+                <a href="web-making.html"><span class="menu-icon icon-make"><i data-lucide="wand-sparkles"></i></span>游戏制作</a>
+                <a href="reading.html"><span class="menu-icon icon-read"><i data-lucide="book-open"></i></span>阅读分享</a>
+              </div>
+            </div>
+          </div>
+        </nav>
+        <a class="follow-button" href="together.html">一起成长</a>
+        <button class="menu-button" aria-label="打开导航菜单" aria-expanded="false"><i data-lucide="menu"></i></button>
+      </header>
+
+      <main>
+        <section class="making-hero">
+          <div class="making-copy">
+            <a class="making-back" href="index.html#creation-studio"><i data-lucide="arrow-left"></i> 返回创作工作室</a>
+            <p class="making-kicker"><span>✦</span> 大家最喜欢的实操系列</p>
+            <h1>看 Joy 怎么做，<br /><strong>再做出你的版本。</strong></h1>
+            <p class="making-intro">这里不讲空泛的方法。跟着真实制作过程，把一张参考图、一个课堂想法，变成可以打开和分享的互动网页。</p>
+            <div class="making-facts">
+              <span><b>3</b> 个制作步骤</span>
+              <span><i data-lucide="mouse-pointer-click"></i> 边看边做</span>
+              <span><i data-lucide="sparkles"></i> 完成自己的版本</span>
+            </div>
+          </div>
+
+          <div class="making-stage" aria-label="互动网页制作视觉">
+            <span class="making-orbit"></span>
+            <img src="assets/studio/html-making.webp" alt="互动网页制作工作台" />
+            <span class="floating-chip chip-prompt">PROMPT</span>
+            <span class="floating-chip chip-html">&lt;/HTML&gt;</span>
+            <span class="floating-chip chip-play"><i data-lucide="play"></i></span>
+          </div>
+        </section>
+
+        <section class="project-workshops">
+          <div class="workshops-heading">
+            <div>
+              <p class="section-kicker"><span>✦</span> 项目工坊</p>
+              <h2>今天，你想做什么？</h2>
+            </div>
+            <p>不用从头学到尾。选择一个想做的作品，跟着教程直接开始。</p>
+          </div>
+
+          <div class="workshop-tabs" role="tablist" aria-label="互动网页教程分类">
+            <button class="workshop-tab active" type="button" role="tab" aria-selected="true" data-workshop="0">
+              <span class="workshop-object game-object"><i data-lucide="gamepad-2"></i><b>PLAY</b></span>
+              <span><small>让练习变好玩</small><strong>课堂游戏工坊</strong></span>
+            </button>
+            <button class="workshop-tab" type="button" role="tab" aria-selected="false" data-workshop="1">
+              <span class="workshop-object lesson-object"><i data-lucide="presentation"></i><b>SHOW</b></span>
+              <span><small>让课堂更有互动</small><strong>互动课件工坊</strong></span>
+            </button>
+            <button class="workshop-tab" type="button" role="tab" aria-selected="false" data-workshop="2">
+              <span class="workshop-object exam-object"><i data-lucide="file-chart-column"></i><b>DATA</b></span>
+              <span><small>让反馈更清楚</small><strong>试卷与学情分析</strong></span>
+            </button>
+            <button class="workshop-tab" type="button" role="tab" aria-selected="false" data-workshop="3">
+              <span class="workshop-object tool-object"><i data-lucide="wand-sparkles"></i><b>TIP</b></span>
+              <span><small>让制作更顺手</small><strong>技巧与工具</strong></span>
+            </button>
+          </div>
+
+          <div class="project-panel" aria-live="polite">
+            <div class="project-panel-heading">
+              <div><span>WORKSHOP 01</span><h3>课堂游戏工坊</h3></div>
+              <p>把知识练习变成学生愿意参与的挑战。</p>
+            </div>
+            <div class="project-list"></div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="web-making.js"></script>
+    <script src="social-follow.js"></script>
+  </body>
+</html>

@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI 基础课｜Joyzhu</title>
+    <meta name="description" content="跟随 Joyzhu 系统学习 AI 基础知识、提示词表达与常见问题解决方法。" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="ai-basics.css" />
+  </head>
+  <body>
+    <div class="page-shell course-shell">
+      <header class="site-header">
+        <a class="brand" href="index.html" aria-label="Joyzhu 首页">
+          <span>Joyzhu</span><span class="brand-swoosh" aria-hidden="true"></span>
+        </a>
+        <nav class="site-nav" aria-label="主导航">
+          <a href="index.html#teaching-hub">教学灵感</a>
+          <a href="index.html#learning-growth">学习与成长</a>
+          <div class="resource-menu">
+            <button class="resource-trigger" type="button" aria-expanded="false">免费资源 <i data-lucide="chevron-down"></i></button>
+            <div class="resource-dropdown">
+              <div class="dropdown-column">
+                <p>拿来即用</p>
+                <a href="games.html"><span class="menu-icon icon-game"><i data-lucide="gamepad-2"></i></span>课堂游戏</a>
+                <a href="classroom-management.html"><span class="menu-icon icon-tool"><i data-lucide="briefcase-business"></i></span>教师工具</a>
+                <a href="ielts.html"><span class="menu-icon icon-ielts"><i data-lucide="book-a"></i></span>雅思资源</a>
+              </div>
+              <div class="dropdown-column">
+                <p>跟着 Joy 学</p>
+                <a href="ai-basics.html"><span class="menu-icon icon-ai"><i data-lucide="laptop"></i></span>AI 教程</a>
+                <a href="web-making.html"><span class="menu-icon icon-make"><i data-lucide="wand-sparkles"></i></span>游戏制作</a>
+                <a href="reading.html"><span class="menu-icon icon-read"><i data-lucide="book-open"></i></span>阅读分享</a>
+              </div>
+            </div>
+          </div>
+        </nav>
+        <a class="follow-button" href="together.html">一起成长</a>
+        <button class="menu-button" aria-label="打开导航菜单" aria-expanded="false"><i data-lucide="menu"></i></button>
+      </header>
+
+      <main>
+        <section class="course-hero">
+          <div class="course-hero-copy">
+            <a class="course-back" href="index.html#creation-studio"><i data-lucide="arrow-left"></i> 返回创作工作室</a>
+            <p class="course-kicker"><span>✦</span> Joy 最推荐的学习起点</p>
+            <h1>花一点时间打好基础，<br /><strong>让之后的每一步都更快。</strong></h1>
+            <p class="course-intro">这可能不是最热闹的系列，却会帮你真正理解 AI、学会表达，并完成自己的第一个网页。</p>
+            <div class="course-facts">
+              <span><b>9</b> 节课程</span>
+              <span><i data-lucide="sprout"></i> 适合零基础</span>
+              <span><i data-lucide="layout-template"></i> 完成一个网页</span>
+            </div>
+          </div>
+
+          <div class="foundation-stage" aria-label="AI 创作基础课视觉">
+            <span class="stage-orbit orbit-one"></span>
+            <span class="stage-orbit orbit-two"></span>
+            <span class="stage-star star-one">✦</span>
+            <span class="stage-star star-two">✦</span>
+            <img src="assets/studio/ai-foundations.webp" alt="由知识积木组成的 AI 基础课" />
+            <div class="joy-note">
+              <span>JOY'S NOTE</span>
+              <p>先理解，再使用。<br />你会走得更稳，也更快。</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="learning-path" aria-labelledby="path-title">
+          <div class="path-heading">
+            <div>
+              <p class="section-kicker"><span>✦</span> 学习路径</p>
+              <p class="path-lead">沿着这条路</p>
+              <h2 id="path-title">一步一步，打好创作基础。</h2>
+              <p class="path-description">三章循序渐进。点击站点，在下方查看这一章的三节课。</p>
+            </div>
+          </div>
+
+          <div class="route-map" role="tablist" aria-label="AI 创作基础课章节">
+            <span class="route-line" aria-hidden="true"><i></i></span>
+            <button class="route-stop active" type="button" role="tab" aria-selected="true" data-chapter="0">
+              <span class="route-icon coral-route"><i data-lucide="brain"></i></span>
+              <small>第一章</small>
+              <strong>正确思考</strong>
+            </button>
+            <button class="route-stop" type="button" role="tab" aria-selected="false" data-chapter="1">
+              <span class="route-icon yellow-route"><i data-lucide="message-square-text"></i></span>
+              <small>第二章</small>
+              <strong>表达需求</strong>
+            </button>
+            <button class="route-stop" type="button" role="tab" aria-selected="false" data-chapter="2">
+              <span class="route-icon blue-route"><i data-lucide="code-2"></i></span>
+              <small>第三章</small>
+              <strong>认识网页</strong>
+            </button>
+          </div>
+
+          <div class="chapter-panel" aria-live="polite">
+            <div class="chapter-summary">
+              <div>
+                <span class="chapter-number">CHAPTER 01</span>
+                <h3>先学会正确思考</h3>
+              </div>
+              <p>先建立正确的判断方式，少走弯路，也不轻易被 AI 的答案带着跑。</p>
+            </div>
+            <div class="lesson-list"></div>
+            <div class="chapter-controls">
+              <button class="chapter-prev" type="button"><i data-lucide="arrow-left"></i> 上一章</button>
+              <span><b>01</b> / 03</span>
+              <button class="chapter-next" type="button">下一章 <i data-lucide="arrow-right"></i></button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="ai-basics.js"></script>
+    <script src="social-follow.js"></script>
+  </body>
+</html>

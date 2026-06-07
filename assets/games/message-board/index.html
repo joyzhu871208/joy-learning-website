@@ -1,0 +1,1813 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>温暖墙 - 小学生匿名心情留言板</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <style>
+        :root {
+            --primary: #FFD166;
+            --secondary: #06D6A0;
+            --accent: #118AB2;
+            --light: #F8F9FA;
+            --dark: #333333;
+            --gray: #95A5A6;
+            --warning: #EF476F;
+            --card-1: #FFD166;
+            --card-2: #06D6A0;
+            --card-3: #118AB2;
+            --card-4: #FF9E6D;
+            --card-5: #CDB4DB;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), #FFC048);
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo i {
+            font-size: 32px;
+        }
+        
+        .logo h1 {
+            font-size: 28px;
+            font-weight: 700;
+        }
+        
+        .mode-switcher {
+            display: flex;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            padding: 5px;
+        }
+        
+        .mode-btn {
+            padding: 8px 20px;
+            border: none;
+            background: transparent;
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .mode-btn.active {
+            background: white;
+            color: var(--primary);
+        }
+        
+        .main-content {
+            display: flex;
+            min-height: 700px;
+        }
+        
+        .sidebar {
+            width: 300px;
+            background: var(--light);
+            padding: 20px;
+            border-right: 1px solid #eaeaea;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .view-selector {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .view-btn {
+            padding: 12px 15px;
+            background: white;
+            border: none;
+            border-radius: 10px;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+            transition: all 0.3s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .view-btn:hover, .view-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .filter-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+        
+        .tag-filter {
+            padding: 5px 10px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 15px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .tag-filter.active {
+            background: var(--secondary);
+            color: white;
+            border-color: var(--secondary);
+        }
+        
+        .stats-panel {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .stats-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+        
+        .mood-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        
+        .mood-stat {
+            text-align: center;
+        }
+        
+        .mood-emoji {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        
+        .content-area {
+            flex: 1;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .wall-view {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+        }
+        
+        .note-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            position: relative;
+            border-left: 5px solid var(--card-1);
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .note-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-emoji {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .card-content {
+            flex: 1;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--gray);
+        }
+        
+        .card-tags {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+        
+        .card-tag {
+            background: var(--light);
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+        }
+        
+        .card-stickers {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 5px;
+        }
+        
+        .sticker {
+            font-size: 16px;
+        }
+        
+        .teacher-panel {
+            display: none;
+            flex: 1;
+            flex-direction: column;
+        }
+        
+        .teacher-panel.active {
+            display: flex;
+        }
+        
+        .teacher-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px dashed #eaeaea;
+        }
+        
+        .teacher-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+        }
+        
+        .btn-accent {
+            background: var(--accent);
+            color: white;
+        }
+        
+        .btn-warning {
+            background: var(--warning);
+            color: white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .pending-notes {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+            background: var(--light);
+            border-radius: 10px;
+        }
+        
+        .pending-item {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            border-left: 5px solid var(--warning);
+        }
+        
+        .pending-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .action-btn {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .sensitive-highlight {
+            background: #FFECEC;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        
+        .modal-header {
+            padding: 20px;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-body {
+            padding: 25px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+        
+        .emoji-selector {
+            display: flex;
+            justify-content: space-between;
+            margin: 15px 0;
+        }
+        
+        .emoji-option {
+            font-size: 40px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+            flex: 1;
+        }
+        
+        .emoji-option.selected {
+            background: var(--light);
+            transform: scale(1.1);
+        }
+        
+        .tag-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .tag-option {
+            padding: 8px 15px;
+            background: var(--light);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .tag-option.selected {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .sticker-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .sticker-option {
+            font-size: 24px;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        
+        .sticker-option.selected {
+            background: var(--light);
+            transform: scale(1.2);
+        }
+        
+        .char-count {
+            text-align: right;
+            font-size: 14px;
+            color: var(--gray);
+            margin-top: 5px;
+        }
+        
+        .modal-footer {
+            padding: 20px;
+            border-top: 1px solid #eaeaea;
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+        }
+        
+        .quick-actions {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 100;
+        }
+        
+        .action-btn-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .action-btn-circle:hover {
+            transform: scale(1.1);
+        }
+        
+        .add-note {
+            background: var(--primary);
+        }
+        
+        .teacher-mode {
+            background: var(--accent);
+        }
+        
+        .print-section {
+            display: none;
+        }
+        
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .print-section, .print-section * {
+                visibility: visible;
+            }
+            .print-section {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                padding: 20px;
+                background: white;
+            }
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--gray);
+            font-size: 14px;
+            border-top: 1px solid #eaeaea;
+            margin-top: 20px;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 1024px) {
+            .main-content {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid #eaeaea;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            .wall-view {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .timeline-view {
+            display: none;
+            flex-direction: column;
+            gap: 20px;
+            padding: 10px;
+        }
+        
+        .timeline-item {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .timeline-date {
+            min-width: 100px;
+            text-align: right;
+            font-weight: 600;
+            color: var(--accent);
+        }
+        
+        .timeline-content {
+            flex: 1;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            border-left: 3px solid var(--primary);
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: var(--gray);
+        }
+        
+        .empty-state i {
+            font-size: 48px;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-heart"></i>
+                <div>
+                    <h1>小学生留言温暖墙</h1>
+                    <span>小学生匿名心情留言板</span>
+                </div>
+            </div>
+            <div class="mode-switcher">
+                <button class="mode-btn active" data-mode="student">学生端</button>
+                <button class="mode-btn" data-mode="teacher">教师端</button>
+            </div>
+        </header>
+        
+        <div class="main-content">
+            <div class="sidebar">
+                <div class="view-selector">
+                    <button class="view-btn active" data-view="wall">
+                        <i class="fas fa-th-large"></i> 拼贴墙
+                    </button>
+                    <button class="view-btn" data-view="timeline">
+                        <i class="fas fa-stream"></i> 时间线
+                    </button>
+                    <button class="view-btn" data-view="thanks">
+                        <i class="fas fa-hands-helping"></i> 感谢墙
+                    </button>
+                    <button class="view-btn" data-view="ideas">
+                        <i class="fas fa-lightbulb"></i> 创意墙
+                    </button>
+                </div>
+                
+                <div class="filter-tags">
+                    <div class="tag-filter active" data-tag="all">全部</div>
+                    <div class="tag-filter" data-tag="开心">开心</div>
+                    <div class="tag-filter" data-tag="感谢">感谢</div>
+                    <div class="tag-filter" data-tag="创意">创意</div>
+                    <div class="tag-filter" data-tag="求帮助">求帮助</div>
+                </div>
+                
+                <div class="stats-panel">
+                    <div class="stats-title">本周心情统计</div>
+                    <div class="mood-stats">
+                        <div class="mood-stat">
+                            <div class="mood-emoji">😀</div>
+                            <div>12</div>
+                        </div>
+                        <div class="mood-stat">
+                            <div class="mood-emoji">🙂</div>
+                            <div>8</div>
+                        </div>
+                        <div class="mood-stat">
+                            <div class="mood-emoji">😐</div>
+                            <div>5</div>
+                        </div>
+                        <div class="mood-stat">
+                            <div class="mood-emoji">🙁</div>
+                            <div>3</div>
+                        </div>
+                        <div class="mood-stat">
+                            <div class="mood-emoji">😣</div>
+                            <div>1</div>
+                        </div>
+                    </div>
+                    <div class="stats-title">热门标签</div>
+                    <div>感谢(15) 开心(12) 创意(8) 求帮助(5)</div>
+                </div>
+            </div>
+            
+            <div class="content-area">
+                <!-- 学生端内容 -->
+                <div class="wall-view" id="wall-view">
+                    <!-- 心情卡片将通过JS动态生成 -->
+                </div>
+                
+                <div class="timeline-view" id="timeline-view">
+                    <!-- 时间线内容将通过JS动态生成 -->
+                </div>
+                
+                <div class="empty-state" id="empty-state" style="display: none;">
+                    <i class="fas fa-inbox"></i>
+                    <h3>还没有留言哦</h3>
+                    <p>点击右下角的"+"按钮，分享你的心情吧！</p>
+                </div>
+                
+                <!-- 教师端内容 -->
+                <div class="teacher-panel" id="teacher-panel">
+                    <div class="teacher-header">
+                        <h2>守护者模式</h2>
+                        <div class="teacher-actions">
+                            <button class="btn btn-primary" id="export-excel">
+                                <i class="fas fa-file-excel"></i> 导出Excel
+                            </button>
+                            <button class="btn btn-secondary" id="check-sensitive">
+                                <i class="fas fa-shield-alt"></i> 检查敏感内容
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="pending-notes" id="pending-notes">
+                        <!-- 待审核内容将通过JS动态生成 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>温暖墙 - 小学生匿名心情留言板 &copy; 2023 - 阳光小学专用</p>
+        </footer>
+    </div>
+    
+    <!-- 快速操作按钮 -->
+    <div class="quick-actions">
+        <div class="action-btn-circle add-note" id="add-note-btn">
+            <i class="fas fa-plus"></i>
+        </div>
+        <div class="action-btn-circle teacher-mode" id="teacher-mode-btn">
+            <i class="fas fa-chalkboard-teacher"></i>
+        </div>
+    </div>
+    
+    <!-- 添加留言模态框 -->
+    <div class="modal" id="note-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>分享你的心情</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="note-form">
+                    <div class="form-group">
+                        <label>选择心情表情</label>
+                        <div class="emoji-selector">
+                            <div class="emoji-option" data-emoji="😀">😀<br>开心</div>
+                            <div class="emoji-option" data-emoji="🙂">🙂<br>不错</div>
+                            <div class="emoji-option" data-emoji="😐">😐<br>一般</div>
+                            <div class="emoji-option" data-emoji="🙁">🙁<br>有点烦</div>
+                            <div class="emoji-option" data-emoji="😣">😣<br>需要帮助</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="note-content">写下你想说的话（最多80字）</label>
+                        <textarea id="note-content" class="form-control" rows="3" placeholder="今天我感到..." maxlength="80"></textarea>
+                        <div class="char-count"><span id="char-count">0</span>/80</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>选择标签（可多选）</label>
+                        <div class="tag-selector">
+                            <div class="tag-option" data-tag="开心">开心</div>
+                            <div class="tag-option" data-tag="感谢">感谢</div>
+                            <div class="tag-option" data-tag="困扰">困扰</div>
+                            <div class="tag-option" data-tag="求帮助">求帮助</div>
+                            <div class="tag-option" data-tag="创意">创意</div>
+                            <div class="tag-option" data-tag="班级建议">班级建议</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>添加贴纸装饰（可选）</label>
+                        <div class="sticker-selector">
+                            <div class="sticker-option">⭐</div>
+                            <div class="sticker-option">❤️</div>
+                            <div class="sticker-option">⚽</div>
+                            <div class="sticker-option">🎨</div>
+                            <div class="sticker-option">📚</div>
+                            <div class="sticker-option">🌻</div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" id="cancel-note">取消</button>
+                <button class="btn btn-primary" id="submit-note">发布留言</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 编辑留言模态框 -->
+    <div class="modal" id="edit-note-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>编辑留言</h3>
+                <span class="close edit-close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="edit-note-form">
+                    <input type="hidden" id="edit-note-id">
+                    <div class="form-group">
+                        <label>选择心情表情</label>
+                        <div class="emoji-selector">
+                            <div class="emoji-option" data-emoji="😀">😀<br>开心</div>
+                            <div class="emoji-option" data-emoji="🙂">🙂<br>不错</div>
+                            <div class="emoji-option" data-emoji="😐">😐<br>一般</div>
+                            <div class="emoji-option" data-emoji="🙁">🙁<br>有点烦</div>
+                            <div class="emoji-option" data-emoji="😣">😣<br>需要帮助</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="edit-note-content">编辑内容（最多80字）</label>
+                        <textarea id="edit-note-content" class="form-control" rows="3" maxlength="80"></textarea>
+                        <div class="char-count"><span id="edit-char-count">0</span>/80</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>选择标签（可多选）</label>
+                        <div class="tag-selector">
+                            <div class="tag-option" data-tag="开心">开心</div>
+                            <div class="tag-option" data-tag="感谢">感谢</div>
+                            <div class="tag-option" data-tag="困扰">困扰</div>
+                            <div class="tag-option" data-tag="求帮助">求帮助</div>
+                            <div class="tag-option" data-tag="创意">创意</div>
+                            <div class="tag-option" data-tag="班级建议">班级建议</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>添加贴纸装饰（可选）</label>
+                        <div class="sticker-selector">
+                            <div class="sticker-option">⭐</div>
+                            <div class="sticker-option">❤️</div>
+                            <div class="sticker-option">⚽</div>
+                            <div class="sticker-option">🎨</div>
+                            <div class="sticker-option">📚</div>
+                            <div class="sticker-option">🌻</div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" id="cancel-edit">取消</button>
+                <button class="btn btn-primary" id="submit-edit">保存编辑</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- PDF打印区域 -->
+    <div id="print-section" class="print-section">
+        <!-- PDF内容将通过JS动态生成 -->
+    </div>
+    
+    <!-- 密码输入模态框 -->
+    <div class="modal" id="password-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>请输入教师密码</h3>
+                <span class="close password-close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <input type="password" id="teacher-password" class="form-control" placeholder="请输入密码">
+                <div id="password-error" style="color: red; margin-top: 10px; display: none;">密码错误</div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" id="cancel-password">取消</button>
+                <button class="btn btn-primary" id="submit-password">确认</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 示例数据
+        const sampleData = {
+            notes: [
+                {
+                    id: 1,
+                    pseudoName: "蓝色小海豚",
+                    emoji: "😀",
+                    text: "今天体育课我们班赢了拔河比赛，太开心了！",
+                    tags: ["开心"],
+                    stickers: ["⭐", "⚽"],
+                    createdAt: "2023-10-20",
+                    status: "published"
+                },
+                {
+                    id: 2,
+                    pseudoName: "粉色小兔子",
+                    emoji: "🙂",
+                    text: "谢谢小明帮我捡起掉在地上的文具盒，你真好！",
+                    tags: ["感谢"],
+                    stickers: ["❤️"],
+                    createdAt: "2023-10-19",
+                    status: "published"
+                },
+                {
+                    id: 3,
+                    pseudoName: "绿色小乌龟",
+                    emoji: "😐",
+                    text: "希望班级图书角能多增加一些科学探险类的书籍",
+                    tags: ["创意", "班级建议"],
+                    stickers: ["📚"],
+                    createdAt: "2023-10-18",
+                    status: "published"
+                },
+                {
+                    id: 4,
+                    pseudoName: "黄色小狮子",
+                    emoji: "🙁",
+                    text: "数学应用题有点难，希望老师能再讲解一遍",
+                    tags: ["求帮助"],
+                    stickers: [],
+                    createdAt: "2023-10-17",
+                    status: "published"
+                },
+                {
+                    id: 5,
+                    pseudoName: "紫色小蝴蝶",
+                    emoji: "😀",
+                    text: "美术课我的画被老师表扬了，好开心！",
+                    tags: ["开心"],
+                    stickers: ["🎨"],
+                    createdAt: "2023-10-16",
+                    status: "published"
+                }
+            ],
+            sensitiveWords: ["讨厌", "不想", "排挤", "打我", "笨蛋", "讨厌自己", "不想来学校"],
+            animalNames: ["小海豚", "小兔子", "小乌龟", "小狮子", "小蝴蝶", "小熊猫", "小松鼠", "小鹿", "小企鹅", "小考拉"],
+            colors: ["红色", "橙色", "黄色", "绿色", "蓝色", "紫色", "粉色", "棕色", "白色", "黑色"]
+        };
+
+        // 当前视图和筛选状态
+        let currentView = "wall";
+        let currentFilter = "all";
+        let isTeacherMode = false;
+        let isTeacherAuthenticated = false;
+
+        // 初始化应用
+        document.addEventListener('DOMContentLoaded', function() {
+            // 从本地存储加载数据或使用示例数据
+            loadData();
+            
+            // 渲染心情墙
+            renderWall();
+            
+            // 初始化事件监听
+            initEventListeners();
+            
+            // 初始化模态框
+            initModal();
+            initEditModal(); // 初始化编辑模态框
+        });
+
+        // 从本地存储加载数据
+        function loadData() {
+            const savedNotes = localStorage.getItem('warmWall_notes');
+            if (savedNotes) {
+                sampleData.notes = JSON.parse(savedNotes);
+            } else {
+                // 首次使用，保存示例数据
+                saveData();
+            }
+            updateStats(); // 加载数据后更新统计
+        }
+
+        // 保存数据到本地存储
+        function saveData() {
+            localStorage.setItem('warmWall_notes', JSON.stringify(sampleData.notes));
+            updateStats(); // 保存数据后更新统计
+        }
+
+        // 初始化事件监听
+        function initEventListeners() {
+            // 模式切换
+            document.querySelectorAll('.mode-btn').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    const mode = this.getAttribute('data-mode');
+                    
+                    // 更新活跃模式按钮
+                    document.querySelectorAll('.mode-btn').forEach(function(b) { b.classList.remove('active'); });
+                    this.classList.add('active');
+                    
+                    // 切换模式
+                    isTeacherMode = (mode === 'teacher');
+                    toggleMode(isTeacherMode);
+                });
+            });
+            
+            // 视图切换
+            document.querySelectorAll('.view-btn').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    const view = this.getAttribute('data-view');
+                    
+                    // 更新活跃视图按钮
+                    document.querySelectorAll('.view-btn').forEach(function(b) { b.classList.remove('active'); });
+                    this.classList.add('active');
+                    
+                    // 切换视图
+                    currentView = view;
+                    toggleView(view);
+                });
+            });
+            
+            // 标签筛选
+            document.querySelectorAll('.tag-filter').forEach(function(filter) {
+                filter.addEventListener('click', function() {
+                    const tag = this.getAttribute('data-tag');
+                    
+                    // 更新活跃筛选标签
+                    document.querySelectorAll('.tag-filter').forEach(function(f) { f.classList.remove('active'); });
+                    this.classList.add('active');
+                    
+                    // 应用筛选
+                    currentFilter = tag;
+                    applyFilter(tag);
+                });
+            });
+            
+            // 教师模式按钮
+            document.getElementById('teacher-mode-btn').addEventListener('click', function() {
+                if (!isTeacherAuthenticated) {
+                    openPasswordModal(function() {
+                        isTeacherAuthenticated = true;
+                        document.querySelectorAll('.mode-btn').forEach(function(b) { b.classList.remove('active'); });
+                        document.querySelector('.mode-btn[data-mode="teacher"]').classList.add('active');
+                        toggleMode(true);
+                    });
+                } else {
+                    document.querySelectorAll('.mode-btn').forEach(function(b) { b.classList.remove('active'); });
+                    document.querySelector('.mode-btn[data-mode="teacher"]').classList.add('active');
+                    toggleMode(true);
+                }
+            });
+            initPasswordModal();
+        }
+
+        // 切换模式（学生/教师）
+        function toggleMode(isTeacher) {
+            if (isTeacher && !isTeacherAuthenticated) {
+                openPasswordModal(function() {
+                    isTeacherAuthenticated = true;
+                    toggleMode(true);
+                });
+                return;
+            }
+            if (isTeacher) {
+                // 显示教师面板，隐藏学生内容
+                document.getElementById('teacher-panel').classList.add('active');
+                document.getElementById('wall-view').style.display = 'none';
+                document.getElementById('timeline-view').style.display = 'none';
+                document.getElementById('empty-state').style.display = 'none';
+                
+                // 渲染待审核内容
+                renderPendingNotes();
+            } else {
+                // 显示学生内容，隐藏教师面板
+                document.getElementById('teacher-panel').classList.remove('active');
+                toggleView(currentView);
+            }
+        }
+
+        // 切换视图
+        function toggleView(view) {
+            // 隐藏所有视图
+            document.getElementById('wall-view').style.display = 'none';
+            document.getElementById('timeline-view').style.display = 'none';
+            document.getElementById('empty-state').style.display = 'none';
+            
+            currentView = view;
+            
+            if (view === 'wall' || view === 'thanks' || view === 'ideas') {
+                document.getElementById('wall-view').style.display = 'grid';
+                if (view === 'thanks') {
+                    renderFilteredWall('感谢');
+                } else if (view === 'ideas') {
+                    renderFilteredWall('创意');
+                } else {
+                    if (currentFilter === 'all') {
+                        renderWall();
+                    } else {
+                        renderFilteredWall(currentFilter);
+                    }
+                }
+            } else if (view === 'timeline') {
+                document.getElementById('timeline-view').style.display = 'flex';
+                renderTimeline(); // Add filtering to timeline if needed
+            }
+            
+            checkEmptyState();
+        }
+
+        // 应用筛选
+        function applyFilter(tag) {
+            if (tag === 'all') {
+                renderWall();
+            } else {
+                renderFilteredWall(tag);
+            }
+        }
+
+        // 渲染心情墙
+        function renderWall() {
+            const wallView = document.getElementById('wall-view');
+            wallView.innerHTML = '';
+            
+            const publishedNotes = sampleData.notes.filter(function(note) { return note.status === 'published'; });
+            
+            if (publishedNotes.length === 0) {
+                document.getElementById('empty-state').style.display = 'block';
+                return;
+            }
+            
+            publishedNotes.forEach(function(note) {
+                const noteCard = createNoteCard(note);
+                wallView.appendChild(noteCard);
+            });
+        }
+
+        // 渲染筛选后的心情墙
+        function renderFilteredWall(tag) {
+            const wallView = document.getElementById('wall-view');
+            wallView.innerHTML = '';
+            
+            const filteredNotes = sampleData.notes.filter(function(note) { 
+                return note.status === 'published' && note.tags.includes(tag);
+            });
+            
+            if (filteredNotes.length === 0) {
+                document.getElementById('empty-state').style.display = 'block';
+                return;
+            }
+            
+            filteredNotes.forEach(function(note) {
+                const noteCard = createNoteCard(note);
+                wallView.appendChild(noteCard);
+            });
+        }
+
+        // 渲染时间线视图
+        function renderTimeline() {
+            const timelineView = document.getElementById('timeline-view');
+            timelineView.innerHTML = '';
+            
+            const publishedNotes = sampleData.notes.filter(function(note) { return note.status === 'published'; });
+            
+            if (publishedNotes.length === 0) {
+                document.getElementById('empty-state').style.display = 'block';
+                return;
+            }
+            
+            // 按日期分组
+            const notesByDate = {};
+            publishedNotes.forEach(function(note) {
+                let date = note.createdAt;
+                if (!isValidDate(date)) {
+                    date = new Date().toISOString().split('T')[0]; // Fallback to today
+                }
+                if (!notesByDate[date]) {
+                    notesByDate[date] = [];
+                }
+                notesByDate[date].push(note);
+            });
+            
+            // 按日期排序（最近的在前）
+            const sortedDates = Object.keys(notesByDate).sort(function(a, b) { return new Date(b) - new Date(a); });
+            
+            sortedDates.forEach(function(date) {
+                const dateHeader = document.createElement('div');
+                dateHeader.className = 'timeline-date';
+                dateHeader.textContent = formatDate(date);
+                
+                const dateNotes = document.createElement('div');
+                dateNotes.className = 'timeline-content';
+                
+                notesByDate[date].forEach(function(note) {
+                    const noteElement = document.createElement('div');
+                    noteElement.style.marginBottom = '10px';
+                    noteElement.style.paddingBottom = '10px';
+                    noteElement.style.borderBottom = '1px dashed #eee';
+                    
+                    noteElement.innerHTML = `
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 5px;">
+                            <span style="font-size: 20px;">${note.emoji}</span>
+                            <span style="font-weight: 600;">${note.pseudoName}</span>
+                            <span style="font-size: 12px; color: #999;">${note.tags.map(function(tag) { return `#${tag}`; }).join(' ')}</span>
+                        </div>
+                        <div>${note.text}</div>
+                    `;
+                    
+                    dateNotes.appendChild(noteElement);
+                });
+                
+                const timelineItem = document.createElement('div');
+                timelineItem.className = 'timeline-item';
+                timelineItem.appendChild(dateHeader);
+                timelineItem.appendChild(dateNotes);
+                
+                timelineView.appendChild(timelineItem);
+            });
+        }
+
+        // 创建心情卡片
+        function createNoteCard(note) {
+            const card = document.createElement('div');
+            card.className = 'note-card';
+            
+            // 根据表情设置卡片颜色
+            const colorClass = getCardColor(note.emoji);
+            card.style.borderLeftColor = `var(--${colorClass})`;
+            
+            card.innerHTML = `
+                <div class="card-emoji">${note.emoji}</div>
+                <div class="card-content">${note.text}</div>
+                <div class="card-meta">
+                    <span>${note.pseudoName}</span>
+                    <span>${formatDate(note.createdAt)}</span>
+                </div>
+                <div class="card-tags">
+                    ${note.tags.map(function(tag) { return `<span class="card-tag">#${tag}</span>`; }).join('')}
+                </div>
+                <div class="card-stickers">
+                    ${note.stickers.map(function(sticker) { return `<span class="sticker">${sticker}</span>`; }).join('')}
+                </div>
+            `;
+            
+            return card;
+        }
+
+        // 根据表情获取卡片颜色
+        function getCardColor(emoji) {
+            switch(emoji) {
+                case '😀': return 'card-1';
+                case '🙂': return 'card-2';
+                case '😐': return 'card-3';
+                case '🙁': return 'card-4';
+                case '😣': return 'card-5';
+                default: return 'card-1';
+            }
+        }
+
+        // 渲染待审核内容（教师端）
+        function renderPendingNotes() {
+            const pendingNotesContainer = document.getElementById('pending-notes');
+            pendingNotesContainer.innerHTML = '';
+            
+            // 查找待审核的笔记（示例中暂无，实际使用中会有status为pending的笔记）
+            const pendingNotes = sampleData.notes.filter(function(note) { return note.status === 'pending'; });
+            
+            if (pendingNotes.length === 0) {
+                pendingNotesContainer.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-check-circle"></i>
+                        <h3>没有待审核的内容</h3>
+                        <p>所有留言都已审核通过！</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            pendingNotes.forEach(function(note) {
+                const pendingItem = document.createElement('div');
+                pendingItem.className = 'pending-item';
+                
+                // 检查敏感词
+                const hasSensitive = checkSensitiveWords(note.text);
+                let displayText = note.text;
+                
+                if (hasSensitive) {
+                    displayText = highlightSensitiveWords(note.text);
+                }
+                
+                pendingItem.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div>
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 5px;">
+                                <span style="font-size: 20px;">${note.emoji}</span>
+                                <span style="font-weight: 600;">${note.pseudoName}</span>
+                            </div>
+                            <div>${displayText}</div>
+                            <div style="margin-top: 5px;">
+                                ${note.tags.map(function(tag) { return `<span style="background: #e0e0e0; padding: 2px 8px; border-radius: 10px; font-size: 12px; margin-right: 5px;">${tag}</span>`; }).join('')}
+                            </div>
+                        </div>
+                        <div style="color: #999; font-size: 14px;">${formatDate(note.createdAt)}</div>
+                    </div>
+                    <div class="pending-actions">
+                        <button class="action-btn" style="background: var(--secondary); color: white;" onclick="approveNote(${note.id})">通过</button>
+                        <button class="action-btn" style="background: var(--warning); color: white;" onclick="rejectNote(${note.id})">暂存</button>
+                        <button class="action-btn" style="background: var(--accent); color: white;" onclick="editNote(${note.id})">编辑</button>
+                    </div>
+                `;
+                
+                pendingNotesContainer.appendChild(pendingItem);
+            });
+        }
+
+        // 检查敏感词
+        function checkSensitiveWords(text) {
+            return sampleData.sensitiveWords.some(function(word) { return text.includes(word); });
+        }
+
+        // 高亮敏感词
+        function highlightSensitiveWords(text) {
+            let result = text;
+            sampleData.sensitiveWords.forEach(function(word) {
+                if (text.includes(word)) {
+                    result = result.replace(new RegExp(word, 'g'), `<span class="sensitive-highlight">${word}</span>`);
+                }
+            });
+            return result;
+        }
+
+        // 检查空状态
+        function checkEmptyState() {
+            const publishedNotes = sampleData.notes.filter(function(note) { return note.status === 'published'; });
+            if (publishedNotes.length === 0 && !isTeacherMode) {
+                document.getElementById('empty-state').style.display = 'block';
+            } else {
+                document.getElementById('empty-state').style.display = 'none';
+            }
+        }
+
+        // 初始化模态框
+        function initModal() {
+            const modal = document.getElementById('note-modal');
+            const closeBtn = document.querySelector('.close');
+            const cancelBtn = document.getElementById('cancel-note');
+            
+            // 打开模态框
+            function openModal() {
+                modal.classList.add('active');
+                
+                // 设置默认日期为今天
+                document.getElementById('note-content').value = '';
+                updateCharCount();
+                
+                // 重置选择
+                document.querySelectorAll('#note-modal .emoji-option, #note-modal .tag-option, #note-modal .sticker-option').forEach(function(option) {
+                    option.classList.remove('selected');
+                });
+                
+                // 默认选择第一个表情
+                document.querySelector('#note-modal .emoji-option').classList.add('selected');
+            }
+            
+            // 关闭模态框
+            function closeModal() {
+                modal.classList.remove('active');
+            }
+            
+            // 事件监听
+            document.getElementById('add-note-btn').addEventListener('click', openModal);
+            
+            closeBtn.addEventListener('click', closeModal);
+            cancelBtn.addEventListener('click', closeModal);
+            
+            // 点击模态框外部关闭
+            window.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+            
+            // 表情选择
+            document.querySelectorAll('#note-modal .emoji-option').forEach(function(option) {
+                option.addEventListener('click', function() {
+                    document.querySelectorAll('#note-modal .emoji-option').forEach(function(opt) {
+                        opt.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                });
+            });
+            
+            // 标签选择
+            document.querySelectorAll('#note-modal .tag-option').forEach(function(option) {
+                option.addEventListener('click', function() {
+                    this.classList.toggle('selected');
+                    console.log('标签点击:', this.getAttribute('data-tag'), '选中状态:', this.classList.contains('selected'));
+                });
+            });
+            
+            // 贴纸选择
+            document.querySelectorAll('#note-modal .sticker-option').forEach(function(option) {
+                option.addEventListener('click', function() {
+                    this.classList.toggle('selected');
+                });
+            });
+            
+            // 字符计数
+            document.getElementById('note-content').addEventListener('input', updateCharCount);
+            
+            // 提交留言
+            document.getElementById('submit-note').addEventListener('click', function() {
+                const content = document.getElementById('note-content').value.trim();
+                if (!content) {
+                    alert('请写下你想说的话');
+                    return;
+                }
+                
+                // 获取选中的表情
+                const selectedEmoji = document.querySelector('#note-modal .emoji-option.selected');
+                if (!selectedEmoji) {
+                    alert('请选择一个心情表情');
+                    return;
+                }
+                const emoji = selectedEmoji.getAttribute('data-emoji');
+                
+                // 获取选中的标签
+                const selectedTags = [];
+                document.querySelectorAll('#note-modal .tag-option.selected').forEach(function(option) {
+                    selectedTags.push(option.getAttribute('data-tag'));
+                });
+                
+                console.log('选中的标签数量:', selectedTags.length);
+                console.log('选中的标签:', selectedTags);
+                
+                if (selectedTags.length === 0) {
+                    alert('请至少选择一个标签');
+                    return;
+                }
+                
+                // 获取选中的贴纸
+                const selectedStickers = [];
+                document.querySelectorAll('#note-modal .sticker-option.selected').forEach(function(option) {
+                    selectedStickers.push(option.textContent);
+                });
+                
+                // 生成随机匿名昵称，确保唯一
+                let pseudoName;
+                do {
+                    const randomColor = sampleData.colors[Math.floor(Math.random() * sampleData.colors.length)];
+                    const randomAnimal = sampleData.animalNames[Math.floor(Math.random() * sampleData.animalNames.length)];
+                    pseudoName = `${randomColor}${randomAnimal}`;
+                } while (sampleData.notes.some(function(note) { return note.pseudoName === pseudoName; }));
+                
+                // 创建新留言
+                const newNote = {
+                    id: sampleData.notes.length > 0 ? Math.max(...sampleData.notes.map(function(n) { return n.id; })) + 1 : 1,
+                    pseudoName,
+                    emoji,
+                    text: content,
+                    tags: selectedTags,
+                    stickers: selectedStickers,
+                    createdAt: new Date().toISOString().split('T')[0],
+                    status: 'pending' // Change to pending for teacher review
+                };
+                
+                sampleData.notes.push(newNote);
+                saveData();
+                
+                // 更新显示
+                if (currentView === 'wall') {
+                    renderWall();
+                } else if (currentView === 'timeline') {
+                    renderTimeline();
+                }
+                
+                closeModal();
+                
+                // 显示成功消息
+                alert('你的心情已分享到温暖墙！');
+            });
+        }
+
+        // 更新字符计数
+        function updateCharCount() {
+            const content = document.getElementById('note-content').value;
+            document.getElementById('char-count').textContent = content.length;
+        }
+
+        // 辅助函数：格式化日期
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return `${date.getMonth() + 1}月${date.getDate()}日`;
+        }
+
+        // 辅助函数：验证日期格式
+        function isValidDate(dateString) {
+            if (!dateString) return false;
+            const date = new Date(dateString);
+            return date instanceof Date && !isNaN(date);
+        }
+
+        // 教师端功能（示例）
+        function approveNote(noteId) {
+            const note = sampleData.notes.find(function(n) { return n.id === noteId; });
+            if (note) {
+                note.status = 'published';
+                saveData();
+                renderPendingNotes();
+                // Refresh student views
+                if (!isTeacherMode) {
+                    toggleView(currentView);
+                }
+                alert('留言已通过审核！');
+            }
+        }
+
+        function rejectNote(noteId) {
+            const note = sampleData.notes.find(function(n) { return n.id === noteId; });
+            if (note) {
+                note.status = 'rejected';
+                saveData();
+                renderPendingNotes();
+                alert('留言已暂存！');
+            }
+        }
+
+        function editNote(noteId) {
+            openEditModal(noteId);
+        }
+
+        // Excel导出功能
+        document.getElementById('export-excel').addEventListener('click', function() {
+            const publishedNotes = sampleData.notes.filter(function(note) { return note.status === 'published'; });
+            
+            // 创建工作簿
+            const wb = XLSX.utils.book_new();
+            
+            // 准备数据
+            const wsData = [
+                ['序号', '匿名昵称', '心情表情', '留言内容', '标签', '贴纸', '创建日期']
+            ];
+            
+            publishedNotes.forEach(function(note, index) {
+                wsData.push([
+                    index + 1,
+                    note.pseudoName,
+                    note.emoji,
+                    note.text,
+                    note.tags.join(', '),
+                    note.stickers.join(', '),
+                    note.createdAt
+                ]);
+            });
+            
+            // 创建工作表
+            const ws = XLSX.utils.aoa_to_sheet(wsData);
+            
+            // 设置列宽
+            ws['!cols'] = [
+                { wch: 6 },   // 序号
+                { wch: 15 }, // 匿名昵称
+                { wch: 8 },  // 心情表情
+                { wch: 40 }, // 留言内容
+                { wch: 20 }, // 标签
+                { wch: 15 }, // 贴纸
+                { wch: 12 }  // 创建日期
+            ];
+            
+            // 添加工作表到工作簿
+            XLSX.utils.book_append_sheet(wb, ws, '温暖墙留言数据');
+            
+            // 生成文件名（包含当前日期）
+            const today = new Date();
+            const dateStr = today.getFullYear() + 
+                           String(today.getMonth() + 1).padStart(2, '0') + 
+                           String(today.getDate()).padStart(2, '0');
+            const fileName = `温暖墙留言数据_${dateStr}.xlsx`;
+            
+            // 导出文件
+            XLSX.writeFile(wb, fileName);
+        });
+
+        document.getElementById('check-sensitive').addEventListener('click', function() {
+            const sensitiveNotes = sampleData.notes
+                .filter(function(note) { return note.status === 'pending' && checkSensitiveWords(note.text); });
+            
+            if (sensitiveNotes.length === 0) {
+                alert('没有发现敏感内容！');
+                return;
+            }
+            
+            let report = '发现敏感内容：\n\n';
+            sensitiveNotes.forEach(function(note) {
+                report += `${note.pseudoName} (${note.createdAt}): ${highlightSensitiveWords(note.text)}\n\n`;
+            });
+            
+            alert(report);
+        });
+
+        // 初始化编辑模态框
+        function initEditModal() {
+            const modal = document.getElementById('edit-note-modal');
+            const closeBtn = document.querySelector('.edit-close');
+            const cancelBtn = document.getElementById('cancel-edit');
+            
+            function openEditModal(noteId) {
+                const note = sampleData.notes.find(function(n) { return n.id === noteId; });
+                if (!note) return;
+                
+                document.getElementById('edit-note-id').value = noteId;
+                document.getElementById('edit-note-content').value = note.text;
+                updateEditCharCount();
+                
+                // 设置表情
+                document.querySelectorAll('.emoji-option').forEach(function(opt) { opt.classList.remove('selected'); });
+                const selectedEmoji = document.querySelector(`.emoji-option[data-emoji="${note.emoji}"]`);
+                if (selectedEmoji) selectedEmoji.classList.add('selected');
+                
+                // 设置标签
+                document.querySelectorAll('.tag-option').forEach(function(opt) { opt.classList.remove('selected'); });
+                note.tags.forEach(function(tag) {
+                    const opt = document.querySelector(`.tag-option[data-tag="${tag}"]`);
+                    if (opt) opt.classList.add('selected');
+                });
+                
+                // 设置贴纸
+                document.querySelectorAll('.sticker-option').forEach(function(opt) { opt.classList.remove('selected'); });
+                note.stickers.forEach(function(sticker) {
+                    const opt = document.querySelector(`.sticker-option[innerText="${sticker}"]`);
+                    if (opt) opt.classList.add('selected');
+                });
+                
+                modal.classList.add('active');
+            }
+            
+            function closeEditModal() {
+                modal.classList.remove('active');
+            }
+            
+            closeBtn.addEventListener('click', closeEditModal);
+            cancelBtn.addEventListener('click', closeEditModal);
+            
+            window.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeEditModal();
+                }
+            });
+            
+            // 选择事件
+            document.querySelectorAll('#edit-note-modal .emoji-option').forEach(function(option) {
+                option.addEventListener('click', function() {
+                    document.querySelectorAll('#edit-note-modal .emoji-option').forEach(function(opt) { opt.classList.remove('selected'); });
+                    this.classList.add('selected');
+                });
+            });
+            
+            document.querySelectorAll('#edit-note-modal .tag-option').forEach(function(option) {
+                option.addEventListener('click', function() {
+                    this.classList.toggle('selected');
+                });
+            });
+            
+            document.querySelectorAll('#edit-note-modal .sticker-option').forEach(function(option) {
+                option.addEventListener('click', function() {
+                    this.classList.toggle('selected');
+                });
+            });
+            
+            document.getElementById('edit-note-content').addEventListener('input', updateEditCharCount);
+            
+            document.getElementById('submit-edit').addEventListener('click', function() {
+                const noteId = parseInt(document.getElementById('edit-note-id').value);
+                const content = document.getElementById('edit-note-content').value.trim();
+                if (!content) {
+                    alert('请写下内容');
+                    return;
+                }
+                
+                const selectedEmoji = document.querySelector('#edit-note-modal .emoji-option.selected');
+                const emoji = selectedEmoji ? selectedEmoji.getAttribute('data-emoji') : '😐';
+                
+                const selectedTags = [];
+                document.querySelectorAll('#edit-note-modal .tag-option.selected').forEach(function(opt) {
+                    selectedTags.push(opt.getAttribute('data-tag'));
+                });
+                if (selectedTags.length === 0) {
+                    alert('请至少选择一个标签');
+                    return;
+                }
+                
+                const selectedStickers = [];
+                document.querySelectorAll('#edit-note-modal .sticker-option.selected').forEach(function(opt) {
+                    selectedStickers.push(opt.textContent);
+                });
+                
+                const note = sampleData.notes.find(function(n) { return n.id === noteId; });
+                if (note) {
+                    note.emoji = emoji;
+                    note.text = content;
+                    note.tags = selectedTags;
+                    note.stickers = selectedStickers;
+                    saveData();
+                    renderPendingNotes();
+                    closeEditModal();
+                    alert('编辑已保存！');
+                }
+            });
+        }
+
+        function updateEditCharCount() {
+            const content = document.getElementById('edit-note-content').value;
+            document.getElementById('edit-char-count').textContent = content.length;
+        }
+
+        // 更新统计数据
+        function updateStats() {
+            const publishedNotes = sampleData.notes.filter(function(note) { return note.status === 'published'; });
+            
+            // Mood stats
+            const moodCounts = {
+                '😀': 0,
+                '🙂': 0,
+                '😐': 0,
+                '🙁': 0,
+                '😣': 0
+            };
+            publishedNotes.forEach(function(note) {
+                if (moodCounts[note.emoji] !== undefined) {
+                    moodCounts[note.emoji]++;
+                }
+            });
+            
+            document.querySelectorAll('.mood-stat div:nth-child(2)').forEach(function(el, index) {
+                const emojis = ['😀', '🙂', '😐', '🙁', '😣'];
+                el.textContent = moodCounts[emojis[index]];
+            });
+            
+            // Popular tags
+            const tagCounts = {};
+            publishedNotes.forEach(function(note) {
+                note.tags.forEach(function(tag) {
+                    tagCounts[tag] = (tagCounts[tag] || 0) + 1;
+                });
+            });
+            
+            const sortedTags = Object.entries(tagCounts)
+                .sort(function(a, b) { return b[1] - a[1]; })
+                .slice(0, 4)
+                .map(function([tag, count]) { return `${tag}(${count})`; })
+                .join(' ');
+            
+            document.querySelector('.stats-panel div:last-child').textContent = sortedTags || '暂无热门标签';
+        }
+
+        // 教师端认证模态框
+        let openPasswordModal;
+        
+        function initPasswordModal() {
+            const modal = document.getElementById('password-modal');
+            const closeBtn = document.querySelector('.password-close');
+            const cancelBtn = document.getElementById('cancel-password');
+            const submitBtn = document.getElementById('submit-password');
+            const passwordInput = document.getElementById('teacher-password');
+            const errorDiv = document.getElementById('password-error');
+
+            let currentCallback;
+
+            openPasswordModal = function(callback) {
+                passwordInput.value = '';
+                errorDiv.style.display = 'none';
+                modal.classList.add('active');
+                currentCallback = callback;
+            };
+
+            function closeModal() {
+                modal.classList.remove('active');
+            }
+
+            closeBtn.addEventListener('click', closeModal);
+            cancelBtn.addEventListener('click', closeModal);
+
+            window.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+            submitBtn.addEventListener('click', function() {
+                const password = passwordInput.value.trim();
+                if (password === '135246') {
+                    closeModal();
+                    if (currentCallback) currentCallback();
+                } else {
+                    errorDiv.style.display = 'block';
+                }
+            });
+        }
+    </script>
+</body>
+</html>

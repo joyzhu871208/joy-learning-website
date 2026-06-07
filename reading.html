@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>阅读与成长｜Joyzhu</title>
+    <meta name="description" content="Joyzhu 的阅读分享，记录书籍带来的思考、成长与不同人生体验。" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="reading.css" />
+  </head>
+  <body>
+    <div class="page-shell reading-shell">
+      <header class="site-header">
+        <a class="brand" href="index.html" aria-label="Joyzhu 首页"><span>Joyzhu</span><span class="brand-swoosh" aria-hidden="true"></span></a>
+        <nav class="site-nav" aria-label="主导航">
+          <a href="index.html#teaching-hub">教学灵感</a><a class="active-nav" href="reading.html">学习与成长</a>
+          <div class="resource-menu">
+            <button class="resource-trigger" type="button" aria-expanded="false">免费资源 <i data-lucide="chevron-down"></i></button>
+            <div class="resource-dropdown">
+              <div class="dropdown-column"><p>拿来即用</p><a href="games.html"><span class="menu-icon icon-game"><i data-lucide="gamepad-2"></i></span>课堂游戏</a><a href="classroom-management.html"><span class="menu-icon icon-tool"><i data-lucide="briefcase-business"></i></span>教师工具</a><a href="ielts.html"><span class="menu-icon icon-ielts"><i data-lucide="book-a"></i></span>雅思资源</a></div>
+              <div class="dropdown-column"><p>跟着 Joy 学</p><a href="ai-basics.html"><span class="menu-icon icon-ai"><i data-lucide="laptop"></i></span>AI 教程</a><a href="web-making.html"><span class="menu-icon icon-make"><i data-lucide="wand-sparkles"></i></span>游戏制作</a><a href="reading.html"><span class="menu-icon icon-read"><i data-lucide="book-open"></i></span>阅读分享</a></div>
+            </div>
+          </div>
+        </nav>
+        <a class="follow-button" href="#reading-library">走进书房</a>
+        <button class="menu-button" aria-label="打开导航菜单" aria-expanded="false"><i data-lucide="menu"></i></button>
+      </header>
+
+      <main>
+        <section class="growth-page-switcher" aria-label="学习与成长方向">
+          <div class="growth-switcher-heading">
+            <p class="reading-kicker"><span>✦</span> 学习与成长</p>
+            <h2>今天，想从哪里继续成长？</h2>
+          </div>
+          <div class="growth-switcher-links">
+            <a class="growth-switch-link active" href="reading.html">
+              <span class="switch-icon switch-reading"><i data-lucide="book-open"></i></span>
+              <span><small>理解自己与世界</small><strong>阅读空间</strong></span>
+              <i data-lucide="arrow-right"></i>
+            </a>
+            <a class="growth-switch-link" href="ielts.html">
+              <span class="switch-icon switch-ielts">IELTS</span>
+              <span><small>建立长期学习系统</small><strong>英语自学系统</strong></span>
+              <i data-lucide="arrow-right"></i>
+            </a>
+          </div>
+        </section>
+
+        <section class="reading-hero">
+          <div class="reading-hero-copy">
+            <a class="reading-back" href="index.html"><i data-lucide="arrow-left"></i> 返回首页</a>
+            <p class="reading-kicker"><span>✦</span> 阅读与成长</p>
+            <h1>阅读，让我们拥有<br /><strong>不止一种人生。</strong></h1>
+            <p>有些书帮助我们认识自己，有些书带我们看见未曾经历的世界。</p>
+            <a class="reading-primary" href="#reading-library">走进书房 <i data-lucide="arrow-down"></i></a>
+          </div>
+
+          <div class="book-stage" aria-label="漂浮的阅读书桌">
+            <span class="stage-sun"></span>
+            <span class="stage-line line-one"></span><span class="stage-line line-two"></span>
+            <div class="hero-book book-left"><img src="assets/reading/war-woman.jpg" alt="《战争中没有女性》视频封面" /></div>
+            <div class="hero-book book-center"><img src="assets/reading/tokyo-eight.jpg" alt="《东京八平米》视频封面" /></div>
+            <div class="hero-book book-right"><img src="assets/reading/grassroots-women.jpg" alt="《基层女性》视频封面" /></div>
+            <span class="hero-bookmark">READ<br />MORE</span>
+            <span class="hero-note">一本书，<br />一种新的观看方式。</span>
+          </div>
+        </section>
+
+        <section class="reading-library" id="reading-library">
+          <div class="library-intro">
+            <div><p class="reading-kicker"><span>✦</span> 从一个问题开始</p><h2>你现在，想理解什么？</h2></div>
+            <p>不是按照书的类型，而是按照它可能带来的改变，重新打开这些阅读分享。</p>
+          </div>
+          <div class="reading-tabs" role="tablist" aria-label="阅读主题"></div>
+          <div class="shelf-wrap">
+            <button class="shelf-arrow shelf-prev" type="button" aria-label="上一组书"><i data-lucide="arrow-left"></i></button>
+            <div class="book-shelf"></div>
+            <button class="shelf-arrow shelf-next" type="button" aria-label="下一组书"><i data-lucide="arrow-right"></i></button>
+          </div>
+          <div class="shelf-rail" aria-hidden="true"></div>
+        </section>
+
+        <section class="reading-question">
+          <div class="question-mark" aria-hidden="true">?</div>
+          <div>
+            <p class="reading-kicker"><span>✦</span> 阅读留下什么</p>
+            <h2>一本书结束之后，<br />也许会留下一个新的问题。</h2>
+          </div>
+          <p>这里没有标准答案。只有一些读完以后，仍然值得继续想下去的问题。</p>
+        </section>
+
+        <section class="all-reading">
+          <div class="all-heading"><div><p class="reading-kicker"><span>✦</span> 全部阅读分享</p><h2>继续翻一翻。</h2></div><span>12 条旧日阅读记录，重新整理后留在这里。</span></div>
+          <div class="reading-list"></div>
+        </section>
+      </main>
+    </div>
+    <script src="reading.js"></script>
+  </body>
+</html>

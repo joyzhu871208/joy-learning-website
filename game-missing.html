@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>What's Missing｜Joyzhu 课堂游戏</title>
+    <meta name="description" content="What's Missing 是一款训练观察力与记忆力的课堂互动游戏，由 Joyzhu 提供试玩与使用指南。" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="game-detail.css" />
+    <link rel="stylesheet" href="game-access.css" />
+  </head>
+  <body>
+    <div class="page-shell detail-shell">
+      <header class="site-header">
+        <a class="brand" href="index.html"><span>Joyzhu</span><span class="brand-swoosh" aria-hidden="true"></span></a>
+        <nav class="site-nav" aria-label="主导航">
+          <a href="index.html#how-i-can-help">教学灵感</a>
+          <a href="index.html#learning-growth">学习与成长</a>
+          <a href="games.html">课堂游戏</a>
+        </nav>
+        <a class="follow-button" href="together.html">一起成长</a>
+        <button class="menu-button" aria-label="打开导航菜单" aria-expanded="false"><i data-lucide="menu"></i></button>
+      </header>
+
+      <main>
+        <section class="detail-hero">
+          <div class="detail-hero-copy">
+            <a class="back-link" href="games.html"><i data-lucide="arrow-left"></i> 返回课堂游戏</a>
+            <p class="detail-kicker">英语课堂 · 观察与记忆挑战</p>
+            <h1>What's Missing</h1>
+            <h2>先认真看，再快速想，<br /><strong>找出消失的那一个。</strong></h2>
+            <div class="detail-actions">
+              <a class="detail-primary" href="#try-game">立即试玩 <i data-lucide="play"></i></a>
+              <button class="detail-secondary guide-open" type="button">查看使用指南 <i data-lucide="book-open"></i></button>
+            </div>
+          </div>
+          <div class="detail-symbol-stage missing-symbol" aria-label="记忆卡片互动插画"><span>?</span><span>apple</span><span>?</span><i data-lucide="scan-eye"></i></div>
+        </section>
+
+        <section class="feature-strip" aria-label="游戏特点">
+          <div><i data-lucide="eye"></i><span><strong>训练观察力</strong><small>在有限时间内专注记忆</small></span></div>
+          <div><i data-lucide="timer"></i><span><strong>节奏紧凑</strong><small>适合作为课堂热身活动</small></span></div>
+          <div><i data-lucide="message-circle-question"></i><span><strong>鼓励快速表达</strong><small>用完整句子说出答案</small></span></div>
+        </section>
+
+        <section class="try-game" id="try-game">
+          <div class="detail-section-heading">
+            <p>先玩一局</p>
+            <h2>再决定要不要<br /><strong>带进课堂。</strong></h2>
+          </div>
+          <div class="game-frame-shell">
+            <div class="game-frame-bar">
+              <span><i></i><i></i><i></i></span>
+              <p>What's Missing · 免费试玩</p>
+              <button class="fullscreen-button" type="button" aria-label="全屏试玩"><i data-lucide="maximize-2"></i></button>
+            </div>
+            <iframe
+              class="game-frame"
+              title="What's Missing 免费试玩"
+              data-src="assets/games/whats-missing/index.html"
+            ></iframe>
+            <a class="game-frame-watermark" href="https://joyzhu.com" target="_blank" rel="noopener noreferrer"><strong>Joyzhu</strong><span>joyzhu.com</span></a>
+          </div>
+          <p class="game-data-note"><i data-lucide="hard-drive"></i> 游戏内容与修改数据仅保存在当前浏览器中，更换设备或清除浏览器数据后不会同步。</p>
+        </section>
+
+        <section class="video-guide">
+          <a class="video-placeholder has-video-cover" style="--video-cover:url('assets/game-covers/whats-missing-cover.png')" href="https://www.bilibili.com/video/BV1fR8YzUE4s/" target="_blank" rel="noopener noreferrer">
+            <i data-lucide="play"></i><span>观看游戏演示</span>
+          </a>
+          <div>
+            <p>先看看，再动手</p>
+            <h2>看看 What's Missing 如何调动全班的观察力与记忆力。</h2>
+            <div class="video-actions">
+              <a class="detail-secondary" href="https://www.bilibili.com/video/BV1fR8YzUE4s/" target="_blank" rel="noopener noreferrer">观看游戏演示 <i data-lucide="play"></i></a>
+              <a class="detail-primary" href="web-making.html">做同款 <i data-lucide="arrow-right"></i></a>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <div class="pdf-modal" aria-hidden="true">
+        <div class="pdf-dialog" role="dialog" aria-modal="true" aria-label="What's Missing 使用指南">
+          <div class="pdf-dialog-bar">
+            <strong>《What's Missing》使用指南</strong>
+            <button class="pdf-close" type="button" aria-label="关闭使用指南"><i data-lucide="x"></i></button>
+          </div>
+          <iframe title="What's Missing 使用指南" src="assets/guides/whats-missing/guide.pdf#toolbar=0&navpanes=0&scrollbar=1"></iframe>
+        </div>
+      </div>
+    </div>
+    <script src="app.js"></script>
+    <script src="game-detail.js"></script>
+    <script src="game-access.js"></script>
+    <script src="social-follow.js"></script>
+  </body>
+</html>

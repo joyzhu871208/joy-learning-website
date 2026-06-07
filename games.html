@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>课堂游戏｜Joyzhu</title>
+    <meta name="description" content="体验 Joyzhu 为教师设计的课堂游戏，通过互动挑战让复习、记忆与课堂参与更有趣。" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="games.css" />
+  </head>
+  <body>
+    <div class="page-shell games-shell">
+      <header class="site-header">
+        <a class="brand" href="index.html" aria-label="Joyzhu 首页">
+          <span>Joyzhu</span><span class="brand-swoosh" aria-hidden="true"></span>
+        </a>
+        <nav class="site-nav" aria-label="主导航">
+          <a href="index.html#how-i-can-help">教学灵感</a>
+          <a href="index.html#learning-growth">学习与成长</a>
+          <div class="resource-menu">
+            <button class="resource-trigger" type="button" aria-expanded="false">免费资源 <i data-lucide="chevron-down"></i></button>
+            <div class="resource-dropdown">
+              <div class="dropdown-column">
+                <p>拿来即用</p>
+                <a href="games.html"><span class="menu-icon icon-game"><i data-lucide="gamepad-2"></i></span>课堂游戏</a>
+                <a href="classroom-management.html"><span class="menu-icon icon-tool"><i data-lucide="briefcase-business"></i></span>教师工具</a>
+                <a href="ielts.html"><span class="menu-icon icon-ielts"><i data-lucide="book-a"></i></span>雅思资源</a>
+              </div>
+              <div class="dropdown-column">
+                <p>跟着 Joy 学</p>
+                <a href="ai-basics.html"><span class="menu-icon icon-ai"><i data-lucide="laptop"></i></span>AI 教程</a>
+                <a href="web-making.html"><span class="menu-icon icon-make"><i data-lucide="wand-sparkles"></i></span>游戏制作</a>
+                <a href="reading.html"><span class="menu-icon icon-read"><i data-lucide="book-open"></i></span>阅读分享</a>
+              </div>
+            </div>
+          </div>
+        </nav>
+        <a class="follow-button" href="together.html">一起成长</a>
+        <button class="menu-button" aria-label="打开导航菜单" aria-expanded="false"><i data-lucide="menu"></i></button>
+      </header>
+
+      <main>
+        <section class="games-hero">
+          <div class="games-hero-copy">
+            <p class="games-kicker">课堂游戏实验区 <span>✦</span></p>
+            <h1>让知识练习，<br /><strong>变成学生想参与的挑战。</strong></h1>
+            <p>这里收藏了 Joy 制作并持续升级的课堂游戏。直接试玩，找到适合下一堂课的新玩法。</p>
+            <a class="games-primary-button" href="#open-games">开始试玩 <i data-lucide="arrow-down"></i></a>
+          </div>
+          <div class="games-hero-stage">
+            <p class="stage-hint">碰一碰，看看会发生什么</p>
+            <a class="stage-card stage-word" href="#open-games" aria-label="探索单词游戏">
+              <svg class="word-svg word-card-front" viewBox="0 0 280 190" role="img" aria-label="立体单词卡">
+                <defs>
+                  <linearGradient id="wordFront" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="#78d8f4" />
+                    <stop offset="1" stop-color="#3fa8dd" />
+                  </linearGradient>
+                </defs>
+                <path class="word-edge" d="M25 35 244 20l18 18-7 130-220 12-16-18Z" />
+                <path class="word-face" d="M20 26 242 15l13 17-8 128-219 12-14-17Z" fill="url(#wordFront)" />
+                <circle cx="220" cy="44" r="14" fill="#ffd34e" />
+                <path d="m215 44 4 4 8-10" fill="none" stroke="#202031" stroke-width="4" stroke-linecap="round" />
+                <text x="43" y="66" class="word-svg-small">WORD CARD</text>
+                <text x="42" y="113" class="word-svg-title">challenge</text>
+                <path d="M42 132c44 10 92 7 142-2" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".72" />
+              </svg>
+              <svg class="word-svg word-card-back" viewBox="0 0 280 190" role="img" aria-label="翻面后的立体单词卡">
+                <defs>
+                  <linearGradient id="wordBack" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="#ff8b67" />
+                    <stop offset="1" stop-color="#f25f57" />
+                  </linearGradient>
+                </defs>
+                <path class="word-edge" d="M25 35 244 20l18 18-7 130-220 12-16-18Z" />
+                <path class="word-face" d="M20 26 242 15l13 17-8 128-219 12-14-17Z" fill="url(#wordBack)" />
+                <text x="43" y="67" class="word-svg-small">READY?</text>
+                <text x="42" y="114" class="word-svg-title word-svg-cn">开始挑战</text>
+                <path d="M42 134c48 9 101 6 154-4" fill="none" stroke="#ffd34e" stroke-width="6" stroke-linecap="round" />
+              </svg>
+            </a>
+            <a class="stage-card stage-dice" href="#open-games" aria-label="探索挑战游戏">
+              <svg class="dice-svg" viewBox="0 0 180 190" role="img" aria-label="立体骰子">
+                <path class="dice-top" d="M30 55 91 20l61 35-61 36Z" />
+                <path class="dice-left" d="M30 55 91 91v72l-61-36Z" />
+                <path class="dice-right" d="M91 91 152 55v72l-61 36Z" />
+                <g class="dice-pips dice-pips-top">
+                  <circle cx="91" cy="56" r="6" />
+                  <circle cx="61" cy="55" r="6" />
+                  <circle cx="121" cy="55" r="6" />
+                </g>
+                <g class="dice-pips dice-pips-left">
+                  <circle cx="53" cy="84" r="6" />
+                  <circle cx="68" cy="128" r="6" />
+                </g>
+                <g class="dice-pips dice-pips-right">
+                  <circle cx="116" cy="91" r="6" />
+                  <circle cx="136" cy="119" r="6" />
+                  <circle cx="111" cy="140" r="6" />
+                </g>
+              </svg>
+              <small>roll me</small>
+            </a>
+            <a class="stage-card stage-flask" href="#open-games" aria-label="探索女巫的毒药游戏">
+              <svg class="flask-svg" viewBox="0 0 210 250" role="img" aria-label="立体药瓶">
+                <defs>
+                  <linearGradient id="glassGradient" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="#fff" stop-opacity=".9" />
+                    <stop offset=".55" stop-color="#d6f5ff" stop-opacity=".72" />
+                    <stop offset="1" stop-color="#80d9f4" stop-opacity=".88" />
+                  </linearGradient>
+                  <linearGradient id="liquidGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#ff6a7a" />
+                    <stop offset="1" stop-color="#cb32c4" />
+                  </linearGradient>
+                </defs>
+                <ellipse cx="105" cy="218" rx="67" ry="15" fill="#52286c" opacity=".18" />
+                <path class="flask-glass" d="M78 24h54v59l50 87c17 30-4 55-36 55H64c-32 0-53-25-36-55l50-87Z" fill="url(#glassGradient)" stroke="#554064" stroke-width="5" />
+                <path class="flask-liquid" d="M43 168c29-16 58 9 83-2 25-11 38-3 48 5 12 26-7 43-33 43H69c-25 0-43-17-26-46Z" fill="url(#liquidGradient)" />
+                <path d="M88 39h34M89 57h32" stroke="#554064" stroke-width="5" stroke-linecap="round" />
+                <path d="M67 115c-18 32-27 48-29 58" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" opacity=".62" />
+                <circle cx="79" cy="183" r="8" fill="#ffd34e" opacity=".9" />
+                <circle cx="119" cy="195" r="5" fill="#fff" opacity=".72" />
+                <circle cx="145" cy="180" r="10" fill="#ffb84a" opacity=".82" />
+              </svg>
+              <span class="stage-bubble bubble-a"></span>
+              <span class="stage-bubble bubble-b"></span>
+              <span class="stage-bubble bubble-c"></span>
+              <small>mix words</small>
+            </a>
+            <span class="stage-spark spark-a">✦</span>
+            <span class="stage-spark spark-b">✦</span>
+            <span class="stage-orbit orbit-a"></span>
+            <span class="stage-orbit orbit-b"></span>
+          </div>
+        </section>
+
+        <section class="open-games" id="open-games">
+          <div class="games-section-heading">
+            <div>
+              <p>已经开放</p>
+              <h2>选一个，玩玩看。</h2>
+              <span></span>
+            </div>
+            <div class="games-arrows">
+              <button class="games-prev" aria-label="上一个游戏"><i data-lucide="arrow-left"></i></button>
+              <button class="games-next" aria-label="下一个游戏"><i data-lucide="arrow-right"></i></button>
+            </div>
+          </div>
+
+          <div class="games-carousel" aria-label="已开放课堂游戏">
+            <div class="games-track">
+              <article class="game-card coral-game">
+                <div class="game-cover image-cover"><img loading="lazy" class="game-cover-image" src="assets/game-covers/witch-cover.png" alt="女巫的毒药游戏封面" /><span class="game-code">GAME 01</span></div>
+                <div class="game-copy"><p>英语课堂</p><h3>女巫的毒药</h3><span>让词汇复习变成一次全班挑战。</span><a href="game-witch.html">免费试玩 <i data-lucide="arrow-right"></i></a></div>
+              </article>
+              <article class="game-card violet-game">
+                <div class="game-cover image-cover"><img loading="lazy" class="game-cover-image" src="assets/game-covers/word-flip-cover.png" alt="生词翻翻乐游戏封面" /><span class="game-code">GAME 02</span></div>
+                <div class="game-copy"><p>英语课堂</p><h3>生词翻翻乐</h3><span>翻开卡片、组队对战，让词汇记忆更有期待。</span><a href="game-flip.html">查看并试玩 <i data-lucide="arrow-right"></i></a></div>
+              </article>
+              <article class="game-card blue-game">
+                <div class="game-cover image-cover"><img loading="lazy" class="game-cover-image" src="assets/game-covers/whats-missing-cover.png" alt="What's Missing 游戏封面" /><span class="game-code">GAME 03</span></div>
+                <div class="game-copy"><p>英语课堂</p><h3>What's Missing</h3><span>观察、记忆、抢答，让单词复习变成注意力挑战。</span><a href="game-missing.html">查看并试玩 <i data-lucide="arrow-right"></i></a></div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="unlock-lab" id="unlock-lab">
+          <div class="unlock-lab-copy">
+            <p class="games-kicker">共同解锁实验 <span>✦</span></p>
+            <h2>分享给大家<br /><strong>解锁更多游戏。</strong></h2>
+            <p>小红书每迎来 1000 位新朋友，我就会开放一款新的课堂游戏。分享给你的同事和家长，邀请更多关心教育的朋友，一起解锁下一款。</p>
+            <a class="games-primary-button" href="https://www.xiaohongshu.com/user/profile/67f36760000000000d008455" target="_blank" rel="noopener noreferrer">去小红书共同解锁 <i data-lucide="arrow-up-right"></i></a>
+          </div>
+
+          <div class="incubator-card">
+            <div class="incubator-visual">
+              <svg class="incubator-svg" viewBox="0 0 430 390" role="img" aria-label="自动听写游戏孵化舱">
+                <defs>
+                  <linearGradient id="incubatorGlass" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="#ffffff" stop-opacity=".86" />
+                    <stop offset=".55" stop-color="#bfeeff" stop-opacity=".48" />
+                    <stop offset="1" stop-color="#64cce9" stop-opacity=".7" />
+                  </linearGradient>
+                  <linearGradient id="incubatorBase" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="#ffda54" />
+                    <stop offset="1" stop-color="#f29b38" />
+                  </linearGradient>
+                </defs>
+                <ellipse cx="215" cy="351" rx="150" ry="24" fill="#202031" opacity=".14" />
+                <path d="M91 294h248l28 49H63Z" fill="url(#incubatorBase)" stroke="#554064" stroke-width="5" />
+                <rect x="92" y="329" width="246" height="27" rx="13" fill="#554064" />
+                <path class="incubator-glass" d="M114 293V145c0-79 45-116 101-116s101 37 101 116v148Z" fill="url(#incubatorGlass)" stroke="#554064" stroke-width="6" />
+                <path d="M141 150c0-59 29-91 67-101" fill="none" stroke="#fff" stroke-width="13" stroke-linecap="round" opacity=".58" />
+                <circle cx="215" cy="179" r="86" fill="#7657c6" opacity=".12" />
+                <g class="incubator-headphones" fill="none" stroke="#7657c6" stroke-width="14" stroke-linecap="round">
+                  <path d="M158 195v-20c0-41 25-69 57-69s57 28 57 69v20" />
+                  <path d="M158 187h-9c-12 0-19 9-19 22v24c0 13 7 22 19 22h18v-68Z" />
+                  <path d="M272 187h9c12 0 19 9 19 22v24c0 13-7 22-19 22h-18v-68Z" />
+                </g>
+                <g class="incubator-letters">
+                  <circle cx="169" cy="134" r="20" fill="#ff6a7a" />
+                  <circle cx="267" cy="145" r="18" fill="#ffd34e" />
+                  <circle cx="218" cy="254" r="19" fill="#4ed5a5" />
+                  <text x="162" y="141">A</text><text x="261" y="152">B</text><text x="211" y="261">C</text>
+                </g>
+                <g class="incubator-waves" fill="none" stroke="#ff6a7a" stroke-width="6" stroke-linecap="round">
+                  <path d="M190 183c14-16 36-16 50 0" />
+                  <path d="M175 168c23-27 57-27 80 0" />
+                  <path d="M159 152c32-37 80-37 112 0" />
+                </g>
+              </svg>
+              <span class="incubator-spark incubator-spark-one">✦</span>
+              <span class="incubator-spark incubator-spark-two">✦</span>
+              <span class="incubator-spark incubator-spark-three">✦</span>
+            </div>
+
+            <div class="incubator-info">
+              <p>下一款准备开放</p>
+              <h3>自动听写教师版</h3>
+              <div class="energy-labels"><span>实验能量</span><strong>72%</strong></div>
+              <div class="energy-tube"><span></span></div>
+              <small>每新增 1000 位小红书朋友，开放一款新游戏。</small>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script src="app.js"></script>
+    <script src="games.js"></script>
+    <script src="social-follow.js"></script>
+  </body>
+</html>

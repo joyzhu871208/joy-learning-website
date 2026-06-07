@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生词翻翻乐 - 多人对战版</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f0f9ff;
+            --primary-color: #38bdf8;
+            --primary-dark: #0ea5e9;
+            --secondary-color: #fbbf24;
+            --secondary-dark: #f59e0b;
+            --success-color: #34d399;
+            --error-color: #f87171;
+            --text-color: #1e293b;
+            --card-bg: #ffffff;
+            --font-family: 'ZCOOL XiaoWei', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-family);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 1400px;
+            min-height: 800px;
+            background-color: white;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .screen {
+            display: none;
+            width: 100%;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .screen.active {
+            display: flex;
+        }
+
+        .game-title {
+            font-size: 56px;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 0 #e0f2fe;
+        }
+
+        .game-intro {
+            font-size: 20px;
+            color: var(--text-color);
+            margin-bottom: 40px;
+        }
+
+        .screen-title {
+            font-size: 36px;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .btn {
+            padding: 12px 28px;
+            border-radius: 50px;
+            border: none;
+            font-family: var(--font-family);
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-transform: uppercase;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        .btn-secondary:hover {
+            background-color: var(--secondary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        /* NEW Game Screen Layout Styles */
+        #game-screen {
+            justify-content: flex-start;
+            gap: 20px;
+        }
+
+        #game-top-bar {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            flex-shrink: 0;
+        }
+
+        #game-status {
+            display: flex;
+            gap: 25px;
+            font-size: 18px;
+        }
+
+        #game-status span {
+            font-weight: bold;
+            color: var(--primary-dark);
+        }
+
+        #game-controls .btn {
+            padding: 8px 20px;
+            font-size: 16px;
+        }
+
+        #game-main-area {
+            width: 100%;
+            flex-grow: 1;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .player-zone {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border-top: 8px solid;
+        }
+
+        .player-zone.player-1 { border-color: #34d399; }
+        .player-zone.player-2 { border-color: #38bdf8; }
+        .player-zone.player-3 { border-color: #fbbf24; }
+
+        .player-header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        .player-score {
+            padding: 4px 12px;
+            border-radius: 20px;
+            color: white;
+        }
+
+        .player-1 .player-score { background-color: #34d399; }
+        .player-2 .player-score { background-color: #38bdf8; }
+        .player-3 .player-score { background-color: #fbbf24; }
+
+        .game-board {
+            display: grid;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .card {
+            aspect-ratio: 1 / 1;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card.matched {
+            opacity: 0.15;
+            cursor: default;
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .card-front {
+            background-color: var(--card-bg);
+            transform: rotateY(180deg);
+            /* border color is now player-specific */
+        }
+
+        .card-back {
+            /* background is now player-specific */
+            color: white;
+            font-size: 24px;
+        }
+        
+        /* Player-specific Card Colors */
+        /* Player 1 Card Colors (Green) */
+        .player-1 .card-front { border: 2px solid #34d399; }
+        .player-1 .card-back { background: linear-gradient(135deg, #4ade80, #34d399); }
+
+        /* Player 2 Card Colors (Blue) */
+        .player-2 .card-front { border: 2px solid #38bdf8; }
+        .player-2 .card-back { background: linear-gradient(135deg, #60a5fa, #38bdf8); }
+
+        /* Player 3 Card Colors (Yellow) */
+        .player-3 .card-front { border: 2px solid #fbbf24; }
+        .player-3 .card-back { background: linear-gradient(135deg, #fcd34d, #fbbf24); }
+        
+        #player-display-area { display: none; }
+        #game-header { display: none; }
+
+        /* Setup Screen Styles */
+        .setup-form {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+        }
+        
+        .form-group label {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .form-group select, .form-group input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 2px solid #e0f2fe;
+            font-size: 16px;
+            font-family: inherit;
+        }
+
+        #player-names-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        #ready-btn {
+            margin-top: 10px;
+        }
+
+        #ready-btn:disabled {
+            background-color: #9ca3af;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: none; /* Changed from flex */
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
+        
+        .modal.show {
+            display: flex; /* Show modal */
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 30px 40px;
+            border-radius: 16px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-content h2 {
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .modal-content p {
+            margin-bottom: 20px;
+            color: var(--text-color);
+            font-size: 14px;
+        }
+        
+        .modal-content textarea {
+            width: 100%;
+            min-height: 200px;
+            padding: 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 14px;
+            resize: vertical;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- 1. Start Screen -->
+        <div id="start-screen" class="screen active">
+            <h1 class="game-title">生词翻翻乐</h1>
+            <p class="game-intro">一个刺激的中英文配对单词记忆比赛！</p>
+            <div class="button-group">
+                <button id="manage-words-btn" class="btn btn-secondary">管理词库</button>
+                <button id="start-game-btn" class="btn btn-primary">开始游戏</button>
+            </div>
+        </div>
+
+        <!-- 2. Game Setup Screen -->
+        <div id="setup-screen" class="screen">
+            <h2 class="screen-title">游戏设置</h2>
+            <form class="setup-form" id="setup-form">
+                <div class="form-group">
+                    <label for="player-count">选择玩家数量:</label>
+                    <select id="player-count">
+                        <option value="1">1 人</option>
+                        <option value="2">2 人</option>
+                        <option value="3">3 人</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="word-count">选择单词数量:</label>
+                    <select id="word-count">
+                        <option value="6">6 词 (12 张卡片)</option>
+                        <option value="8">8 词 (16 张卡片)</option>
+                        <option value="10">10 词 (20 张卡片)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>输入玩家姓名:</label>
+                    <div id="player-names-container">
+                        <input type="text" placeholder="玩家 1" class="player-name-input" required>
+                    </div>
+                </div>
+                <button id="ready-btn" class="btn btn-primary" type="submit" disabled>准备开始游戏</button>
+            </form>
+        </div>
+
+        <!-- 3. Game Screen -->
+        <div id="game-screen" class="screen">
+            <div id="game-top-bar">
+                <div id="game-status">
+                    <div>时间: <span id="game-timer">00:00</span></div>
+                </div>
+                <div id="game-controls" class="button-group">
+                    <button id="restart-game-btn" class="btn btn-primary">重新开始</button>
+                </div>
+            </div>
+            <div id="game-main-area">
+                <!-- Player zones will be generated by JS -->
+            </div>
+        </div>
+
+        <!-- 4. Results Screen -->
+        <div id="results-screen" class="screen">
+            <h2 class="screen-title">🎉 游戏结束! 🎉</h2>
+            <p id="results-summary">恭喜 <span id="winner-name"></span> 获胜!</p>
+            <div id="final-scores"></div>
+            <button id="play-again-btn" class="btn btn-primary" style="margin-top: 30px;">再玩一次</button>
+        </div>
+    </div>
+
+    <!-- Word Management Modal -->
+    <div id="word-modal" class="modal">
+        <div class="modal-content">
+            <h2>管理自定义词库</h2>
+            <p>请按格式 "英文|中文" 输入，每行一对。至少需要20对单词。</p>
+            <textarea id="word-textarea" placeholder="apple|苹果&#10;banana|香蕉&#10;..."></textarea>
+            <div id="word-count-error" style="color: var(--error-color); margin-bottom: 15px; display: none;">单词数量不足20对！</div>
+            <div class="button-group">
+                <button id="cancel-words-btn" class="btn btn-secondary">取消</button>
+                <button id="save-words-btn" class="btn btn-primary">保存词库</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // Default words
+            const defaultWords = [
+                { word: "apple", meaning: "苹果" }, { word: "banana", meaning: "香蕉" },
+                { word: "orange", meaning: "橙子" }, { word: "grape", meaning: "葡萄" },
+                { word: "watermelon", meaning: "西瓜" }, { word: "strawberry", meaning: "草莓" },
+                { word: "pineapple", meaning: "菠萝" }, { word: "pear", meaning: "梨" },
+                { word: "cherry", meaning: "樱桃" }, { word: "mango", meaning: "芒果" },
+                { word: "lemon", meaning: "柠檬" }, { word: "peach", meaning: "桃子" },
+                { word: "dog", meaning: "狗" }, { word: "cat", meaning: "猫" },
+                { word: "house", meaning: "房子" }, { word: "car", meaning: "车" },
+                { word: "book", meaning: "书" }, { word: "sun", meaning: "太阳" },
+                { word: "moon", meaning: "月亮" }, { word: "star", meaning: "星星" }
+            ];
+
+            // Game State
+            let state = {
+                players: [],
+                wordCount: 6, // Default value
+                gameActive: false,
+                timerInterval: null,
+                elapsedTime: 0,
+                wordList: [],
+                winner: null,
+            };
+
+            // DOM Elements
+            const screens = {
+                start: document.getElementById('start-screen'),
+                setup: document.getElementById('setup-screen'),
+                game: document.getElementById('game-screen'),
+                results: document.getElementById('results-screen'),
+            };
+            const manageWordsBtn = document.getElementById('manage-words-btn');
+            const startGameBtn = document.getElementById('start-game-btn');
+            const wordModal = document.getElementById('word-modal');
+            const saveWordsBtn = document.getElementById('save-words-btn');
+            const cancelWordsBtn = document.getElementById('cancel-words-btn');
+            const wordTextarea = document.getElementById('word-textarea');
+            const wordCountError = document.getElementById('word-count-error');
+            const setupForm = document.getElementById('setup-form');
+            const playerCountSelect = document.getElementById('player-count');
+            const wordCountSelect = document.getElementById('word-count');
+            const playerNamesContainer = document.getElementById('player-names-container');
+            const readyBtn = document.getElementById('ready-btn');
+            const gameMainArea = document.getElementById('game-main-area');
+            const gameTimerEl = document.getElementById('game-timer');
+            const restartGameBtn = document.getElementById('restart-game-btn');
+            const resultsSummary = document.getElementById('results-summary');
+            const winnerNameEl = document.getElementById('winner-name');
+            const finalScoresContainer = document.getElementById('final-scores');
+            const playAgainBtn = document.getElementById('play-again-btn');
+
+            // --- NAVIGATION ---
+            function showScreen(screenName) {
+                Object.values(screens).forEach(screen => screen.classList.remove('active'));
+                screens[screenName].classList.add('active');
+            }
+
+            // --- WORD MANAGEMENT ---
+            function loadWordList() {
+                const savedWords = localStorage.getItem('customWordList');
+                if (savedWords) {
+                    state.wordList = JSON.parse(savedWords);
+                } else {
+                    state.wordList = defaultWords;
+                }
+            }
+
+            function openWordModal() {
+                wordTextarea.value = state.wordList.map(p => `${p.word}|${p.meaning}`).join('\n');
+                wordCountError.style.display = 'none';
+                wordModal.classList.add('show');
+            }
+
+            function closeWordModal() {
+                wordModal.classList.remove('show');
+            }
+
+            function saveWordList() {
+                const lines = wordTextarea.value.trim().split('\n');
+                const newWordList = [];
+                for (const line of lines) {
+                    if (line.includes('|')) {
+                        const [word, meaning] = line.split('|').map(s => s.trim());
+                        if (word && meaning) {
+                            newWordList.push({ word, meaning });
+                        }
+                    }
+                }
+
+                if (newWordList.length < 20) {
+                    wordCountError.style.display = 'block';
+                    return;
+                }
+
+                state.wordList = newWordList;
+                localStorage.setItem('customWordList', JSON.stringify(newWordList));
+                closeWordModal();
+            }
+
+            // --- GAME SETUP ---
+            function updatePlayerNameInputs() {
+                const count = parseInt(playerCountSelect.value);
+                playerNamesContainer.innerHTML = '';
+                for (let i = 0; i < count; i++) {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.placeholder = `玩家 ${i + 1} 姓名`;
+                    input.className = 'player-name-input';
+                    input.required = true;
+                    playerNamesContainer.appendChild(input);
+                }
+                validateSetupForm();
+            }
+
+            function validateSetupForm() {
+                const inputs = playerNamesContainer.querySelectorAll('input');
+                const allFilled = [...inputs].every(input => input.value.trim() !== '');
+                readyBtn.disabled = !allFilled;
+            }
+
+            function handleSetupSubmit(e) {
+                e.preventDefault();
+                state.wordCount = parseInt(wordCountSelect.value);
+                const nameInputs = playerNamesContainer.querySelectorAll('input');
+                state.players = [...nameInputs].map((input, index) => ({
+                    name: input.value.trim() || `玩家 ${index + 1}`,
+                    id: index + 1,
+                    score: 0,
+                    cards: [],
+                    flippedCards: [],
+                    isProcessing: false,
+                    isFinished: false,
+                    finishTime: null
+                }));
+                
+                startGame();
+            }
+
+            // --- GAME LOGIC ---
+            function startGame() {
+                // Reset global state
+                state.gameActive = true;
+                state.winner = null;
+                
+                const selectedWords = shuffleArray([...state.wordList]).slice(0, state.wordCount);
+                
+                // Initialize each player's state
+                state.players.forEach(player => {
+                    player.score = 0;
+                    player.flippedCards = [];
+                    player.isProcessing = false;
+                    player.isFinished = false;
+                    player.finishTime = null;
+                    player.cards = createPlayerCards(selectedWords);
+                });
+                
+                // Setup UI
+                setupPlayerZones();
+                startTimer();
+                showScreen('game');
+            }
+            
+            function createPlayerCards(words) {
+                const cards = [];
+                words.forEach((pair, index) => {
+                    cards.push({ id: `w${index}`, content: pair.word, pairId: `m${index}`, isFlipped: false, isMatched: false });
+                    cards.push({ id: `m${index}`, content: pair.meaning, pairId: `w${index}`, isFlipped: false, isMatched: false });
+                });
+                return shuffleArray(cards);
+            }
+
+            function setupPlayerZones() {
+                gameMainArea.innerHTML = '';
+                
+                state.players.forEach(player => {
+                    const zoneEl = document.createElement('div');
+                    zoneEl.className = `player-zone player-${player.id}`;
+                    
+                    const headerEl = document.createElement('div');
+                    headerEl.className = 'player-header';
+                    headerEl.innerHTML = `
+                        <span class="player-name">${player.name}</span>
+                        <span class="player-score">0</span>
+                    `;
+
+                    const boardEl = document.createElement('div');
+                    boardEl.className = 'game-board';
+                    boardEl.dataset.playerId = player.id;
+                    
+                    const columns = state.wordCount === 6 ? 3 : (state.wordCount === 8 ? 4 : 5);
+                    boardEl.style.gridTemplateColumns = `repeat(${columns}, 1fr)`;
+
+                    player.cards.forEach(card => {
+                        const cardEl = document.createElement('div');
+                        cardEl.className = 'card';
+                        cardEl.dataset.cardId = card.id;
+                        cardEl.innerHTML = `
+                            <div class="card-inner">
+                                <div class="card-face card-front">${card.content}</div>
+                                <div class="card-face card-back">?</div>
+                            </div>
+                        `;
+                        cardEl.addEventListener('click', () => handleCardClick(player.id, card.id));
+                        boardEl.appendChild(cardEl);
+                    });
+
+                    zoneEl.appendChild(headerEl);
+                    zoneEl.appendChild(boardEl);
+                    gameMainArea.appendChild(zoneEl);
+                });
+            }
+            
+            function handleCardClick(playerId, cardId) {
+                const player = state.players.find(p => p.id === playerId);
+                if (!player || player.isFinished || player.isProcessing || !state.gameActive) return;
+
+                const cardData = player.cards.find(c => c.id === cardId);
+                if (cardData.isFlipped || cardData.isMatched) return;
+                
+                player.isProcessing = true; // Lock this player's board
+
+                const boardEl = document.querySelector(`.game-board[data-player-id="${playerId}"]`);
+                const cardEl = boardEl.querySelector(`.card[data-card-id="${cardId}"]`);
+                cardEl.classList.add('flipped');
+                cardData.isFlipped = true;
+                player.flippedCards.push(cardData);
+
+                if (player.flippedCards.length === 2) {
+                    checkForMatch(player);
+                } else {
+                    player.isProcessing = false; // Unlock if only one card is flipped
+                }
+            }
+
+            function checkForMatch(player) {
+                const [card1, card2] = player.flippedCards;
+                const boardEl = document.querySelector(`.game-board[data-player-id="${player.id}"]`);
+
+                if (card1.pairId === card2.id) { // Match
+                    card1.isMatched = true;
+                    card2.isMatched = true;
+                    player.score++;
+                    
+                    const card1El = boardEl.querySelector(`.card[data-card-id="${card1.id}"]`);
+                    const card2El = boardEl.querySelector(`.card[data-card-id="${card2.id}"]`);
+                    card1El.classList.add('matched');
+                    card2El.classList.add('matched');
+                    
+                    player.flippedCards = [];
+                    updatePlayerScoreUI(player);
+                    
+                    if (player.score === state.wordCount) {
+                        player.isFinished = true;
+                        player.finishTime = state.elapsedTime;
+                        if (!state.winner) {
+                            state.winner = player;
+                        }
+                        // Check if all players are finished
+                        if (state.players.every(p => p.isFinished)) {
+                            endGame();
+                        } else if (state.winner) { // If there's a winner, end the game
+                            endGame();
+                        }
+                    }
+                    player.isProcessing = false;
+                } else { // No match
+                    setTimeout(() => {
+                        const card1El = boardEl.querySelector(`.card[data-card-id="${card1.id}"]`);
+                        const card2El = boardEl.querySelector(`.card[data-card-id="${card2.id}"]`);
+                        
+                        card1El.classList.remove('flipped');
+                        card2El.classList.remove('flipped');
+                        card1.isFlipped = false;
+                        card2.isFlipped = false;
+                        player.flippedCards = [];
+                        player.isProcessing = false;
+                    }, 1000);
+                }
+            }
+
+            function updatePlayerScoreUI(player) {
+                const zoneEl = document.querySelector(`.player-zone.player-${player.id}`);
+                if (zoneEl) {
+                    zoneEl.querySelector('.player-score').textContent = player.score;
+                }
+            }
+
+            function startTimer() {
+                clearInterval(state.timerInterval);
+                state.elapsedTime = 0;
+                gameTimerEl.textContent = '00:00';
+                state.timerInterval = setInterval(() => {
+                    if (!state.gameActive) {
+                        clearInterval(state.timerInterval);
+                        return;
+                    }
+                    state.elapsedTime++;
+                    const minutes = Math.floor(state.elapsedTime / 60).toString().padStart(2, '0');
+                    const seconds = (state.elapsedTime % 60).toString().padStart(2, '0');
+                    gameTimerEl.textContent = `${minutes}:${seconds}`;
+
+                }, 1000);
+            }
+
+            // --- GAME END & RESULTS ---
+            function endGame() {
+                if (!state.gameActive) return; // Prevent endGame from running multiple times
+                state.gameActive = false;
+                clearInterval(state.timerInterval);
+                
+                if (state.winner) {
+                     resultsSummary.innerHTML = `恭喜 <span id="winner-name">${state.winner.name}</span> 获胜!`;
+                } else {
+                    resultsSummary.textContent = "比赛结束！";
+                }
+
+                // Display final scores
+                finalScoresContainer.innerHTML = '<h3>最终结果</h3>';
+                const sortedPlayers = [...state.players].sort((a, b) => {
+                    if (a.isFinished && !b.isFinished) return -1;
+                    if (!a.isFinished && b.isFinished) return 1;
+                    return a.finishTime - b.finishTime;
+                });
+
+                sortedPlayers.forEach(p => {
+                    const scoreEl = document.createElement('p');
+                    const time = p.finishTime ? `${Math.floor(p.finishTime / 60).toString().padStart(2, '0')}:${(p.finishTime % 60).toString().padStart(2, '0')}` : '未完成';
+                    scoreEl.textContent = `${p.name}: ${time}`;
+                    finalScoresContainer.appendChild(scoreEl);
+                });
+
+                showScreen('results');
+            }
+            
+            function resetGame() {
+                clearInterval(state.timerInterval);
+                // Reset state but keep wordlist
+                state.players = [];
+                setupForm.reset();
+                updatePlayerNameInputs();
+                showScreen('start');
+            }
+
+            // --- UTILITY ---
+            function shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
+            }
+
+            // --- EVENT LISTENERS ---
+            manageWordsBtn.addEventListener('click', openWordModal);
+            cancelWordsBtn.addEventListener('click', closeWordModal);
+            saveWordsBtn.addEventListener('click', saveWordList);
+            startGameBtn.addEventListener('click', () => showScreen('setup'));
+            playAgainBtn.addEventListener('click', resetGame);
+            restartGameBtn.addEventListener('click', resetGame);
+            
+            playerCountSelect.addEventListener('change', updatePlayerNameInputs);
+            setupForm.addEventListener('input', validateSetupForm);
+            setupForm.addEventListener('submit', handleSetupSubmit);
+
+            // --- INITIALIZATION ---
+            loadWordList();
+            updatePlayerNameInputs();
+        });
+    </script>
+</body>
+</html>

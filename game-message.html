@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>小学生温暖留言板｜Joyzhu</title>
+    <meta name="description" content="小学生温暖留言板帮助学生安心表达，也帮助教师整理班级反馈与小心愿。" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="game-detail.css" />
+    <link rel="stylesheet" href="game-access.css" />
+  </head>
+  <body>
+    <div class="page-shell detail-shell">
+      <header class="site-header">
+        <a class="brand" href="index.html"><span>Joyzhu</span><span class="brand-swoosh" aria-hidden="true"></span></a>
+        <nav class="site-nav" aria-label="主导航">
+          <a href="index.html#how-i-can-help">教学灵感</a>
+          <a href="index.html#learning-growth">学习与成长</a>
+          <a href="games.html">课堂游戏</a>
+        </nav>
+        <a class="follow-button" href="together.html">一起成长</a>
+        <button class="menu-button" aria-label="打开导航菜单" aria-expanded="false"><i data-lucide="menu"></i></button>
+      </header>
+
+      <main>
+        <section class="detail-hero">
+          <div class="detail-hero-copy">
+            <a class="back-link" href="classroom-management.html"><i data-lucide="arrow-left"></i> 返回课堂管理</a>
+            <p class="detail-kicker">课堂管理 · 学生表达与反馈</p>
+            <h1>小学生温暖留言板</h1>
+            <h2>让每一句真心话，<br /><strong>都被老师认真看见。</strong></h2>
+            <div class="detail-actions">
+              <a class="detail-primary" href="#try-game">立即试玩 <i data-lucide="play"></i></a>
+            </div>
+          </div>
+          <div class="detail-symbol-stage message-symbol" aria-label="温暖留言板互动插画"><span>谢谢老师</span><span>今天很开心</span><span>我想说...</span><i data-lucide="message-circle-heart"></i></div>
+        </section>
+
+        <section class="feature-strip" aria-label="游戏特点">
+          <div><i data-lucide="heart-handshake"></i><span><strong>鼓励真实表达</strong><small>给不善举手的孩子一个出口</small></span></div>
+          <div><i data-lucide="shield-check"></i><span><strong>教师管理入口</strong><small>集中查看与整理学生留言</small></span></div>
+          <div><i data-lucide="sparkles"></i><span><strong>营造温暖班级</strong><small>记录感谢、困惑与小心愿</small></span></div>
+        </section>
+
+        <section class="try-game" id="try-game">
+          <div class="detail-section-heading">
+            <p>先玩一局</p>
+            <h2>再决定要不要<br /><strong>带进课堂。</strong></h2>
+          </div>
+          <div class="game-frame-shell">
+            <div class="game-frame-bar">
+              <span><i></i><i></i><i></i></span>
+              <p>小学生温暖留言板 · 免费试玩</p>
+              <button class="fullscreen-button" type="button" aria-label="全屏试玩"><i data-lucide="maximize-2"></i></button>
+            </div>
+            <iframe
+              class="game-frame"
+              title="小学生温暖留言板免费使用"
+              data-src="assets/games/message-board/index.html"
+            ></iframe>
+            <a class="game-frame-watermark" href="https://joyzhu.com" target="_blank" rel="noopener noreferrer"><strong>Joyzhu</strong><span>joyzhu.com</span></a>
+          </div>
+          <p class="game-data-note"><i data-lucide="hard-drive"></i> 留言与修改数据仅保存在当前浏览器中，更换设备或清除浏览器数据后不会同步。</p>
+        </section>
+
+        <section class="video-guide">
+          <a class="video-placeholder has-video-cover" style="--video-cover:url('assets/game-covers/message-board-cover.png')" href="https://www.bilibili.com/video/BV1z4V16bEwL/" target="_blank" rel="noopener noreferrer">
+            <i data-lucide="play"></i><span>观看工具演示</span>
+          </a>
+          <div>
+            <p>先看看，再使用</p>
+            <h2>看看温暖留言板如何收集并整理孩子们的真实表达。</h2>
+            <div class="video-actions">
+              <a class="detail-secondary" href="https://www.bilibili.com/video/BV1z4V16bEwL/" target="_blank" rel="noopener noreferrer">观看工具演示 <i data-lucide="play"></i></a>
+              <a class="detail-primary" href="web-making.html">做同款 <i data-lucide="arrow-right"></i></a>
+            </div>
+          </div>
+        </section>
+      </main>
+
+    </div>
+    <script src="app.js"></script>
+    <script src="game-detail.js"></script>
+    <script src="game-access.js"></script>
+    <script src="social-follow.js"></script>
+  </body>
+</html>
