@@ -3,6 +3,8 @@ const games={
   flip:{title:"生词翻翻乐",src:"assets/games/word-flip/index.html"},
   missing:{title:"What's Missing",src:"assets/games/whats-missing/index.html"},
   message:{title:"小学生温暖留言板",src:"assets/games/message-board/index.html"},
+  spelling:{title:"拼单词小游戏",src:"assets/games/spelling/index.html"},
+  "test-analysis":{title:"学生个人成绩分析",src:"assets/games/test-analysis/index.html"},
 };
 const params=new URLSearchParams(window.location.search);
 const game=games[params.get("game")]||games.witch;

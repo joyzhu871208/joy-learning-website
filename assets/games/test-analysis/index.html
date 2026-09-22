@@ -1,0 +1,2304 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>学生个人成绩分析报告</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --primary-color: #4361ee;
+      --secondary-color: #3f37c9;
+      --accent-color: #4895ef;
+      --light-color: #f8f9fa;
+      --dark-color: #212529;
+      --success-color: #4cc9f0;
+      --warning-color: #f72585;
+      --border-radius: 8px;
+      --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+      color: var(--dark-color);
+    }
+    
+    .container {
+      max-width: 1000px;
+      margin: 20px auto;
+      background: #fff;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      padding: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+    }
+    
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: var(--primary-color);
+      position: relative;
+      padding-bottom: 15px;
+    }
+    
+    h1::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+      border-radius: 3px;
+    }
+    
+    .tool-description {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #666;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+    
+    .file-input-wrapper {
+      position: relative;
+      overflow: hidden;
+      display: inline-block;
+    }
+    
+    input[type="file"] {
+      position: absolute;
+      font-size: 100px;
+      opacity: 0;
+      right: 0;
+      top: 0;
+      cursor: pointer;
+    }
+    
+    .btn {
+      background: var(--primary-color);
+      color: #fff;
+      border: none;
+      border-radius: var(--border-radius);
+      padding: 12px 28px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    
+    .btn:hover {
+      background: var(--secondary-color);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+    
+    .btn:active {
+      transform: translateY(0);
+    }
+    
+    .btn:disabled {
+      background: #cccccc;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+    
+    .btn i {
+      font-size: 18px;
+    }
+    
+    .btn-secondary {
+      background: #6c757d;
+    }
+    
+    .btn-secondary:hover {
+      background: #5a6268;
+    }
+    
+    .btn-success {
+      background: var(--success-color);
+    }
+    
+    .btn-success:hover {
+      background: #3aa8d8;
+    }
+    
+    .file-info {
+      margin-bottom: 20px;
+      text-align: center;
+      font-size: 14px;
+      color: #666;
+      padding: 10px;
+      background: #f8f9fa;
+      border-radius: var(--border-radius);
+      display: none;
+    }
+    
+    .loading {
+      display: none;
+      text-align: center;
+      margin: 20px 0;
+    }
+    
+    .spinner {
+      width: 40px;
+      height: 40px;
+      margin: 0 auto;
+      border: 4px solid rgba(0, 0, 0, 0.1);
+      border-left-color: var(--primary-color);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    .table-container {
+      overflow-x: auto;
+      margin-top: 20px;
+      border-radius: var(--border-radius);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      font-size: 14px;
+    }
+    
+    th, td {
+      border: 1px solid #e0e0e0;
+      padding: 12px 15px;
+      text-align: center;
+    }
+    
+    th {
+      background: var(--primary-color);
+      color: white;
+      font-weight: 600;
+      position: sticky;
+      top: 0;
+    }
+    
+    tr:nth-child(even) {
+      background: #f9f9f9;
+    }
+    
+    tr:hover {
+      background: #f1f1f1;
+    }
+    
+    .stats-container {
+      display: none;
+      margin-top: 30px;
+      background: #fff;
+      border-radius: var(--border-radius);
+      padding: 20px;
+      box-shadow: var(--box-shadow);
+    }
+    
+    .stats-title {
+      font-size: 18px;
+      margin-bottom: 15px;
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 15px;
+    }
+    
+    .stat-card {
+      background: #f8f9fa;
+      border-radius: var(--border-radius);
+      padding: 15px;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+    
+    .stat-value {
+      font-size: 24px;
+      font-weight: bold;
+      color: var(--primary-color);
+      margin: 10px 0;
+    }
+    
+    .stat-label {
+      font-size: 14px;
+      color: #666;
+    }
+    
+    .no-data {
+      text-align: center;
+      padding: 40px;
+      color: #666;
+      display: none;
+    }
+    
+    .error-message {
+      color: var(--warning-color);
+      text-align: center;
+      margin: 20px 0;
+      display: none;
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px;
+      }
+      
+      .actions {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .btn {
+        width: 100%;
+      }
+      
+      th, td {
+        padding: 8px 10px;
+        font-size: 12px;
+      }
+    }
+    
+    /* 打印样式 */
+    @media print {
+      body {
+        background: none;
+        padding: 0;
+      }
+      
+      .container {
+        box-shadow: none;
+        padding: 0;
+        max-width: 100%;
+      }
+      
+      .actions, .file-info, .stats-container {
+        display: none !important;
+      }
+      
+      table {
+        font-size: 12px;
+      }
+      
+      /* 隐藏图表容器 */
+      .charts-grid, .chart-container {
+        display: none !important;
+      }
+    }
+    
+    /* PDF导出专用样式 */
+    .pdf-export-content {
+      font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      line-height: 1.6;
+    }
+    
+    .pdf-export-content .subject-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+      page-break-inside: avoid;
+    }
+    
+    .pdf-export-content .overview-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-bottom: 20px;
+      page-break-inside: avoid;
+    }
+    
+    .pdf-export-content .diagnosis-section {
+      page-break-inside: avoid;
+      margin-top: 20px;
+    }
+    
+    /* 新增样式 */
+    .view-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .analysis-container {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      margin-top: 20px;
+    }
+    
+    .subject-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-bottom: 20px;
+      width: 100%;
+    }
+    
+    .charts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+      gap: 20px;
+    }
+    
+    .chart-container {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      min-height: 400px;
+    }
+    
+    .subject-card {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s;
+    }
+    
+    .subject-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .subject-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+    }
+    
+    .subject-card.chinese::before { background: #FF6B6B; }
+    .subject-card.math::before { background: #4ECDC4; }
+    .subject-card.english::before { background: #45B7D1; }
+    .subject-card.physics::before { background: #96CEB4; }
+    .subject-card.chemistry::before { background: #FFEEAD; }
+    .subject-card.biology::before { background: #D4A5A5; }
+    
+    .subject-score {
+      font-size: 36px;
+      font-weight: bold;
+      margin: 10px 0;
+      color: #2c3e50;
+    }
+    
+    .subject-stats {
+      font-size: 14px;
+      color: #666;
+      margin-top: 15px;
+    }
+    
+    .subject-stats div {
+      margin: 8px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .status-badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: bold;
+      margin-left: 10px;
+    }
+    
+    .student-header {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .student-info {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    .student-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: #4361ee;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+    
+    .student-details h2 {
+      margin: 0;
+      color: #2c3e50;
+    }
+    
+    .student-details p {
+      margin: 5px 0 0;
+      color: #666;
+    }
+    
+    .overview-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    
+    .overview-card {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    
+    .overview-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #4361ee, #4895ef);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+    
+    .overview-content h3 {
+      margin: 0;
+      font-size: 16px;
+      color: #666;
+    }
+    
+    .overview-value {
+      font-size: 24px;
+      font-weight: bold;
+      color: #2c3e50;
+      margin-top: 5px;
+    }
+    
+    .diagnosis-section {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 30px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .section-title {
+      font-size: 18px;
+      color: #2c3e50;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .diagnosis-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    
+    .diagnosis-card {
+      background: #f8f9fa;
+      border-radius: 8px;
+      padding: 15px;
+    }
+    
+    .diagnosis-card h4 {
+      margin: 0 0 10px 0;
+      color: #2c3e50;
+    }
+    
+    .diagnosis-points {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .diagnosis-points li {
+      margin: 8px 0;
+      padding-left: 20px;
+      position: relative;
+    }
+    
+    .diagnosis-points li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: #4361ee;
+    }
+    
+    /* 添加考试记录列表样式 */
+    .exam-records {
+      margin: 20px 0;
+      padding: 15px;
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+    }
+    
+    .exam-list {
+      margin-top: 15px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    
+    .exam-item {
+      background: #f8f9fa;
+      border-radius: 6px;
+      padding: 10px 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .exam-item:hover {
+      background: #e9ecef;
+    }
+    
+    .exam-item.active {
+      background: var(--primary-color);
+      color: white;
+    }
+    
+    .exam-item .exam-date {
+      font-weight: bold;
+    }
+    
+    .exam-item .exam-info {
+      font-size: 0.9em;
+      color: #666;
+    }
+    
+    .exam-item.active .exam-info {
+      color: rgba(255, 255, 255, 0.8);
+    }
+    
+    /* 数据格式说明样式 */
+    .format-guide {
+      background: white;
+      border-radius: var(--border-radius);
+      padding: 20px;
+      margin: 20px 0;
+      box-shadow: var(--box-shadow);
+    }
+    
+    .format-guide h3 {
+      color: var(--primary-color);
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 18px;
+    }
+    
+    .format-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    
+    .format-section {
+      padding: 15px;
+      background: #f8f9fa;
+      border-radius: 8px;
+    }
+    
+    .format-section h4 {
+      color: #2c3e50;
+      margin-bottom: 10px;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .format-section ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .format-section ul li {
+      margin: 8px 0;
+      padding-left: 20px;
+      position: relative;
+      line-height: 1.5;
+      color: #666;
+    }
+    
+    .format-section ul li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: var(--primary-color);
+    }
+    
+    .example-table {
+      overflow-x: auto;
+      margin: 10px 0;
+      background: white;
+      border-radius: 6px;
+      border: 1px solid #eee;
+    }
+    
+    .example-table table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    
+    .example-table th {
+      background: #f1f3f5;
+      color: #2c3e50;
+      font-weight: 600;
+      padding: 10px;
+      text-align: center;
+      border: 1px solid #eee;
+    }
+    
+    .example-table td {
+      padding: 8px 10px;
+      text-align: center;
+      border: 1px solid #eee;
+      color: #666;
+    }
+    
+    .example-table tr:nth-child(even) {
+      background: #f8f9fa;
+    }
+    
+    @media (max-width: 768px) {
+      .format-content {
+        grid-template-columns: 1fr;
+      }
+      
+      .example-table {
+        margin: 10px -15px;
+        border-radius: 0;
+      }
+    }
+    
+    .file-examples {
+      margin: 8px 0 8px 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    
+    .file-examples code {
+      display: inline-block;
+      padding: 4px 8px;
+      background: #e9ecef;
+      border-radius: 4px;
+      color: #2c3e50;
+      font-family: monospace;
+      font-size: 13px;
+    }
+    
+    .format-section h4 i {
+      color: var(--primary-color);
+      margin-right: 8px;
+    }
+    
+    /* 学生选择区域样式 */
+    .selection-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    .input-group label {
+      font-weight: 600;
+      color: var(--dark-color);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .input-group label i {
+      color: var(--primary-color);
+    }
+    
+    .input-group select,
+    .input-group input[type="text"] {
+      padding: 12px;
+      border: 2px solid #e0e0e0;
+      border-radius: var(--border-radius);
+      font-size: 16px;
+      background: white;
+      transition: border-color 0.3s ease;
+    }
+    
+    .input-group select:focus,
+    .input-group input[type="text"]:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+    }
+    
+    .input-group input[type="text"]::placeholder {
+      color: #999;
+    }
+    
+    @media (max-width: 768px) {
+      .selection-row {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+    }
+    
+    /* 班级设置区域样式 */
+    .class-setting {
+      background: #f8f9fa;
+      border-radius: var(--border-radius);
+      padding: 20px;
+      margin: 20px 0;
+      border: 1px solid #e9ecef;
+    }
+    
+    .class-setting h3 {
+      margin-bottom: 15px;
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .class-input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    .class-input-group label {
+      font-weight: 600;
+      color: var(--dark-color);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .class-input-group label i {
+      color: var(--primary-color);
+    }
+    
+    .class-input-group input[type="text"] {
+      padding: 12px;
+      border: 2px solid #e0e0e0;
+      border-radius: var(--border-radius);
+      font-size: 16px;
+      background: white;
+      transition: border-color 0.3s ease;
+    }
+    
+    .class-input-group input[type="text"]:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+    }
+    
+    .input-hint {
+      color: #666;
+      font-size: 12px;
+      margin-top: 4px;
+      display: block;
+    }
+  </style>
+  <!-- Font Awesome 图标库 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- ECharts图表库 -->
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1><i class="fas fa-chart-line"></i> 学生个人成绩分析报告</h1>
+    
+    <!-- 数据导入视图 -->
+    <div id="importView">
+      <p class="tool-description">
+        本工具可快速导入Excel成绩表，进行数据分析和可视化展示，支持导出为PDF格式。<br>
+        请确保Excel文件第一行为表头，数据从第二行开始。
+      </p>
+      
+      <!-- 添加数据格式说明 -->
+      <div class="format-guide">
+        <h3><i class="fas fa-info-circle"></i> 数据格式要求</h3>
+        <div class="format-content">
+          <div class="format-section">
+            <h4><i class="fas fa-list-ul"></i> 基本要求：</h4>
+            <ul>
+              <li>文件格式：支持 .xlsx、.xls 或 .csv 格式</li>
+              <li>表头要求：第一行必须是表头，包含"姓名"和各科目名称</li>
+              <li>数据行：从第二行开始，每行为一个学生的成绩数据</li>
+              <li>成绩格式：使用数字表示分数（0-100）</li>
+            </ul>
+          </div>
+          
+          <!-- 新增文件命名建议部分 -->
+          <div class="format-section">
+            <h4><i class="fas fa-file-signature"></i> 文件命名建议：</h4>
+            <div class="file-examples">
+              <code>2024-01-15-月考.xlsx</code>
+              <code>2024-03-期中考试.xlsx</code>
+              <code>2024-05-30-期末考试.xlsx</code>
+              <code>2024-09-开学考试.xlsx</code>
+            </div>
+            <ul>
+              <li>日期格式：支持 YYYY-MM-DD、YYYY-MM 等格式</li>
+              <li>考试名称：月考、期中、期末、模拟考等</li>
+              <li>系统会自动从文件名提取考试日期，在图表中显示</li>
+              <li>按时间顺序命名，便于进步趋势分析</li>
+              <li>支持多种格式：2024-01、20240115、2024-01-15等</li>
+            </ul>
+          </div>
+          
+          <div class="format-section">
+            <h4><i class="fas fa-table"></i> 表格示例：</h4>
+            <div class="example-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>姓名</th>
+                    <th>语文</th>
+                    <th>数学</th>
+                    <th>英语</th>
+                    <th>物理</th>
+                    <th>化学</th>
+                    <th>生物</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>张三</td>
+                    <td>89</td>
+                    <td>92</td>
+                    <td>88</td>
+                    <td>85</td>
+                    <td>90</td>
+                    <td>87</td>
+                  </tr>
+                  <tr>
+                    <td>李四</td>
+                    <td>92</td>
+                    <td>85</td>
+                    <td>90</td>
+                    <td>88</td>
+                    <td>86</td>
+                    <td>89</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          
+          <div class="format-section">
+            <h4><i class="fas fa-exclamation-triangle"></i> 注意事项：</h4>
+            <ul>
+              <li>多次考试数据：每个考试保存为单独的Excel文件</li>
+              <li>表头一致性：所有考试文件的表头必须完全一致（科目顺序相同）</li>
+              <li>学生姓名：请确保同一学生在不同考试文件中的姓名完全相同</li>
+              <li>空值处理：如有缺考等情况，请填写0或留空</li>
+              <li>建议导入3次以上的考试数据，使进步趋势分析更准确</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="actions">
+        <div class="file-input-wrapper">
+          <button class="btn" id="importBtn">
+            <i class="fas fa-file-import"></i> 导入Excel成绩表
+            <input type="file" id="excelFile" accept=".xlsx,.xls,.csv" multiple />
+          </button>
+        </div>
+        <button class="btn btn-secondary" id="sampleBtn">
+          <i class="fas fa-vial"></i> 加载示例数据
+        </button>
+      </div>
+      
+      <div class="file-info" id="fileInfo">
+        <i class="fas fa-file-excel"></i> 已选择文件: <span id="fileName"></span> | 
+        数据行数: <span id="rowCount"></span> | 
+        数据列数: <span id="colCount"></span>
+      </div>
+      
+      <!-- 班级信息设置 -->
+      <div class="class-setting" id="classSetting" style="display: none;">
+        <h3><i class="fas fa-users"></i> 班级信息设置</h3>
+        <div class="class-input-group">
+          <label for="globalClassInput">
+            <i class="fas fa-school"></i> 班级名称：
+          </label>
+          <input type="text" id="globalClassInput" placeholder="请输入班级名称（如：高三(1)班）" />
+          <small class="input-hint">此班级信息将应用到所有学生，您也可以在分析时单独修改</small>
+        </div>
+      </div>
+      
+      <!-- 科目满分设置 -->
+      <div class="class-setting" id="maxScoreSetting" style="display: none;">
+        <h3><i class="fas fa-tasks"></i> 科目满分设置</h3>
+        <div id="maxScoreInputs" class="format-content" style="grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));">
+          <!-- Dynamic inputs will be generated here -->
+        </div>
+        <div class="class-input-group" style="margin-top: 15px;">
+            <label for="totalMaxScore">
+                <i class="fas fa-check-double"></i> <strong>总分满分：</strong>
+            </label>
+            <input type="text" id="totalMaxScore" readonly style="background-color: #e9ecef;">
+            <small class="input-hint">总分根据各科满分自动计算</small>
+        </div>
+      </div>
+      
+      <!-- 新增学生选择部分 -->
+      <div class="student-selection" id="studentSelection" style="display: none;">
+        <h3><i class="fas fa-user"></i> 选择要分析的学生</h3>
+        
+        <div class="selection-row">
+          <div class="input-group">
+            <label for="studentSelect"><i class="fas fa-user"></i> 学生姓名：</label>
+            <select id="studentSelect">
+              <option value="">请选择学生...</option>
+            </select>
+          </div>
+          
+          <div class="input-group">
+            <label for="currentClassInput">
+              <i class="fas fa-users"></i> 当前学生班级：
+            </label>
+            <input type="text" id="currentClassInput" placeholder="自动从全局设置获取" />
+            <small class="input-hint">如需修改此学生的班级，请直接编辑</small>
+          </div>
+        </div>
+        
+        <div class="student-info" id="studentInfo" style="display: none;">
+          <h3>学生信息</h3>
+          <div id="studentDetails"></div>
+        </div>
+        <button class="btn btn-success" id="analyzeBtn">
+          <i class="fas fa-chart-pie"></i> 分析数据
+        </button>
+      </div>
+      
+      <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <p>正在处理数据，请稍候...</p>
+      </div>
+      
+      <div class="error-message" id="errorMessage">
+        <i class="fas fa-exclamation-triangle"></i> <span id="errorText"></span>
+      </div>
+      
+      <div class="no-data" id="noData">
+        <i class="fas fa-database" style="font-size: 48px; margin-bottom: 15px;"></i>
+        <h3>暂无数据</h3>
+        <p>请导入Excel文件以开始分析</p>
+      </div>
+      
+      <div class="table-container">
+        <div id="tableArea"></div>
+      </div>
+    </div>
+    
+    <!-- 新增考试记录列表 -->
+    <div class="exam-records" id="examRecords" style="display: none;">
+      <h3><i class="fas fa-history"></i> 已导入的考试记录</h3>
+      <div class="exam-list" id="examList"></div>
+    </div>
+    
+    <!-- 分析结果视图 -->
+    <div id="analysisView" style="display: none;">
+      <div class="view-header">
+        <button class="btn btn-secondary" id="backToImport">
+          <i class="fas fa-arrow-left"></i> 返回数据
+        </button>
+        <button class="btn btn-secondary" id="exportPDF">
+          <i class="fas fa-file-pdf"></i> 导出为PDF
+        </button>
+      </div>
+      
+      <!-- 学生信息头部 -->
+      <div class="student-header">
+        <div class="student-info">
+          <div class="student-avatar">
+            <i class="fas fa-user"></i>
+          </div>
+          <div class="student-details">
+            <h2 id="studentName">学生姓名</h2>
+            <p id="studentClass">班级信息</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="analysis-container">
+        <!-- 科目成绩卡片 -->
+        <div class="subject-cards" id="subjectCards"></div>
+        
+        <!-- 新增成绩概览卡片 -->
+        <div class="overview-cards" id="overviewCards">
+          <div class="overview-card">
+            <div class="overview-icon">
+              <i class="fas fa-trophy"></i>
+            </div>
+            <div class="overview-content">
+              <h3>总分排名</h3>
+              <div class="overview-value" id="totalRank">-/-</div>
+            </div>
+          </div>
+          <div class="overview-card">
+            <div class="overview-icon">
+              <i class="fas fa-calculator"></i>
+            </div>
+            <div class="overview-content">
+              <h3>总分/满分</h3>
+              <div class="overview-value" id="totalScore">-/-</div>
+            </div>
+          </div>
+          <div class="overview-card">
+            <div class="overview-icon">
+              <i class="fas fa-chart-line"></i>
+            </div>
+            <div class="overview-content">
+              <h3>优势学科</h3>
+              <div class="overview-value" id="bestSubject">-</div>
+            </div>
+          </div>
+          <div class="overview-card">
+            <div class="overview-icon">
+              <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <div class="overview-content">
+              <h3>待提升学科</h3>
+              <div class="overview-value" id="weakSubject">-</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 图表网格 -->
+        <div class="charts-grid">
+          <!-- 雷达图 -->
+          <div class="chart-container">
+            <div class="chart-title">
+              <i class="fas fa-chart-radar"></i> 成绩雷达图
+            </div>
+            <div id="radarChart" style="width: 100%; height: 400px;"></div>
+          </div>
+          
+          <!-- 柱状图 -->
+          <div class="chart-container">
+            <div class="chart-title">
+              <i class="fas fa-chart-bar"></i> 各科与班级平均分差距
+            </div>
+            <div id="barChart" style="width: 100%; height: 400px;"></div>
+          </div>
+          
+          <!-- 新增成绩分布图 -->
+          <div class="chart-container">
+            <div class="chart-title">
+              <i class="fas fa-chart-area"></i> 成绩分布分析
+            </div>
+            <div id="distributionChart" style="width: 100%; height: 400px;"></div>
+          </div>
+          
+          <!-- 新增进步分析图 -->
+          <div class="chart-container">
+            <div class="chart-title">
+              <i class="fas fa-chart-line"></i> 进步趋势分析
+            </div>
+            <div id="progressChart" style="width: 100%; height: 400px;"></div>
+          </div>
+        </div>
+        
+        <!-- 新增学科诊断部分 -->
+        <div class="diagnosis-section">
+          <h3 class="section-title"><i class="fas fa-stethoscope"></i> 学科诊断</h3>
+          <div class="diagnosis-cards" id="diagnosisCards"></div>
+        </div>
+      </div>
+      
+      <div class="stats-container" id="statsContainer">
+        <h3 class="stats-title"><i class="fas fa-chart-bar"></i> 数据概览</h3>
+        <div class="stats-grid" id="statsGrid"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SheetJS (xlsx) -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <!-- html2pdf.js -->
+  <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
+  
+  <script>
+    // 添加示例数据
+    const sampleData = [
+      ['姓名', '语文', '数学', '英语'],
+      ['张三', '59', '72', '58'],
+      ['李四', '75', '68', '82'],
+      ['王五', '89', '87', '89'],
+      ['赵六', '62', '75', '71'],
+      ['钱七', '78', '65', '68'],
+      ['孙八', '85', '71', '75'],
+      ['周九', '71', '69', '73'],
+      ['吴十', '83', '78', '77']
+    ];
+    
+    let selectedStudentData = null;
+    let examDataList = []; // 存储所有考试数据
+    let subjectMaxScores = {}; // 存储各科满分
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      const importView = document.getElementById('importView');
+      const analysisView = document.getElementById('analysisView');
+      const backToImport = document.getElementById('backToImport');
+      const exportPDF = document.getElementById('exportPDF');
+      const studentSelection = document.getElementById('studentSelection');
+      const studentSelect = document.getElementById('studentSelect');
+      const studentInfo = document.getElementById('studentInfo');
+      const studentDetails = document.getElementById('studentDetails');
+      const analyzeBtn = document.getElementById('analyzeBtn');
+      const excelInput = document.getElementById('excelFile');
+      const tableArea = document.getElementById('tableArea');
+      const fileInfo = document.getElementById('fileInfo');
+      const fileName = document.getElementById('fileName');
+      const rowCount = document.getElementById('rowCount');
+      const colCount = document.getElementById('colCount');
+      const loading = document.getElementById('loading');
+      const errorMessage = document.getElementById('errorMessage');
+      const errorText = document.getElementById('errorText');
+      const noData = document.getElementById('noData');
+      const statsContainer = document.getElementById('statsContainer');
+      const statsGrid = document.getElementById('statsGrid');
+      
+      let excelData = null;
+      let lastTableHTML = '';
+      
+      // 初始状态下禁用分析按钮
+      analyzeBtn.disabled = true;
+      
+      // 获取班级信息（全局或当前学生的）
+      function getClassInfo() {
+        const globalClass = document.getElementById('globalClassInput').value.trim();
+        const currentClass = document.getElementById('currentClassInput').value.trim();
+        return currentClass || globalClass || '未设置班级';
+      }
+      
+      // 全局班级输入事件
+      document.getElementById('globalClassInput').addEventListener('input', function() {
+        const globalClass = this.value.trim();
+        const currentClassInput = document.getElementById('currentClassInput');
+        
+        // 如果当前学生班级为空，自动填充全局班级
+        if (!currentClassInput.value.trim()) {
+          currentClassInput.value = globalClass;
+        }
+        
+        // 更新已选学生的班级信息
+        if (selectedStudentData) {
+          selectedStudentData.class = getClassInfo();
+          updateStudentDisplay();
+        }
+      });
+      
+      // 更新学生信息显示
+      function updateStudentDisplay() {
+        if (selectedStudentData) {
+          studentDetails.innerHTML = `
+            <p><strong>姓名：</strong>${selectedStudentData.name}</p>
+            <p><strong>班级：</strong>${selectedStudentData.class}</p>
+            <p><strong>各科成绩：</strong></p>
+            ${Object.entries(selectedStudentData.scores)
+              .map(([subject, score]) => 
+                `<div>${subject}: ${score}分</div>`
+              ).join('')}
+          `;
+        }
+      }
+      
+      // 处理学生选择
+      studentSelect.addEventListener('change', function() {
+        const selectedIndex = this.selectedIndex;
+        if (selectedIndex > 0) { // 0是"请选择学生"选项
+          const studentRow = excelData[selectedIndex];
+          selectedStudentData = {
+            name: studentRow[0],
+            class: getClassInfo(),
+            scores: {}
+          };
+          
+          // 获取所有科目成绩
+          excelData[0].forEach((subject, index) => {
+            if (index > 0) { // 跳过姓名列
+              selectedStudentData.scores[subject] = parseFloat(studentRow[index]);
+            }
+          });
+          
+          // 自动填充当前学生班级输入框
+          const globalClass = document.getElementById('globalClassInput').value.trim();
+          document.getElementById('currentClassInput').value = globalClass;
+          selectedStudentData.class = getClassInfo();
+          
+          // 显示学生信息
+          studentInfo.style.display = 'block';
+          updateStudentDisplay();
+          
+          // 启用分析按钮
+          analyzeBtn.disabled = false;
+        } else {
+          studentInfo.style.display = 'none';
+          analyzeBtn.disabled = true;
+          selectedStudentData = null;
+          document.getElementById('currentClassInput').value = '';
+        }
+      });
+      
+      // 当前学生班级输入事件
+      document.getElementById('currentClassInput').addEventListener('input', function() {
+        if (selectedStudentData) {
+          selectedStudentData.class = getClassInfo();
+          updateStudentDisplay();
+        }
+      });
+      
+      // 处理Excel数据导入后的操作
+      function handleDataImport(data, name) {
+        // 数据验证：确保data有效
+        if (!data || !Array.isArray(data) || data.length === 0) {
+          showError('导入的数据无效或为空');
+          return;
+        }
+        
+        if (!data[0] || !Array.isArray(data[0]) || data[0].length === 0) {
+          showError('数据格式不正确，请确保表头存在');
+          return;
+        }
+        
+        excelData = data;
+        
+        // 显示文件信息
+        fileName.textContent = name;
+        rowCount.textContent = data.length - 1;
+        colCount.textContent = data[0].length;
+        fileInfo.style.display = 'block';
+        
+        // 1. First, populate the score settings to initialize the subjectMaxScores variable
+        populateMaxScoreSettings(data[0]);
+        
+        // 2. Then, render the table, which depends on subjectMaxScores for coloring
+        renderTable(data);
+        
+        // 3. Now, populate the student dropdown
+        studentSelect.innerHTML = '<option value="">请选择学生...</option>';
+        data.slice(1).forEach((row, index) => {
+          const option = document.createElement('option');
+          option.value = index + 1;
+          option.textContent = row[0]; // 假设第一列是学生姓名
+          studentSelect.appendChild(option);
+        });
+        
+        // 4. Finally, show all the necessary UI elements
+        document.getElementById('classSetting').style.display = 'block';
+        document.getElementById('maxScoreSetting').style.display = 'block';
+        studentSelection.style.display = 'block';
+        
+        // 隐藏无数据提示
+        noData.style.display = 'none';
+      }
+      
+      // 修改示例数据按钮事件
+      document.getElementById('sampleBtn').addEventListener('click', function() {
+        handleDataImport(sampleData, '示例数据.xlsx');
+      });
+      
+      // 从文件名中提取考试日期
+      function extractExamDateFromFileName(fileName) {
+        // 匹配多种日期格式
+        const datePatterns = [
+          /(\d{4})-(\d{1,2})-(\d{1,2})/,  // 2024-01-15 格式
+          /(\d{4})-(\d{1,2})/,           // 2024-01 格式
+          /(\d{4})(\d{2})(\d{2})/,       // 20240115 格式
+          /(\d{4})(\d{2})/,              // 202401 格式
+        ];
+        
+        for (let pattern of datePatterns) {
+          const match = fileName.match(pattern);
+          if (match) {
+            const year = match[1];
+            const month = match[2] || '01';
+            const day = match[3] || '01';
+            
+            // 补齐月份和日期的零
+            const formattedMonth = month.padStart(2, '0');
+            const formattedDay = day.padStart(2, '0');
+            
+            return `${year}-${formattedMonth}-${formattedDay}`;
+          }
+        }
+        
+        // 如果无法从文件名提取日期，返回当前日期
+        return new Date().toISOString().split('T')[0];
+      }
+      
+      // 从文件名中提取考试名称
+      function extractExamNameFromFileName(fileName) {
+        // 移除文件扩展名
+        const nameWithoutExt = fileName.replace(/\.[^/.]+$/, "");
+        
+        // 移除日期部分，保留考试名称
+        const examName = nameWithoutExt
+          .replace(/\d{4}-\d{1,2}-\d{1,2}/, '')  // 移除 YYYY-MM-DD
+          .replace(/\d{4}-\d{1,2}/, '')          // 移除 YYYY-MM
+          .replace(/\d{8}/, '')                   // 移除 YYYYMMDD
+          .replace(/\d{6}/, '')                   // 移除 YYYYMM
+          .replace(/^[-_\s]+|[-_\s]+$/g, '')      // 移除首尾的分隔符
+          .trim();
+        
+        return examName || '考试';
+      }
+      
+      // 修改文件上传处理
+      excelInput.addEventListener('change', async function(e) {
+        const files = e.target.files;
+        if (files.length === 0) {
+          showError('请选择文件');
+          return;
+        }
+        
+        loading.style.display = 'block';
+        errorMessage.style.display = 'none';
+        
+        try {
+          for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            const fileType = file.name.split('.').pop().toLowerCase();
+            
+            if (!['xlsx', 'xls', 'csv'].includes(fileType)) {
+              continue;
+            }
+            
+            const data = await readExcelFile(file);
+            if (data && data.length > 1) {
+              examDataList.push({
+                name: file.name,
+                examName: extractExamNameFromFileName(file.name),
+                date: extractExamDateFromFileName(file.name),
+                data: data
+              });
+            }
+          }
+          
+          if (examDataList.length > 0) {
+            // 按日期排序考试数据
+            examDataList.sort((a, b) => new Date(a.date) - new Date(b.date));
+            updateExamList();
+            document.getElementById('examRecords').style.display = 'block';
+          } else {
+            showError('没有有效的数据被导入');
+          }
+        } catch (error) {
+          console.error('处理文件时出错:', error);
+          showError('处理文件时出错: ' + error.message);
+        } finally {
+          loading.style.display = 'none';
+        }
+      });
+      
+      // 读取Excel文件
+      function readExcelFile(file) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          
+          reader.onload = function(evt) {
+            try {
+              const data = evt.target.result;
+              const workbook = XLSX.read(data, { type: 'binary' });
+              
+              if (workbook.SheetNames.length === 0) {
+                reject(new Error('Excel文件中没有工作表'));
+                return;
+              }
+              
+              const firstSheet = workbook.SheetNames[0];
+              const worksheet = workbook.Sheets[firstSheet];
+              const json = XLSX.utils.sheet_to_json(worksheet, { 
+                header: 1,
+                defval: '',
+                raw: false
+              });
+              
+              resolve(json);
+            } catch (error) {
+              reject(error);
+            }
+          };
+          
+          reader.onerror = () => reject(new Error('读取文件时出错'));
+          reader.readAsBinaryString(file);
+        });
+      }
+      
+      // 更新考试记录列表
+      function updateExamList() {
+        const examList = document.getElementById('examList');
+        examList.innerHTML = '';
+        
+        examDataList.forEach((exam, index) => {
+          const examItem = document.createElement('div');
+          examItem.className = 'exam-item';
+          examItem.innerHTML = `
+            <div class="exam-date">${exam.date}</div>
+            <div class="exam-info">
+              ${exam.examName} (${exam.data.length - 1}名学生)
+            </div>
+          `;
+          
+          examItem.addEventListener('click', () => {
+            document.querySelectorAll('.exam-item').forEach(item => item.classList.remove('active'));
+            examItem.classList.add('active');
+            handleDataImport(exam.data, exam.name);
+          });
+          
+          examList.appendChild(examItem);
+        });
+      }
+      
+      // 修改分析按钮事件
+      analyzeBtn.addEventListener('click', function() {
+        if (!selectedStudentData) {
+          showError('请先选择要分析的学生');
+          return;
+        }
+        
+        try {
+          // 更新学生信息显示
+          document.getElementById('studentName').textContent = selectedStudentData.name;
+          // 使用用户输入的班级信息
+          document.getElementById('studentClass').textContent = selectedStudentData.class;
+          
+          // 处理所选学生的数据
+          const subjects = processStudentData(selectedStudentData, excelData);
+          
+          // 更新概览信息
+          updateOverview(subjects, selectedStudentData, excelData);
+          
+          // 生成学科诊断
+          generateDiagnosis(subjects);
+          
+          // 切换到分析视图
+          switchToAnalysisView();
+          
+          // 等待DOM更新完成后再生成图表
+          setTimeout(() => {
+            generateSubjectCards(subjects);
+            generateRadarChart(subjects);
+            generateBarChart(subjects);
+            generateDistributionChart(subjects, excelData);
+            generateProgressChart(subjects);
+          }, 100);
+          
+        } catch (error) {
+          console.error('分析数据时出错:', error);
+          showError('分析数据时出错: ' + error.message);
+        }
+      });
+      
+      // 计算总体排名
+      function calculateOverallRank(studentData, allData) {
+        const headers = allData[0].slice(1); // 跳过姓名列
+        const scores = allData.slice(1).map(row => {
+          const sum = headers.reduce((acc, _, index) => {
+            return acc + parseFloat(row[index + 1] || 0);
+          }, 0);
+          return {
+            name: row[0],
+            total: sum
+          };
+        });
+        
+        // 按总分排序
+        scores.sort((a, b) => b.total - a.total);
+        
+        // 找到当前学生的排名
+        const rank = scores.findIndex(s => s.name === studentData.name) + 1;
+        const total = scores.length;
+        
+        return `${rank}/${total}`;
+      }
+      
+      // 处理单个学生的数据
+      function processStudentData(studentData, allData) {
+        const subjects = {};
+        const headers = allData[0];
+        
+        headers.slice(1).forEach((subject, index) => {
+          const allScores = allData.slice(1).map(row => parseFloat(row[index + 1])).filter(score => !isNaN(score));
+          const studentScore = studentData.scores[subject];
+          
+          subjects[subject] = {
+            score: studentScore,
+            average: allScores.reduce((a, b) => a + b, 0) / allScores.length,
+            max: Math.max(...allScores),
+            min: Math.min(...allScores),
+            rank: allScores.filter(score => score > studentScore).length + 1,
+            total: allScores.length,
+            maxScore: subjectMaxScores[subject] || 100
+          };
+        });
+        
+        return subjects;
+      }
+      
+      // 渲染表格函数
+      function renderTable(data) {
+        // 数据验证
+        if (!data || !Array.isArray(data) || data.length === 0) {
+          console.error('Invalid data for table rendering');
+          return;
+        }
+        
+        let html = '<table><thead><tr>';
+        
+        // 表头
+        data[0].forEach(cell => {
+          html += `<th>${cell || '未命名列'}</th>`;
+        });
+        html += '</tr></thead><tbody>';
+        
+        // 数据行
+        for (let i = 1; i < data.length; i++) {
+          if (data[i].length === 0) continue;
+          
+          html += '<tr>';
+          data[i].forEach((cell, index) => {
+            // 高亮显示数值
+            const cellValue = cell !== undefined ? cell : '';
+            const isNumeric = !isNaN(parseFloat(cellValue)) && isFinite(cellValue);
+            
+            if (index > 0 && isNumeric) {
+              // 根据数值大小添加颜色
+              const numValue = parseFloat(cellValue);
+              const subject = data[0][index];
+              const maxScore = subjectMaxScores[subject] || 100;
+              const percentage = maxScore > 0 ? numValue / maxScore : 0;
+
+              let color = '';
+              if (percentage >= 0.85) color = '#4caf50'; // 优秀
+              else if (percentage >= 0.7) color = '#2196f3'; // 良好
+              else if (percentage >= 0.6) color = '#ff9800'; // 及格
+              else color = '#f44336'; // 不及格
+              
+              html += `<td style="font-weight: bold; color: ${color}">${cellValue}</td>`;
+            } else {
+              html += `<td>${cellValue}</td>`;
+            }
+          });
+          html += '</tr>';
+        }
+        html += '</tbody></table>';
+        
+        tableArea.innerHTML = html;
+        lastTableHTML = html;
+      }
+      
+      // 显示错误信息
+      function showError(message) {
+        errorText.textContent = message;
+        errorMessage.style.display = 'block';
+        noData.style.display = 'block';
+        fileInfo.style.display = 'none';
+        statsContainer.style.display = 'none';
+        
+        analyzeBtn.disabled = true;
+        
+        // 启用导出按钮
+        const exportBtn = document.getElementById('exportPDF');
+        exportBtn.disabled = false;
+      }
+      
+      // 视图切换函数
+      function switchToAnalysisView() {
+        importView.style.display = 'none';
+        analysisView.style.display = 'block';
+        window.scrollTo(0, 0);
+      }
+      
+      function switchToImportView() {
+        analysisView.style.display = 'none';
+        importView.style.display = 'block';
+        window.scrollTo(0, 0);
+      }
+      
+      // 返回按钮事件
+      backToImport.addEventListener('click', switchToImportView);
+      
+      // 导出PDF事件
+      exportPDF.addEventListener('click', function() {
+        loading.style.display = 'block';
+        
+        // 获取需要导出的内容，排除图表部分
+        const studentHeader = document.querySelector('.student-header');
+        const subjectCards = document.querySelector('.subject-cards');
+        const overviewCards = document.querySelector('.overview-cards');
+        const diagnosisSection = document.querySelector('.diagnosis-section');
+        
+        const element = document.createElement('div');
+        element.className = 'pdf-export-content';
+        element.innerHTML = `
+          <h2 style="text-align:center; color: #4361ee; margin-bottom: 20px;">
+            <i class="fas fa-chart-line"></i> 高三成绩分析报告
+          </h2>
+          <div style="margin-bottom: 15px; text-align: center;">
+            <span style="font-weight: bold;">导出时间: </span>${new Date().toLocaleString()}
+          </div>
+          <div class="analysis-content">
+            ${studentHeader ? studentHeader.outerHTML : ''}
+            ${overviewCards ? overviewCards.outerHTML : ''}
+            ${subjectCards ? subjectCards.outerHTML : ''}
+            ${diagnosisSection ? diagnosisSection.outerHTML : ''}
+            ${statsContainer.innerHTML}
+          </div>
+          <div style="text-align: center; margin-top: 30px; color: #666; font-size: 12px; padding: 15px; background: #f8f9fa; border-radius: 8px; border-left: 4px solid #4361ee;">
+            <strong>📋 说明：</strong>本PDF报告已自动跳过图表内容，如需查看完整的雷达图、柱状图等图表分析，请在网页版中查看
+          </div>
+          <div style="text-align: center; margin-top: 10px; color: #666; font-size: 12px;">
+            本报告由学生个人成绩分析系统生成
+          </div>
+        `;
+        
+        // 构建包含学生姓名的文件名
+        const studentName = selectedStudentData ? selectedStudentData.name : '未知学生';
+        const currentDate = new Date().toISOString().slice(0,10);
+        const filename = `${studentName}_成绩分析报告_${currentDate}.pdf`;
+        
+        const opt = {
+          margin: 0.5,
+          filename: filename,
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: { 
+            scale: 2,
+            logging: false,
+            useCORS: true
+          },
+          jsPDF: { 
+            unit: 'mm', 
+            format: 'a4', 
+            orientation: 'portrait',
+            hotfixes: ["px_scaling"]
+          }
+        };
+        
+        html2pdf().set(opt).from(element).save().then(() => {
+          loading.style.display = 'none';
+        });
+      });
+      
+      // 生成科目卡片
+      function generateSubjectCards(subjects) {
+        const container = document.getElementById('subjectCards');
+        container.innerHTML = '';
+        
+        Object.entries(subjects).forEach(([subject, data]) => {
+          const card = document.createElement('div');
+          card.className = `subject-card ${subject.toLowerCase()}`;
+          
+          const status = data.score >= 60 ? 
+            '<span class="status-badge status-pass">及格</span>' : 
+            '<span class="status-badge status-fail">不及格</span>';
+          
+          card.innerHTML = `
+            <h3>${subject}${status}</h3>
+            <div class="subject-score">${data.score.toFixed(1)}</div>
+            <div class="subject-stats">
+              <div>
+                <span>班级平均</span>
+                <span>${data.average.toFixed(1)}</span>
+              </div>
+              <div>
+                <span>最高分</span>
+                <span>${data.max}</span>
+              </div>
+              <div>
+                <span>排名</span>
+                <span>${data.rank}/${data.total}</span>
+              </div>
+            </div>
+          `;
+          
+          container.appendChild(card);
+        });
+      }
+      
+      // 生成雷达图
+      function generateRadarChart(subjects) {
+        const chart = echarts.init(document.getElementById('radarChart'));
+        
+        const indicators = Object.keys(subjects).map(subject => ({
+          name: subject,
+          max: subjects[subject].maxScore || 100
+        }));
+        
+        const data = {
+          value: Object.values(subjects).map(s => s.score),
+          name: '个人成绩'
+        };
+        
+        const avgData = {
+          value: Object.values(subjects).map(s => s.average),
+          name: '班级平均'
+        };
+        
+        const option = {
+          title: {
+            text: '成绩分析雷达图'
+          },
+          tooltip: {
+            trigger: 'item'
+          },
+          legend: {
+            data: ['个人成绩', '班级平均'],
+            bottom: 0
+          },
+          radar: {
+            indicator: indicators,
+            shape: 'circle',
+            splitNumber: 5,
+            axisName: {
+              color: '#333'
+            }
+          },
+          series: [{
+            name: '成绩对比',
+            type: 'radar',
+            data: [data, avgData],
+            areaStyle: {
+              opacity: 0.3
+            }
+          }]
+        };
+        
+        chart.setOption(option);
+        window.addEventListener('resize', () => chart.resize());
+      }
+      
+      // 生成柱状图
+      function generateBarChart(subjects) {
+        const chart = echarts.init(document.getElementById('barChart'));
+        
+        const subjectNames = Object.keys(subjects);
+        const personalScores = Object.values(subjects).map(s => s.score);
+        const averageScores = Object.values(subjects).map(s => s.average);
+        const maxVal = Math.max(...Object.values(subjects).map(s => s.maxScore));
+        
+        const option = {
+          title: {
+            text: '各科与班级平均分差距',
+            textStyle: {
+              fontSize: 16,
+              fontWeight: 'normal'
+            }
+          },
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+              type: 'shadow'
+            },
+            formatter: function(params) {
+              const personalScore = params[0].value;
+              const avgScore = params[1].value;
+              const diff = (personalScore - avgScore).toFixed(1);
+              const diffText = diff >= 0 ? `+${diff}` : diff;
+              return `${params[0].name}<br/>
+                     ${params[0].seriesName}: ${personalScore}<br/>
+                     ${params[1].seriesName}: ${avgScore}<br/>
+                     <span style="color: ${diff >= 0 ? '#67C23A' : '#F56C6C'}">
+                     差距: ${diffText}</span>`;
+            }
+          },
+          legend: {
+            data: ['个人成绩', '班级平均'],
+            bottom: 0
+          },
+          grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '15%',
+            top: '15%',
+            containLabel: true
+          },
+          xAxis: {
+            type: 'category',
+            data: subjectNames,
+            axisLabel: {
+              interval: 0,
+              rotate: 30
+            }
+          },
+          yAxis: {
+            type: 'value',
+            min: 0,
+            max: Math.ceil(maxVal / 10) * 10,
+            splitNumber: 5,
+            axisLine: {
+              show: true
+            },
+            splitLine: {
+              lineStyle: {
+                type: 'dashed'
+              }
+            }
+          },
+          series: [
+            {
+              name: '个人成绩',
+              type: 'bar',
+              data: personalScores,
+              itemStyle: {
+                color: '#FF6B6B'  // 鲜艳的红色
+              },
+              barGap: '30%',
+              barWidth: '20%',
+              emphasis: {
+                itemStyle: {
+                  color: '#FF8787'  // 高亮时的颜色
+                }
+              },
+              label: {
+                show: true,
+                position: 'top',
+                formatter: '{c}'
+              }
+            },
+            {
+              name: '班级平均',
+              type: 'bar',
+              data: averageScores,
+              itemStyle: {
+                color: '#4ECDC4'  // 清新的青色
+              },
+              barWidth: '20%',
+              emphasis: {
+                itemStyle: {
+                  color: '#6EE7E0'  // 高亮时的颜色
+                }
+              },
+              label: {
+                show: true,
+                position: 'top',
+                formatter: '{c}'
+              }
+            }
+          ]
+        };
+        
+        chart.setOption(option);
+        window.addEventListener('resize', () => chart.resize());
+      }
+      
+      // 更新概览信息
+      function updateOverview(subjects, studentData, allData) {
+        // 计算总分排名
+        document.getElementById('totalRank').textContent = calculateOverallRank(studentData, allData);
+        
+        // 更新总分显示
+        const studentTotalScore = Object.values(studentData.scores).reduce((a, b) => a + (parseFloat(b) || 0), 0);
+        const totalMaxScore = Object.values(subjectMaxScores).reduce((a, b) => a + (parseFloat(b) || 0), 0);
+        document.getElementById('totalScore').textContent = `${studentTotalScore.toFixed(1)} / ${totalMaxScore}`;
+        
+        // 找出优势和待提升学科
+        const subjectScores = Object.entries(subjects).map(([name, data]) => ({
+          name,
+          score: data.score,
+          avgDiff: data.score - data.average
+        }));
+        
+        // 按与平均分的差值排序
+        subjectScores.sort((a, b) => b.avgDiff - a.avgDiff);
+        
+        // 更新优势学科（差值最大的）
+        const bestSubject = subjectScores[0];
+        document.getElementById('bestSubject').textContent = 
+          `${bestSubject.name} (+${bestSubject.avgDiff.toFixed(1)})`;
+        
+        // 更新待提升学科（差值最小的）
+        const weakSubject = subjectScores[subjectScores.length - 1];
+        document.getElementById('weakSubject').textContent = 
+          `${weakSubject.name} (${weakSubject.avgDiff.toFixed(1)})`;
+      }
+      
+      // 生成学科诊断
+      function generateDiagnosis(subjects) {
+        const diagnosisCards = document.getElementById('diagnosisCards');
+        diagnosisCards.innerHTML = '';
+        
+        Object.entries(subjects).forEach(([subject, data]) => {
+          const card = document.createElement('div');
+          card.className = 'diagnosis-card';
+          
+          // 计算诊断点
+          const diagnosisPoints = [];
+          
+          // 成绩水平诊断
+          if (data.score >= 85) {
+            diagnosisPoints.push('成绩优秀，建议保持当前学习方法');
+          } else if (data.score >= 60) {
+            diagnosisPoints.push('成绩及格，仍有提升空间');
+          } else {
+            diagnosisPoints.push('需要加强基础知识的掌握');
+          }
+          
+          // 与平均分比较
+          const diff = data.score - data.average;
+          if (diff > 10) {
+            diagnosisPoints.push('远超班级平均水平，可以帮助其他同学');
+          } else if (diff > 0) {
+            diagnosisPoints.push('略高于班级平均水平，继续保持');
+          } else {
+            diagnosisPoints.push('低于班级平均水平，需要加强');
+          }
+          
+          // 排名分析
+          const rankPercentage = (data.rank / data.total) * 100;
+          if (rankPercentage <= 20) {
+            diagnosisPoints.push('位于班级前20%，成绩优异');
+          } else if (rankPercentage <= 50) {
+            diagnosisPoints.push('位于班级中上水平，仍有进步空间');
+          } else {
+            diagnosisPoints.push('排名靠后，建议寻求老师帮助');
+          }
+          
+          card.innerHTML = `
+            <h4>${subject}</h4>
+            <ul class="diagnosis-points">
+              ${diagnosisPoints.map(point => `<li>${point}</li>`).join('')}
+            </ul>
+          `;
+          
+          diagnosisCards.appendChild(card);
+        });
+      }
+      
+      // 生成成绩分布图
+      function generateDistributionChart(subjects, allData) {
+        const chart = echarts.init(document.getElementById('distributionChart'));
+        
+        // 计算各分数段的人数分布
+        const scoreRanges = ['<60%', '60-70%', '70-80%', '80-90%', '90-100%'];
+        const distributions = {};
+        
+        Object.keys(subjects).forEach(subject => {
+          distributions[subject] = new Array(5).fill(0);
+          const maxScore = subjectMaxScores[subject] || 100;
+          
+          // 获取该科目所有学生的成绩
+          const scores = allData.slice(1).map(row => {
+            const subjectIndex = allData[0].indexOf(subject);
+            return parseFloat(row[subjectIndex]);
+          }).filter(score => !isNaN(score));
+          
+          // 统计分布
+          scores.forEach(score => {
+            const percentage = maxScore > 0 ? score / maxScore : 0;
+            if (percentage < 0.6) distributions[subject][0]++;
+            else if (percentage < 0.7) distributions[subject][1]++;
+            else if (percentage < 0.8) distributions[subject][2]++;
+            else if (percentage < 0.9) distributions[subject][3]++;
+            else distributions[subject][4]++;
+          });
+        });
+        
+        const option = {
+          title: {
+            text: '成绩分布分析',
+            textStyle: {
+              fontSize: 16,
+              fontWeight: 'normal'
+            }
+          },
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+              type: 'shadow'
+            }
+          },
+          legend: {
+            data: Object.keys(subjects),
+            bottom: 0
+          },
+          grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '15%',
+            containLabel: true
+          },
+          xAxis: {
+            type: 'category',
+            data: scoreRanges
+          },
+          yAxis: {
+            type: 'value',
+            name: '人数'
+          },
+          series: Object.entries(distributions).map(([subject, data]) => ({
+            name: subject,
+            type: 'bar',
+            data: data,
+            barMaxWidth: '50%'
+          }))
+        };
+        
+        chart.setOption(option);
+        window.addEventListener('resize', () => chart.resize());
+      }
+      
+      // 生成进步分析图（需要多次考试数据）
+      function generateProgressChart(subjects) {
+        const chart = echarts.init(document.getElementById('progressChart'));
+        
+        // 如果没有多次考试数据，显示提示信息
+        if (examDataList.length < 2) {
+          const option = {
+            title: {
+              text: '成绩进步趋势',
+              textStyle: {
+                fontSize: 16,
+                fontWeight: 'normal'
+              }
+            },
+            graphic: {
+              type: 'text',
+              left: 'center',
+              top: 'center',
+              style: {
+                text: '需要导入至少2次考试数据才能显示进步趋势\n\n建议按时间顺序导入多次考试的Excel文件',
+                fontSize: 14,
+                textAlign: 'center',
+                fill: '#999'
+              }
+            }
+          };
+          chart.setOption(option);
+          return;
+        }
+        
+        // 生成横坐标标签（考试名称 + 日期）
+        const examLabels = examDataList.map(exam => {
+          const date = new Date(exam.date);
+          const month = (date.getMonth() + 1).toString().padStart(2, '0');
+          const day = date.getDate().toString().padStart(2, '0');
+          return `${exam.examName}\n${month}-${day}`;
+        });
+        
+        // 找出所有科目在所有考试中的最高满分
+        const maxVal = Object.values(subjectMaxScores).length > 0 ? Math.max(...Object.values(subjectMaxScores)) : 100;
+        
+        const series = Object.keys(subjects).map(subject => {
+          const scores = examDataList.map(exam => {
+            const subjectIndex = exam.data[0].indexOf(subject);
+            const studentRow = exam.data.find(row => row[0] === selectedStudentData.name);
+            if (studentRow && subjectIndex !== -1) {
+              return parseFloat(studentRow[subjectIndex]) || 0;
+            }
+            return 0;
+          });
+          
+          return {
+            name: subject,
+            type: 'line',
+            data: scores,
+            symbolSize: 8,
+            smooth: true,
+            lineStyle: {
+              width: 3
+            }
+          };
+        });
+        
+        const option = {
+          title: {
+            text: '成绩进步趋势',
+            textStyle: {
+              fontSize: 16,
+              fontWeight: 'normal'
+            }
+          },
+          tooltip: {
+            trigger: 'axis',
+            formatter: function(params) {
+              const examIndex = params[0].dataIndex;
+              const exam = examDataList[examIndex];
+              let result = `<strong>${exam.examName}</strong><br/>`;
+              result += `日期: ${exam.date}<br/>`;
+              params.forEach(param => {
+                result += `${param.seriesName}: ${param.value}分<br/>`;
+              });
+              return result;
+            }
+          },
+          legend: {
+            data: Object.keys(subjects),
+            bottom: 0
+          },
+          grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '20%',
+            top: '15%',
+            containLabel: true
+          },
+          xAxis: {
+            type: 'category',
+            data: examLabels,
+            axisLabel: {
+              interval: 0,
+              textStyle: {
+                fontSize: 11
+              }
+            }
+          },
+          yAxis: {
+            type: 'value',
+            min: 0,
+            max: Math.ceil(maxVal / 10) * 10,
+            splitNumber: 5,
+            axisLine: {
+              show: true
+            },
+            splitLine: {
+              lineStyle: {
+                type: 'dashed'
+              }
+            }
+          },
+          series: series
+        };
+        
+        chart.setOption(option);
+        window.addEventListener('resize', () => chart.resize());
+      }
+      
+      // 填充满分设置
+      function populateMaxScoreSettings(headers) {
+        const container = document.getElementById('maxScoreInputs');
+        container.innerHTML = '';
+        
+        // 初始化 subjectMaxScores 为空对象，确保即使验证失败也有默认值
+        subjectMaxScores = {};
+        
+        // 数据验证：确保headers存在且是数组
+        if (!headers || !Array.isArray(headers) || headers.length < 2) {
+          console.warn('Invalid headers data, using defaults');
+          return;
+        }
+
+        headers.slice(1).forEach(subject => { // Skip '姓名'
+            const inputGroup = document.createElement('div');
+            inputGroup.className = 'class-input-group';
+
+            const label = document.createElement('label');
+            label.htmlFor = `max-score-${subject}`;
+            label.textContent = subject;
+            
+            const input = document.createElement('input');
+            input.type = 'number';
+            input.id = `max-score-${subject}`;
+            input.value = '100';
+            input.min = '0';
+
+            inputGroup.appendChild(label);
+            inputGroup.appendChild(input);
+            container.appendChild(inputGroup);
+
+            // Initialize
+            subjectMaxScores[subject] = 100;
+
+            // Add event listener
+            input.addEventListener('input', () => {
+                subjectMaxScores[subject] = parseFloat(input.value) || 0;
+                updateTotalMaxScore();
+                // Re-render table to update colors if data is present
+                if (excelData) {
+                  renderTable(excelData);
+                }
+            });
+        });
+
+        updateTotalMaxScore();
+      }
+
+      function updateTotalMaxScore() {
+          const totalMaxScoreInput = document.getElementById('totalMaxScore');
+          let totalMax = Object.values(subjectMaxScores).reduce((sum, val) => sum + (parseFloat(val) || 0), 0);
+          totalMaxScoreInput.value = totalMax;
+      }
+    });
+  </script>
+</body>
+</html>
