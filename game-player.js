@@ -5,6 +5,7 @@ const games={
   message:{title:"小学生温暖留言板",src:"assets/games/message-board/index.html"},
   spelling:{title:"拼单词小游戏",src:"assets/games/spelling/index.html"},
   "test-analysis":{title:"学生个人成绩分析",src:"assets/games/test-analysis/index.html"},
+  "mind-game":{title:"心灵飞行棋",src:"assets/games/mind-game/mind-game.html"},
 };
 const params=new URLSearchParams(window.location.search);
 const game=games[params.get("game")]||games.witch;
