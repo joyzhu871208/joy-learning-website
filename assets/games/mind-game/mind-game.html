@@ -1,0 +1,1780 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>心灵飞行棋 - 心理健康教育游戏</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --ink: #1f2937;
+            --muted: #64748b;
+            --paper: rgba(255, 255, 255, 0.92);
+            --line: rgba(15, 23, 42, 0.12);
+            --violet: #6d28d9;
+            --blue: #0284c7;
+            --green: #16a34a;
+            --orange: #f97316;
+            --pink: #db2777;
+            --yellow: #facc15;
+            --shadow: 0 18px 45px rgba(30, 41, 59, 0.18);
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+            color: var(--ink);
+            background:
+                radial-gradient(circle at 10% 15%, rgba(250, 204, 21, 0.35), transparent 28%),
+                radial-gradient(circle at 88% 12%, rgba(14, 165, 233, 0.34), transparent 26%),
+                radial-gradient(circle at 82% 88%, rgba(236, 72, 153, 0.30), transparent 32%),
+                linear-gradient(135deg, #f8fafc 0%, #e0f2fe 44%, #fdf2f8 100%);
+            padding: 22px;
+        }
+
+        button,
+        input,
+        select {
+            font: inherit;
+        }
+
+        button {
+            border: 0;
+        }
+
+        .page {
+            width: min(1280px, 100%);
+            margin: 0 auto;
+        }
+
+        .hero {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 22px;
+            margin-bottom: 18px;
+        }
+
+        .hero-title {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo {
+            width: 64px;
+            height: 64px;
+            display: grid;
+            place-items: center;
+            border-radius: 20px;
+            color: white;
+            font-size: 34px;
+            font-weight: 900;
+            background: conic-gradient(from 20deg, #f97316, #facc15, #22c55e, #06b6d4, #8b5cf6, #ec4899, #f97316);
+            box-shadow: var(--shadow);
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 4.2rem);
+            line-height: 1;
+            color: #312e81;
+            letter-spacing: 0;
+        }
+
+        .subtitle {
+            margin-top: 8px;
+            color: #475569;
+            font-size: 1.05rem;
+            font-weight: 700;
+        }
+
+        .round-card {
+            border: 1px solid rgba(255, 255, 255, 0.68);
+            border-radius: 28px;
+            background: var(--paper);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(18px);
+        }
+
+        .pill-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .status-pill {
+            min-width: 112px;
+            padding: 10px 14px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.82);
+            border: 1px solid var(--line);
+            text-align: center;
+            font-weight: 800;
+            color: #334155;
+        }
+
+        .setup-panel {
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .home-stage {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(260px, 420px);
+            align-items: center;
+            gap: 22px;
+            margin-bottom: 22px;
+            padding: 18px;
+            border-radius: 24px;
+            background:
+                linear-gradient(135deg, rgba(219, 234, 254, 0.88), rgba(254, 249, 195, 0.78)),
+                radial-gradient(circle at 16% 20%, rgba(34, 197, 94, 0.24), transparent 30%);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            overflow: hidden;
+        }
+
+        .home-copy {
+            display: grid;
+            gap: 10px;
+        }
+
+        .home-kicker {
+            width: fit-content;
+            padding: 7px 12px;
+            border-radius: 999px;
+            color: #075985;
+            background: rgba(255, 255, 255, 0.72);
+            font-size: 0.92rem;
+            font-weight: 900;
+        }
+
+        .home-headline {
+            color: #312e81;
+            font-size: clamp(1.45rem, 3vw, 2.3rem);
+            line-height: 1.12;
+            font-weight: 900;
+        }
+
+        .home-text {
+            color: #475569;
+            font-size: 1rem;
+            line-height: 1.65;
+            font-weight: 700;
+        }
+
+        .plane-scene {
+            width: 100%;
+            min-height: 220px;
+            filter: drop-shadow(0 18px 20px rgba(15, 23, 42, 0.18));
+        }
+
+        .plane-float {
+            animation: planeFloat 3.2s ease-in-out infinite alternate;
+            transform-origin: center;
+        }
+
+        @keyframes planeFloat {
+            from { transform: translateY(6px) rotate(-1deg); }
+            to { transform: translateY(-8px) rotate(2deg); }
+        }
+
+        .setup-title {
+            font-size: 1.45rem;
+            color: #312e81;
+            font-weight: 900;
+            margin-bottom: 16px;
+        }
+
+        .setup-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(190px, 1fr));
+            gap: 16px;
+        }
+
+        .option-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .option-label {
+            color: #475569;
+            font-weight: 800;
+        }
+
+        .option-input {
+            width: 100%;
+            min-height: 46px;
+            border-radius: 14px;
+            border: 2px solid rgba(99, 102, 241, 0.16);
+            background: white;
+            padding: 10px 12px;
+            color: var(--ink);
+            outline: none;
+        }
+
+        .option-input:focus {
+            border-color: #7c3aed;
+            box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.12);
+        }
+
+        .import-section {
+            display: none;
+            margin-top: 18px;
+            padding: 16px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, rgba(224, 242, 254, 0.9), rgba(252, 231, 243, 0.88));
+            border: 1px dashed rgba(99, 102, 241, 0.35);
+        }
+
+        .import-section.is-visible {
+            display: block;
+        }
+
+        .import-help {
+            margin-top: 10px;
+            color: #475569;
+            line-height: 1.6;
+            font-size: 0.94rem;
+        }
+
+        .import-status {
+            margin-top: 10px;
+            color: #0f766e;
+            font-weight: 800;
+        }
+
+        .start-btn,
+        .roll-btn,
+        .modal-btn,
+        .rules-btn,
+        .small-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            border-radius: 999px;
+            color: white;
+            font-weight: 900;
+            transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+        }
+
+        .start-btn {
+            min-width: 210px;
+            min-height: 54px;
+            margin-top: 20px;
+            padding: 0 28px;
+            background: linear-gradient(135deg, #16a34a, #06b6d4);
+            box-shadow: 0 14px 28px rgba(22, 163, 74, 0.28);
+            font-size: 1.1rem;
+        }
+
+        .setup-actions {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .setup-actions .start-btn {
+            margin-top: 0;
+        }
+
+        .rules-btn {
+            min-width: 170px;
+            min-height: 54px;
+            padding: 0 24px;
+            color: #312e81;
+            background: white;
+            border: 2px solid rgba(124, 58, 237, 0.22);
+            box-shadow: 0 12px 24px rgba(99, 102, 241, 0.14);
+            font-size: 1.05rem;
+        }
+
+        .start-btn:hover,
+        .roll-btn:hover,
+        .modal-btn:hover,
+        .rules-btn:hover,
+        .small-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .game-layout {
+            display: none;
+            grid-template-columns: minmax(620px, 1fr) 330px;
+            gap: 20px;
+            align-items: start;
+        }
+
+        .game-layout.is-visible {
+            display: grid;
+        }
+
+        .board-panel {
+            padding: 18px;
+        }
+
+        .board-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .turn-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            min-height: 42px;
+            padding: 8px 14px;
+            border-radius: 999px;
+            color: white;
+            font-weight: 900;
+            background: linear-gradient(135deg, #7c3aed, #db2777);
+        }
+
+        .route-note {
+            color: var(--muted);
+            font-weight: 800;
+            text-align: right;
+        }
+
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(11, 1fr);
+            grid-template-rows: repeat(11, 1fr);
+            gap: 6px;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            max-height: calc(100vh - 190px);
+            min-height: 600px;
+            padding: 12px;
+            border-radius: 24px;
+            position: relative;
+            background:
+                linear-gradient(90deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.2)),
+                repeating-linear-gradient(45deg, rgba(125, 211, 252, 0.22) 0 14px, rgba(254, 240, 138, 0.20) 14px 28px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .cell {
+            position: relative;
+            min-width: 0;
+            min-height: 0;
+            display: grid;
+            place-items: center;
+            border-radius: 14px;
+            color: #334155;
+            font-size: clamp(0.68rem, 1.1vw, 0.9rem);
+            font-weight: 900;
+            text-align: center;
+            border: 1px solid transparent;
+            overflow: hidden;
+        }
+
+        .cell.empty {
+            background: rgba(255, 255, 255, 0.24);
+        }
+
+        .cell.path {
+            background: rgba(255, 255, 255, 0.86);
+            border-color: rgba(148, 163, 184, 0.34);
+            box-shadow: inset 0 -4px 0 rgba(15, 23, 42, 0.05);
+        }
+
+        .cell.start {
+            background: linear-gradient(135deg, #22c55e, #14b8a6);
+            color: white;
+        }
+
+        .cell.finish {
+            background: linear-gradient(135deg, #facc15, #f97316);
+            color: #431407;
+        }
+
+        .cell.heart {
+            background: linear-gradient(135deg, #dbeafe, #fce7f3);
+            color: #1e40af;
+            border-color: rgba(59, 130, 246, 0.34);
+        }
+
+        .cell.event {
+            background: linear-gradient(135deg, #ffedd5, #fef3c7);
+            color: #9a3412;
+            border-color: rgba(249, 115, 22, 0.35);
+        }
+
+        .cell.energy {
+            background: linear-gradient(135deg, #dcfce7, #a7f3d0);
+            color: #166534;
+            border-color: rgba(34, 197, 94, 0.40);
+        }
+
+        .cell.trail {
+            background: rgba(255, 255, 255, 0.52);
+            border: 1px dashed rgba(148, 163, 184, 0.28);
+            color: rgba(71, 85, 105, 0.56);
+        }
+
+        .mission-control {
+            position: absolute;
+            inset: 24% 20%;
+            display: grid;
+            grid-template-columns: minmax(190px, 1fr) minmax(170px, 0.85fr);
+            align-items: center;
+            gap: 18px;
+            padding: 24px;
+            border-radius: 30px;
+            background:
+                linear-gradient(135deg, rgba(255, 255, 255, 0.90), rgba(224, 242, 254, 0.78)),
+                radial-gradient(circle at 86% 20%, rgba(250, 204, 21, 0.28), transparent 34%);
+            border: 2px solid rgba(255, 255, 255, 0.86);
+            box-shadow: 0 18px 45px rgba(15, 23, 42, 0.12);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .mission-copy {
+            display: grid;
+            gap: 10px;
+        }
+
+        .mission-kicker {
+            width: fit-content;
+            padding: 7px 11px;
+            border-radius: 999px;
+            color: #075985;
+            background: rgba(186, 230, 253, 0.72);
+            font-size: 0.82rem;
+            font-weight: 900;
+        }
+
+        .mission-title {
+            color: #312e81;
+            font-size: clamp(1.1rem, 2vw, 1.55rem);
+            line-height: 1.16;
+            font-weight: 900;
+        }
+
+        .mission-text {
+            color: #475569;
+            font-size: 0.92rem;
+            line-height: 1.55;
+            font-weight: 700;
+        }
+
+        .mission-badges {
+            display: grid;
+            gap: 8px;
+        }
+
+        .mission-badge {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 16px;
+            color: #334155;
+            background: rgba(255, 255, 255, 0.78);
+            border: 1px solid rgba(148, 163, 184, 0.22);
+            font-weight: 900;
+        }
+
+        .mission-badge strong {
+            color: #16a34a;
+        }
+
+        .mini-plane {
+            position: absolute;
+            right: 18px;
+            top: 14px;
+            color: rgba(14, 165, 233, 0.26);
+            font-size: 4rem;
+            line-height: 1;
+            transform: rotate(-12deg);
+        }
+
+        .cell.current {
+            box-shadow: 0 0 0 4px rgba(236, 72, 153, 0.42), inset 0 -4px 0 rgba(15, 23, 42, 0.05);
+            z-index: 3;
+        }
+
+        .cell-label {
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .cell-number {
+            position: absolute;
+            top: 5px;
+            left: 6px;
+            color: rgba(15, 23, 42, 0.38);
+            font-size: 0.68rem;
+            font-weight: 900;
+        }
+
+        .players-on-cell {
+            position: absolute;
+            right: 5px;
+            bottom: 5px;
+            display: grid;
+            grid-template-columns: repeat(2, 18px);
+            grid-auto-rows: 18px;
+            gap: 3px;
+            z-index: 2;
+        }
+
+        .player-token {
+            display: grid;
+            place-items: center;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            color: white;
+            border: 2px solid white;
+            box-shadow: 0 3px 8px rgba(15, 23, 42, 0.25);
+            font-size: 0.62rem;
+            font-weight: 900;
+        }
+
+        .player-1 { background: #ef4444; }
+        .player-2 { background: #0284c7; }
+        .player-3 { background: #16a34a; }
+        .player-4 { background: #f97316; }
+
+        .side-panel {
+            display: grid;
+            gap: 16px;
+        }
+
+        .dice-card,
+        .players-card,
+        .log-card {
+            padding: 18px;
+        }
+
+        .dice-stage {
+            display: grid;
+            place-items: center;
+            gap: 14px;
+        }
+
+        .dice {
+            width: 104px;
+            height: 104px;
+            display: grid;
+            place-items: center;
+            border-radius: 28px;
+            color: #312e81;
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, white, #e0f2fe);
+            border: 3px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 18px 30px rgba(15, 23, 42, 0.18);
+        }
+
+        .dice.rolling {
+            animation: pop 0.15s ease infinite alternate;
+        }
+
+        @keyframes pop {
+            from { transform: rotate(-6deg) scale(0.96); }
+            to { transform: rotate(6deg) scale(1.04); }
+        }
+
+        .roll-btn {
+            width: 100%;
+            min-height: 54px;
+            padding: 0 18px;
+            background: linear-gradient(135deg, #7c3aed, #ec4899);
+            box-shadow: 0 14px 28px rgba(124, 58, 237, 0.25);
+            font-size: 1.1rem;
+        }
+
+        .roll-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.55;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .effect-strip {
+            display: grid;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .effect-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            padding: 9px 10px;
+            border-radius: 14px;
+            background: rgba(248, 250, 252, 0.88);
+            color: #475569;
+            font-size: 0.9rem;
+            font-weight: 800;
+        }
+
+        .section-title {
+            color: #312e81;
+            font-size: 1.05rem;
+            font-weight: 900;
+            margin-bottom: 12px;
+        }
+
+        .players-info {
+            display: grid;
+            gap: 10px;
+        }
+
+        .player-info {
+            display: grid;
+            grid-template-columns: 26px 1fr auto;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            border-radius: 18px;
+            background: rgba(248, 250, 252, 0.9);
+            border: 2px solid transparent;
+        }
+
+        .player-info.current-turn {
+            background: #eef2ff;
+            border-color: rgba(124, 58, 237, 0.38);
+        }
+
+        .player-info.skipping {
+            opacity: 0.64;
+        }
+
+        .player-color {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 3px 8px rgba(15, 23, 42, 0.18);
+        }
+
+        .player-name {
+            min-width: 0;
+            font-weight: 900;
+            overflow-wrap: anywhere;
+        }
+
+        .player-meta {
+            color: var(--muted);
+            font-size: 0.8rem;
+            font-weight: 800;
+        }
+
+        .player-score {
+            padding: 6px 9px;
+            border-radius: 999px;
+            background: white;
+            color: #6d28d9;
+            font-weight: 900;
+            white-space: nowrap;
+        }
+
+        .log-list {
+            display: grid;
+            gap: 8px;
+            max-height: 174px;
+            overflow: auto;
+            padding-right: 4px;
+        }
+
+        .log-item {
+            padding: 9px 10px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.76);
+            border: 1px solid rgba(148, 163, 184, 0.20);
+            color: #475569;
+            font-size: 0.88rem;
+            line-height: 1.45;
+        }
+
+        .small-btn {
+            min-height: 40px;
+            padding: 0 16px;
+            background: linear-gradient(135deg, #0f766e, #0284c7);
+        }
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 22px;
+            background: rgba(15, 23, 42, 0.48);
+            z-index: 50;
+        }
+
+        .modal.is-visible {
+            display: flex;
+        }
+
+        .modal-content {
+            width: min(560px, 100%);
+            padding: 28px;
+            border-radius: 30px;
+            background: white;
+            box-shadow: 0 28px 70px rgba(15, 23, 42, 0.34);
+            text-align: center;
+        }
+
+        .modal-icon {
+            width: 72px;
+            height: 72px;
+            display: grid;
+            place-items: center;
+            margin: 0 auto 14px;
+            border-radius: 24px;
+            color: white;
+            font-size: 2.2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #7c3aed, #ec4899);
+        }
+
+        .modal-title {
+            color: #312e81;
+            font-size: 1.55rem;
+            font-weight: 900;
+            margin-bottom: 12px;
+        }
+
+        .modal-text {
+            color: #334155;
+            font-size: 1.15rem;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .rules-list {
+            display: grid;
+            gap: 12px;
+            margin: 18px 0 22px;
+            text-align: left;
+        }
+
+        .rules-list li {
+            list-style: none;
+            display: grid;
+            grid-template-columns: 34px 1fr;
+            align-items: start;
+            gap: 10px;
+            color: #334155;
+            line-height: 1.55;
+            font-weight: 700;
+        }
+
+        .rule-num {
+            display: grid;
+            place-items: center;
+            width: 34px;
+            height: 34px;
+            border-radius: 12px;
+            color: white;
+            background: linear-gradient(135deg, #7c3aed, #06b6d4);
+            font-weight: 900;
+        }
+
+        .modal-actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .modal-btn {
+            min-width: 132px;
+            min-height: 48px;
+            padding: 0 20px;
+            background: linear-gradient(135deg, #7c3aed, #2563eb);
+        }
+
+        .modal-btn.secondary {
+            background: linear-gradient(135deg, #64748b, #334155);
+        }
+
+        .modal-btn.success {
+            background: linear-gradient(135deg, #16a34a, #0f766e);
+        }
+
+        .modal-btn.warning {
+            background: linear-gradient(135deg, #f97316, #db2777);
+        }
+
+        @media (max-width: 1050px) {
+            .hero {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .pill-row {
+                justify-content: flex-start;
+            }
+
+            .game-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .game-board {
+                min-height: auto;
+                max-height: none;
+            }
+
+            .home-stage {
+                grid-template-columns: 1fr;
+            }
+
+            .mission-control {
+                inset: 28% 16%;
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 720px) {
+            body {
+                padding: 14px;
+            }
+
+            .setup-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .board-topbar {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .route-note {
+                text-align: left;
+            }
+
+            .game-board {
+                gap: 4px;
+                padding: 7px;
+            }
+
+            .cell {
+                border-radius: 8px;
+                font-size: 0.56rem;
+            }
+
+            .cell-number {
+                display: none;
+            }
+
+            .players-on-cell {
+                right: 2px;
+                bottom: 2px;
+                grid-template-columns: repeat(2, 13px);
+                grid-auto-rows: 13px;
+                gap: 1px;
+            }
+
+            .player-token {
+                width: 13px;
+                height: 13px;
+                border-width: 1px;
+                font-size: 0.48rem;
+            }
+
+            .mission-control {
+                inset: 30% 14%;
+                padding: 14px;
+                border-radius: 20px;
+            }
+
+            .mission-text,
+            .mission-badges {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="page">
+        <header class="hero">
+            <div class="hero-title">
+                <div class="logo">心</div>
+                <div>
+                    <h1>心灵飞行棋</h1>
+                    <div class="subtitle">心理健康课堂互动游戏</div>
+                </div>
+            </div>
+            <div class="pill-row" aria-live="polite">
+                <div class="status-pill" id="roundInfo">准备开始</div>
+                <div class="status-pill" id="goalInfo">目标 10 分</div>
+                <div class="status-pill" id="cardInfo">默认题库</div>
+            </div>
+        </header>
+
+        <section class="setup-panel round-card" id="setupPanel">
+            <div class="home-stage">
+                <div class="home-copy">
+                    <div class="home-kicker">起飞前检查</div>
+                    <div class="home-headline">投骰起飞，沿着心灵航线完成挑战</div>
+                    <div class="home-text">心灵格会抽到课堂互动题，事件格会带来惊喜变化。队伍轮流飞行，先达到 10 分就能抵达胜利终点。</div>
+                </div>
+                <svg class="plane-scene" viewBox="0 0 520 300" role="img" aria-label="彩色飞机飞过棋盘航线">
+                    <defs>
+                        <linearGradient id="skyGradient" x1="0" x2="1" y1="0" y2="1">
+                            <stop offset="0%" stop-color="#bae6fd"/>
+                            <stop offset="55%" stop-color="#fef3c7"/>
+                            <stop offset="100%" stop-color="#fbcfe8"/>
+                        </linearGradient>
+                        <linearGradient id="planeGradient" x1="0" x2="1">
+                            <stop offset="0%" stop-color="#7c3aed"/>
+                            <stop offset="100%" stop-color="#0ea5e9"/>
+                        </linearGradient>
+                    </defs>
+                    <rect x="10" y="16" width="500" height="260" rx="36" fill="url(#skyGradient)"/>
+                    <path d="M55 214 C140 132, 220 246, 312 156 S455 78, 478 154" fill="none" stroke="#ffffff" stroke-width="12" stroke-linecap="round" stroke-dasharray="18 18"/>
+                    <g opacity="0.95">
+                        <rect x="78" y="194" width="38" height="38" rx="12" fill="#22c55e"/>
+                        <rect x="136" y="166" width="38" height="38" rx="12" fill="#ffffff"/>
+                        <rect x="194" y="192" width="38" height="38" rx="12" fill="#bfdbfe"/>
+                        <rect x="278" y="142" width="38" height="38" rx="12" fill="#fed7aa"/>
+                        <rect x="350" y="102" width="38" height="38" rx="12" fill="#fbcfe8"/>
+                        <rect x="420" y="128" width="38" height="38" rx="12" fill="#facc15"/>
+                    </g>
+                    <g class="plane-float">
+                        <path d="M120 82 L462 44 C483 42 492 67 474 78 L350 150 L382 233 C386 244 373 253 364 245 L284 181 L188 235 C177 241 165 230 171 219 L225 124 L117 104 C104 102 105 84 120 82Z" fill="url(#planeGradient)"/>
+                        <path d="M225 124 L462 44 L284 181 Z" fill="#e0f2fe" opacity="0.78"/>
+                        <path d="M350 150 L474 78 L382 233 Z" fill="#38bdf8" opacity="0.75"/>
+                        <circle cx="303" cy="108" r="12" fill="#ffffff" opacity="0.9"/>
+                        <circle cx="344" cy="96" r="10" fill="#ffffff" opacity="0.86"/>
+                    </g>
+                    <g fill="#ffffff" opacity="0.86">
+                        <circle cx="82" cy="72" r="18"/>
+                        <circle cx="104" cy="66" r="24"/>
+                        <circle cx="130" cy="76" r="16"/>
+                        <rect x="80" y="72" width="66" height="18" rx="9"/>
+                        <circle cx="382" cy="222" r="16"/>
+                        <circle cx="404" cy="214" r="22"/>
+                        <circle cx="430" cy="224" r="15"/>
+                        <rect x="382" y="222" width="64" height="16" rx="8"/>
+                    </g>
+                </svg>
+            </div>
+            <div class="setup-title">设置本局游戏</div>
+            <div class="setup-grid">
+                <div class="option-group">
+                    <label class="option-label" for="playerCount">玩家人数</label>
+                    <select class="option-input" id="playerCount">
+                        <option value="2">2 人</option>
+                        <option value="3">3 人</option>
+                        <option value="4" selected>4 人</option>
+                    </select>
+                </div>
+                <div class="option-group">
+                    <label class="option-label" for="playerNames">玩家名称</label>
+                    <input type="text" class="option-input" id="playerNames" value="红队,蓝队,绿队,黄队" placeholder="用逗号分隔，例如：红队,蓝队">
+                </div>
+                <div class="option-group">
+                    <label class="option-label" for="gameMode">游戏内容</label>
+                    <select class="option-input" id="gameMode">
+                        <option value="default" selected>默认心理课题库</option>
+                        <option value="custom">导入自定义题库</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="import-section" id="importSection">
+                <div class="option-group">
+                    <label class="option-label" for="importFile">导入 TXT 文件</label>
+                    <input type="file" class="option-input" id="importFile" accept=".txt">
+                </div>
+                <div class="import-help">
+                    每行一个内容，格式为：heart|心灵问答 或 event|随机事件。事件会按导入文本展示，效果从内置事件效果中轮流匹配。
+                </div>
+                <div class="import-status" id="importStatus">尚未导入文件</div>
+            </div>
+
+            <div class="setup-actions">
+                <button class="start-btn" id="startBtn">开始飞行</button>
+                <button class="rules-btn" id="rulesBtn" type="button">游戏规则</button>
+            </div>
+        </section>
+
+        <section class="game-layout" id="gameContainer">
+            <div class="board-panel round-card">
+                <div class="board-topbar">
+                    <div class="turn-badge" id="turnBadge">轮到红队</div>
+                    <div class="route-note">固定 40 格环形路线，绿色能量格可补给再飞</div>
+                </div>
+                <div class="game-board" id="gameBoard" aria-label="心灵飞行棋棋盘"></div>
+            </div>
+
+            <aside class="side-panel">
+                <div class="dice-card round-card">
+                    <div class="dice-stage">
+                        <div class="dice" id="dice">?</div>
+                        <button class="roll-btn" id="rollBtn">掷骰子</button>
+                    </div>
+                    <div class="effect-strip" id="effectStrip"></div>
+                </div>
+
+                <div class="players-card round-card">
+                    <div class="section-title">玩家状态</div>
+                    <div class="players-info" id="playersInfo"></div>
+                </div>
+
+                <div class="log-card round-card">
+                    <div class="section-title">课堂动态</div>
+                    <div class="log-list" id="logList"></div>
+                    <button class="rules-btn" id="rulesBtnInGame" type="button">游戏规则</button>
+                    <button class="small-btn" id="backToSetupBtn" type="button">重新设置</button>
+                </div>
+            </aside>
+        </section>
+    </main>
+
+    <div class="modal" id="rulesModal" role="dialog" aria-modal="true">
+        <div class="modal-content">
+            <div class="modal-icon">飞</div>
+            <div class="modal-title">游戏规则</div>
+            <ul class="rules-list">
+                <li><span class="rule-num">1</span><span>每队轮流掷骰子，沿 40 格航线前进。到达终点可额外获得 2 分。</span></li>
+                <li><span class="rule-num">2</span><span>落到“心灵”格，需要完成心理课堂互动题。完成后加 1 分；若有“答题双倍”效果则加 2 分。</span></li>
+                <li><span class="rule-num">3</span><span>落到“能量”格，领取能量补给：获得 1 分，并获得一次额外掷骰机会。</span></li>
+                <li><span class="rule-num">4</span><span>落到“事件”格，抽取随机事件，可能前进、后退、休息一回合、获得额外掷骰或交换位置。</span></li>
+                <li><span class="rule-num">5</span><span>先达到 10 分的队伍获胜。老师可以根据课堂表现决定“回答完成”或“暂不加分”。</span></li>
+            </ul>
+            <div class="modal-actions">
+                <button class="modal-btn" id="closeRulesBtn">知道了</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="questionModal" role="dialog" aria-modal="true">
+        <div class="modal-content">
+            <div class="modal-icon">问</div>
+            <div class="modal-title">心灵问答</div>
+            <div class="modal-text" id="questionText"></div>
+            <div class="modal-actions">
+                <button class="modal-btn success" id="correctBtn">回答完成</button>
+                <button class="modal-btn secondary" id="skipQuestionBtn">暂不加分</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="eventModal" role="dialog" aria-modal="true">
+        <div class="modal-content">
+            <div class="modal-icon">卡</div>
+            <div class="modal-title">随机事件</div>
+            <div class="modal-text" id="eventText"></div>
+            <div class="modal-actions">
+                <button class="modal-btn" id="eventBtn">继续</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="energyModal" role="dialog" aria-modal="true">
+        <div class="modal-content">
+            <div class="modal-icon">能</div>
+            <div class="modal-title">能量补给</div>
+            <div class="modal-text" id="energyText">抵达能量站，获得 1 分和一次额外掷骰机会。</div>
+            <div class="modal-actions">
+                <button class="modal-btn success" id="energyBtn">领取能量</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="winnerModal" role="dialog" aria-modal="true">
+        <div class="modal-content">
+            <div class="modal-icon">胜</div>
+            <div class="modal-title">游戏结束</div>
+            <div class="modal-text" id="winnerText"></div>
+            <div class="modal-actions">
+                <button class="modal-btn warning" id="restartBtn">再玩一局</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const WIN_SCORE = 10;
+        const ROUTE = [
+            [0, 5], [0, 6], [0, 7], [0, 8], [0, 9], [0, 10],
+            [1, 10], [2, 10], [3, 10], [4, 10], [5, 10], [6, 10],
+            [7, 10], [8, 10], [9, 10], [10, 10], [10, 9], [10, 8],
+            [10, 7], [10, 6], [10, 5], [10, 4], [10, 3], [10, 2],
+            [10, 1], [10, 0], [9, 0], [8, 0], [7, 0], [6, 0],
+            [5, 0], [4, 0], [3, 0], [2, 0], [1, 0], [0, 0],
+            [0, 1], [0, 2], [0, 3], [0, 4]
+        ];
+
+        const SPECIAL_CELLS = {
+            3: "heart",
+            5: "energy",
+            6: "event",
+            9: "heart",
+            12: "event",
+            15: "heart",
+            18: "event",
+            20: "energy",
+            22: "heart",
+            25: "event",
+            27: "energy",
+            28: "heart",
+            31: "event",
+            34: "heart",
+            37: "event",
+            38: "energy"
+        };
+
+        const defaultQuestions = [
+            "说出三种缓解压力的方法。",
+            "分享一件让你最近开心的小事。",
+            "当你感到焦虑时，可以怎样帮助自己冷静下来？",
+            "对右边的同学说一句真诚的赞美。",
+            "带大家做一次缓慢的深呼吸。",
+            "用表情表演“惊喜”的情绪。",
+            "说出除了开心之外的两种积极情绪。",
+            "朋友难过时，你会怎样安慰对方？",
+            "分享一个你欣赏自己的优点。",
+            "用三种语气说“你好”。",
+            "与任一同学击掌并说“加油”。",
+            "给大家分享一个让你放松的小方法。",
+            "组织大家一起做一个简单伸展动作。",
+            "对全班说一句鼓励的话。",
+            "分享最近学到的一个新东西。",
+            "说出一个你想慢慢改进的小习惯。",
+            "描述你理想中的放松方式。",
+            "分享一个本周可以完成的小目标。",
+            "对自己说一句温柔的话。",
+            "说出一种你遇到压力时可以求助的人。"
+        ];
+
+        const defaultEvents = [
+            { text: "心情晴朗，前进 2 格。", action: "move", value: 2 },
+            { text: "需要冷静一下，休息一回合。", action: "skip" },
+            { text: "帮助了朋友，获得额外掷骰机会。", action: "extraRoll" },
+            { text: "遇到小烦恼，后退 1 格。", action: "move", value: -1 },
+            { text: "勇敢分享感受，全体玩家各加 1 分。", action: "allScore", value: 1 },
+            { text: "情绪有点波动，下次掷骰点数减 1。", action: "diceMinus", value: 1 },
+            { text: "完成了挑战，跳到下一个心灵格。", action: "nextHeart" },
+            { text: "需要换个角度，和随机一名玩家交换位置。", action: "swap" },
+            { text: "积极思考，下次答题得 2 分。", action: "doubleAnswer" },
+            { text: "压力较大，回到起点重新出发。", action: "goStart" }
+        ];
+
+        const gameData = {
+            players: [],
+            currentPlayerIndex: 0,
+            round: 1,
+            gameStarted: false,
+            board: [],
+            questions: [...defaultQuestions],
+            events: defaultEvents.map(event => ({ ...event })),
+            pendingEvent: null,
+            imported: { questions: [], events: [] },
+            eventCursor: 0
+        };
+
+        const setupPanel = document.getElementById("setupPanel");
+        const gameContainer = document.getElementById("gameContainer");
+        const playerCountSelect = document.getElementById("playerCount");
+        const playerNamesInput = document.getElementById("playerNames");
+        const gameModeSelect = document.getElementById("gameMode");
+        const importSection = document.getElementById("importSection");
+        const importFileInput = document.getElementById("importFile");
+        const importStatus = document.getElementById("importStatus");
+        const startBtn = document.getElementById("startBtn");
+        const gameBoard = document.getElementById("gameBoard");
+        const dice = document.getElementById("dice");
+        const rollBtn = document.getElementById("rollBtn");
+        const playersInfo = document.getElementById("playersInfo");
+        const effectStrip = document.getElementById("effectStrip");
+        const logList = document.getElementById("logList");
+        const turnBadge = document.getElementById("turnBadge");
+        const roundInfo = document.getElementById("roundInfo");
+        const goalInfo = document.getElementById("goalInfo");
+        const cardInfo = document.getElementById("cardInfo");
+        const questionModal = document.getElementById("questionModal");
+        const questionText = document.getElementById("questionText");
+        const correctBtn = document.getElementById("correctBtn");
+        const skipQuestionBtn = document.getElementById("skipQuestionBtn");
+        const eventModal = document.getElementById("eventModal");
+        const eventText = document.getElementById("eventText");
+        const eventBtn = document.getElementById("eventBtn");
+        const energyModal = document.getElementById("energyModal");
+        const energyText = document.getElementById("energyText");
+        const energyBtn = document.getElementById("energyBtn");
+        const winnerModal = document.getElementById("winnerModal");
+        const winnerText = document.getElementById("winnerText");
+        const restartBtn = document.getElementById("restartBtn");
+        const backToSetupBtn = document.getElementById("backToSetupBtn");
+        const rulesModal = document.getElementById("rulesModal");
+        const rulesBtn = document.getElementById("rulesBtn");
+        const rulesBtnInGame = document.getElementById("rulesBtnInGame");
+        const closeRulesBtn = document.getElementById("closeRulesBtn");
+
+        gameModeSelect.addEventListener("change", () => {
+            importSection.classList.toggle("is-visible", gameModeSelect.value === "custom");
+            updateCardInfo();
+        });
+        importFileInput.addEventListener("change", importCustomContent);
+        startBtn.addEventListener("click", startGame);
+        rollBtn.addEventListener("click", rollDice);
+        correctBtn.addEventListener("click", () => closeQuestionModal(true));
+        skipQuestionBtn.addEventListener("click", () => closeQuestionModal(false));
+        eventBtn.addEventListener("click", closeEventModal);
+        energyBtn.addEventListener("click", closeEnergyModal);
+        restartBtn.addEventListener("click", restartGame);
+        backToSetupBtn.addEventListener("click", restartGame);
+        rulesBtn.addEventListener("click", openRulesModal);
+        rulesBtnInGame.addEventListener("click", openRulesModal);
+        closeRulesBtn.addEventListener("click", closeRulesModal);
+        rulesModal.addEventListener("click", event => {
+            if (event.target === rulesModal) closeRulesModal();
+        });
+
+        function buildBoardData() {
+            const byPosition = new Map();
+            ROUTE.forEach(([row, col], index) => {
+                const type = index === 0 ? "start" : index === ROUTE.length - 1 ? "finish" : SPECIAL_CELLS[index] || "normal";
+                const label = getCellLabel(type, index);
+                const cellData = { row, col, routeIndex: index, type, label };
+                gameData.board[index] = cellData;
+                byPosition.set(`${row}-${col}`, cellData);
+            });
+            return byPosition;
+        }
+
+        function initializeBoard() {
+            gameBoard.innerHTML = "";
+            gameData.board = [];
+            const routeCells = buildBoardData();
+
+            for (let row = 0; row < 11; row++) {
+                for (let col = 0; col < 11; col++) {
+                    const cell = document.createElement("div");
+                    const routeCell = routeCells.get(`${row}-${col}`);
+                    cell.dataset.row = row;
+                    cell.dataset.col = col;
+
+                    if (routeCell) {
+                        cell.className = `cell path ${routeCell.type}`;
+                        cell.dataset.routeIndex = routeCell.routeIndex;
+                        cell.innerHTML = `
+                            <span class="cell-number">${routeCell.routeIndex + 1}</span>
+                            <span class="cell-label">${routeCell.label}</span>
+                            <div class="players-on-cell" data-token-box="${routeCell.routeIndex}"></div>
+                        `;
+                    } else {
+                        cell.className = "cell empty";
+                    }
+
+                    gameBoard.appendChild(cell);
+                }
+            }
+
+            gameBoard.insertAdjacentHTML("beforeend", `
+                <div class="mission-control" aria-hidden="true">
+                    <div class="mini-plane">✈</div>
+                    <div class="mission-copy">
+                        <div class="mission-kicker">飞行任务区</div>
+                        <div class="mission-title">能量站不是摆设，落到绿色“能量”格就能补给</div>
+                        <div class="mission-text">领取能量后，本队立即加 1 分，并得到一次额外掷骰机会。适合让课堂节奏更有惊喜。</div>
+                    </div>
+                    <div class="mission-badges">
+                        <div class="mission-badge"><span>心灵格</span><strong>答题加分</strong></div>
+                        <div class="mission-badge"><span>事件格</span><strong>抽卡变化</strong></div>
+                        <div class="mission-badge"><span>能量格</span><strong>+1 分 再飞</strong></div>
+                    </div>
+                </div>
+            `);
+
+            renderGame();
+        }
+
+        function openRulesModal() {
+            rulesModal.classList.add("is-visible");
+        }
+
+        function closeRulesModal() {
+            rulesModal.classList.remove("is-visible");
+        }
+
+        function getCellLabel(type, index) {
+            if (type === "start") return "起飞";
+            if (type === "finish") return "终点";
+            if (type === "heart") return "心灵";
+            if (type === "event") return "事件";
+            if (type === "energy") return "能量";
+            return index % 2 === 0 ? "前进" : "同行";
+        }
+
+        function importCustomContent() {
+            const file = importFileInput.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = () => {
+                const lines = String(reader.result)
+                    .split(/\r?\n/)
+                    .map(line => line.trim())
+                    .filter(Boolean);
+
+                const importedQuestions = [];
+                const importedEvents = [];
+
+                lines.forEach(line => {
+                    const divider = line.indexOf("|");
+                    if (divider === -1) return;
+                    const type = line.slice(0, divider).trim().toLowerCase();
+                    const content = line.slice(divider + 1).trim();
+                    if (!content) return;
+                    if (type === "heart") importedQuestions.push(content);
+                    if (type === "event") importedEvents.push(content);
+                });
+
+                gameData.imported.questions = importedQuestions;
+                gameData.imported.events = importedEvents;
+                importStatus.textContent = `已导入 ${importedQuestions.length} 个心灵问答，${importedEvents.length} 个随机事件`;
+                updateCardInfo();
+            };
+            reader.readAsText(file, "UTF-8");
+        }
+
+        function startGame() {
+            const playerCount = Number(playerCountSelect.value);
+            const names = playerNamesInput.value
+                .split(/[,，]/)
+                .map(name => name.trim())
+                .filter(Boolean);
+
+            const customQuestions = gameData.imported.questions;
+            const customEventTexts = gameData.imported.events;
+            const useCustom = gameModeSelect.value === "custom" && (customQuestions.length || customEventTexts.length);
+
+            gameData.questions = useCustom && customQuestions.length ? [...customQuestions] : [...defaultQuestions];
+            gameData.events = useCustom && customEventTexts.length ? buildImportedEvents(customEventTexts) : defaultEvents.map(event => ({ ...event }));
+            gameData.players = Array.from({ length: playerCount }, (_, index) => ({
+                name: names[index] || `玩家${index + 1}`,
+                position: 0,
+                score: 0,
+                skipTurns: 0,
+                extraRolls: 0,
+                dicePenalty: 0,
+                doubleAnswer: false
+            }));
+            gameData.currentPlayerIndex = 0;
+            gameData.round = 1;
+            gameData.gameStarted = true;
+            gameData.pendingEvent = null;
+            gameData.eventCursor = 0;
+
+            setupPanel.style.display = "none";
+            gameContainer.classList.add("is-visible");
+            winnerModal.classList.remove("is-visible");
+            questionModal.classList.remove("is-visible");
+            eventModal.classList.remove("is-visible");
+            energyModal.classList.remove("is-visible");
+            dice.textContent = "?";
+            logList.innerHTML = "";
+            addLog("游戏开始，先达到 10 分的队伍获胜。");
+            initializeBoard();
+            enableRollButtonForCurrentPlayer();
+            updateCardInfo();
+        }
+
+        function buildImportedEvents(texts) {
+            return texts.map((text, index) => ({
+                ...defaultEvents[index % defaultEvents.length],
+                text
+            }));
+        }
+
+        function rollDice() {
+            if (!gameData.gameStarted) return;
+
+            const player = getCurrentPlayer();
+            rollBtn.disabled = true;
+            dice.classList.add("rolling");
+            let rolls = 0;
+
+            const interval = setInterval(() => {
+                dice.textContent = randomDice();
+                rolls++;
+                if (rolls >= 12) {
+                    clearInterval(interval);
+                    dice.classList.remove("rolling");
+                    const raw = randomDice();
+                    const penalty = player.dicePenalty;
+                    const finalValue = Math.max(1, raw - penalty);
+                    player.dicePenalty = 0;
+                    dice.textContent = finalValue;
+
+                    const penaltyText = penalty ? `，受情绪波动影响从 ${raw} 调整为 ${finalValue}` : "";
+                    addLog(`${player.name} 掷出 ${finalValue}${penaltyText}。`);
+                    movePlayer(player, finalValue, true);
+                }
+            }, 90);
+        }
+
+        function movePlayer(player, steps, shouldResolveCell) {
+            const maxIndex = gameData.board.length - 1;
+            const nextPosition = Math.max(0, Math.min(maxIndex, player.position + steps));
+            player.position = nextPosition;
+            renderGame();
+
+            if (!shouldResolveCell) return;
+
+            const cell = gameData.board[player.position];
+            if (cell.type === "heart") {
+                showQuestionModal();
+            } else if (cell.type === "event") {
+                showEventModal();
+            } else if (cell.type === "energy") {
+                showEnergyModal();
+            } else if (cell.type === "finish") {
+                player.score += 2;
+                addLog(`${player.name} 到达终点，获得 2 分。`);
+                finishTurn();
+            } else {
+                finishTurn();
+            }
+        }
+
+        function showQuestionModal() {
+            const question = pick(gameData.questions);
+            questionText.textContent = question;
+            questionModal.classList.add("is-visible");
+        }
+
+        function closeQuestionModal(scored) {
+            const player = getCurrentPlayer();
+            questionModal.classList.remove("is-visible");
+
+            if (scored) {
+                const points = player.doubleAnswer ? 2 : 1;
+                player.score += points;
+                player.doubleAnswer = false;
+                addLog(`${player.name} 完成心灵问答，获得 ${points} 分。`);
+            } else {
+                addLog(`${player.name} 暂不加分，继续下一位。`);
+            }
+
+            finishTurn();
+        }
+
+        function showEventModal() {
+            const event = pick(gameData.events);
+            gameData.pendingEvent = event;
+            eventText.textContent = event.text;
+            eventModal.classList.add("is-visible");
+        }
+
+        function closeEventModal() {
+            eventModal.classList.remove("is-visible");
+            const event = gameData.pendingEvent;
+            gameData.pendingEvent = null;
+            applyEvent(event);
+        }
+
+        function showEnergyModal() {
+            const player = getCurrentPlayer();
+            energyText.textContent = `${player.name} 抵达能量站，获得 1 分和一次额外掷骰机会。`;
+            energyModal.classList.add("is-visible");
+        }
+
+        function closeEnergyModal() {
+            const player = getCurrentPlayer();
+            energyModal.classList.remove("is-visible");
+            player.score += 1;
+            player.extraRolls += 1;
+            addLog(`${player.name} 领取能量补给：+1 分，并获得一次额外掷骰。`);
+            finishTurn();
+        }
+
+        function applyEvent(event) {
+            if (!event) {
+                finishTurn();
+                return;
+            }
+
+            const player = getCurrentPlayer();
+            addLog(`${player.name} 抽到事件：${event.text}`);
+
+            switch (event.action) {
+                case "move":
+                    movePlayer(player, event.value, true);
+                    return;
+                case "skip":
+                    player.skipTurns += 1;
+                    addLog(`${player.name} 将休息一回合。`);
+                    break;
+                case "extraRoll":
+                    player.extraRolls += 1;
+                    addLog(`${player.name} 获得一次额外掷骰机会。`);
+                    break;
+                case "allScore":
+                    gameData.players.forEach(item => item.score += event.value);
+                    addLog(`全体玩家各获得 ${event.value} 分。`);
+                    break;
+                case "diceMinus":
+                    player.dicePenalty += event.value;
+                    addLog(`${player.name} 下次掷骰点数减 ${event.value}。`);
+                    break;
+                case "nextHeart":
+                    player.position = findNextCell(player.position, "heart");
+                    renderGame();
+                    showQuestionModal();
+                    return;
+                case "swap":
+                    swapWithRandomPlayer(player);
+                    break;
+                case "doubleAnswer":
+                    player.doubleAnswer = true;
+                    addLog(`${player.name} 下次心灵问答得分翻倍。`);
+                    break;
+                case "goStart":
+                    player.position = 0;
+                    addLog(`${player.name} 回到起点。`);
+                    break;
+                default:
+                    break;
+            }
+
+            renderGame();
+            finishTurn();
+        }
+
+        function finishTurn() {
+            renderGame();
+            const winner = gameData.players.find(player => player.score >= WIN_SCORE);
+            if (winner) {
+                showWinnerModal(winner);
+                return;
+            }
+
+            const player = getCurrentPlayer();
+            if (player.extraRolls > 0) {
+                player.extraRolls -= 1;
+                addLog(`${player.name} 使用额外机会，可以再掷一次。`);
+                enableRollButtonForCurrentPlayer();
+                return;
+            }
+
+            advanceToNextPlayer();
+            enableRollButtonForCurrentPlayer();
+        }
+
+        function advanceToNextPlayer() {
+            const previousIndex = gameData.currentPlayerIndex;
+            let guard = 0;
+
+            do {
+                gameData.currentPlayerIndex = (gameData.currentPlayerIndex + 1) % gameData.players.length;
+                if (gameData.currentPlayerIndex === 0 && previousIndex !== 0) {
+                    gameData.round += 1;
+                }
+
+                const candidate = getCurrentPlayer();
+                if (candidate.skipTurns > 0) {
+                    candidate.skipTurns -= 1;
+                    addLog(`${candidate.name} 休息本回合。`);
+                } else {
+                    break;
+                }
+
+                guard++;
+                if (guard >= gameData.players.length) {
+                    addLog("所有玩家都休息了一轮，重新开始下一轮。");
+                    gameData.players.forEach(player => player.skipTurns = 0);
+                    gameData.currentPlayerIndex = (gameData.currentPlayerIndex + 1) % gameData.players.length;
+                    break;
+                }
+            } while (true);
+        }
+
+        function enableRollButtonForCurrentPlayer() {
+            renderGame();
+            rollBtn.disabled = false;
+        }
+
+        function showWinnerModal(winner) {
+            gameData.gameStarted = false;
+            rollBtn.disabled = true;
+            winnerText.textContent = `${winner.name} 获胜！最终得分 ${winner.score} 分。`;
+            winnerModal.classList.add("is-visible");
+            addLog(`${winner.name} 达成目标分数，游戏结束。`);
+            renderGame();
+        }
+
+        function restartGame() {
+            gameData.gameStarted = false;
+            winnerModal.classList.remove("is-visible");
+            questionModal.classList.remove("is-visible");
+            eventModal.classList.remove("is-visible");
+            energyModal.classList.remove("is-visible");
+            gameContainer.classList.remove("is-visible");
+            setupPanel.style.display = "block";
+            roundInfo.textContent = "准备开始";
+            dice.textContent = "?";
+            rollBtn.disabled = false;
+        }
+
+        function renderGame() {
+            renderBoardTokens();
+            renderPlayersInfo();
+            renderEffects();
+            renderTurn();
+        }
+
+        function renderBoardTokens() {
+            document.querySelectorAll(".cell.current").forEach(cell => cell.classList.remove("current"));
+            document.querySelectorAll("[data-token-box]").forEach(box => box.innerHTML = "");
+
+            if (!gameData.players.length) return;
+
+            gameData.players.forEach((player, index) => {
+                const tokenBox = document.querySelector(`[data-token-box="${player.position}"]`);
+                if (!tokenBox) return;
+
+                const token = document.createElement("div");
+                token.className = `player-token player-${index + 1}`;
+                token.textContent = index + 1;
+                token.title = player.name;
+                tokenBox.appendChild(token);
+            });
+
+            const currentCell = document.querySelector(`[data-route-index="${getCurrentPlayer().position}"]`);
+            if (currentCell) currentCell.classList.add("current");
+        }
+
+        function renderPlayersInfo() {
+            playersInfo.innerHTML = "";
+            gameData.players.forEach((player, index) => {
+                const element = document.createElement("div");
+                element.className = `player-info ${index === gameData.currentPlayerIndex ? "current-turn" : ""} ${player.skipTurns > 0 ? "skipping" : ""}`;
+                const effects = [
+                    player.skipTurns > 0 ? `休息 ${player.skipTurns}` : "",
+                    player.extraRolls > 0 ? `额外 ${player.extraRolls}` : "",
+                    player.dicePenalty > 0 ? `减骰 ${player.dicePenalty}` : "",
+                    player.doubleAnswer ? "答题双倍" : ""
+                ].filter(Boolean).join(" / ");
+
+                element.innerHTML = `
+                    <div class="player-color player-${index + 1}"></div>
+                    <div>
+                        <div class="player-name">${escapeHtml(player.name)}</div>
+                        <div class="player-meta">第 ${player.position + 1} 格${effects ? ` · ${effects}` : ""}</div>
+                    </div>
+                    <div class="player-score">${player.score} 分</div>
+                `;
+                playersInfo.appendChild(element);
+            });
+        }
+
+        function renderEffects() {
+            const player = getCurrentPlayer();
+            if (!player) {
+                effectStrip.innerHTML = "";
+                return;
+            }
+
+            const effects = [
+                ["额外机会", player.extraRolls],
+                ["点数减免", player.dicePenalty],
+                ["答题双倍", player.doubleAnswer ? 1 : 0]
+            ];
+
+            effectStrip.innerHTML = effects.map(([label, value]) => `
+                <div class="effect-item">
+                    <span>${label}</span>
+                    <strong>${value ? value : "无"}</strong>
+                </div>
+            `).join("");
+        }
+
+        function renderTurn() {
+            if (!gameData.players.length) return;
+            const player = getCurrentPlayer();
+            turnBadge.textContent = `轮到 ${player.name}`;
+            roundInfo.textContent = `第 ${gameData.round} 轮`;
+            goalInfo.textContent = `目标 ${WIN_SCORE} 分`;
+        }
+
+        function addLog(message) {
+            const item = document.createElement("div");
+            item.className = "log-item";
+            item.textContent = message;
+            logList.prepend(item);
+
+            while (logList.children.length > 12) {
+                logList.removeChild(logList.lastChild);
+            }
+        }
+
+        function updateCardInfo() {
+            if (gameModeSelect.value !== "custom") {
+                cardInfo.textContent = "默认题库";
+                return;
+            }
+            const q = gameData.imported.questions.length;
+            const e = gameData.imported.events.length;
+            cardInfo.textContent = q || e ? `自定义 ${q}+${e}` : "等待导入";
+        }
+
+        function swapWithRandomPlayer(player) {
+            const others = gameData.players.filter(item => item !== player);
+            if (!others.length) return;
+            const other = pick(others);
+            const oldPosition = player.position;
+            player.position = other.position;
+            other.position = oldPosition;
+            addLog(`${player.name} 和 ${other.name} 交换了位置。`);
+        }
+
+        function findNextCell(startPosition, type) {
+            for (let offset = 1; offset < gameData.board.length; offset++) {
+                const index = (startPosition + offset) % gameData.board.length;
+                if (gameData.board[index].type === type) return index;
+            }
+            return startPosition;
+        }
+
+        function getCurrentPlayer() {
+            return gameData.players[gameData.currentPlayerIndex];
+        }
+
+        function randomDice() {
+            return Math.floor(Math.random() * 6) + 1;
+        }
+
+        function pick(list) {
+            return list[Math.floor(Math.random() * list.length)];
+        }
+
+        function escapeHtml(value) {
+            return String(value)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        initializeBoard();
+        updateCardInfo();
+    </script>
+</body>
+</html>
